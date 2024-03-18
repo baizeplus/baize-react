@@ -1,8 +1,7 @@
-import Layout from "@/layout";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 // import useRouterbeforeEach from "@/hooks/useRouterbeforeEach";
 
-const Dashboard:FC = () => {
+const Dashboard: FC = () => {
   // const { pathname } = useLocation();
   // const navigate = useNavigate();
 
@@ -16,7 +15,7 @@ const Dashboard:FC = () => {
 
   return (
     // <Layout>
-      <div>hello world</div>
+    <div>hello world</div>
     // </Layout>
   );
 };

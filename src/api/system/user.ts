@@ -3,75 +3,74 @@ import request from "@/utils/request";
 // 查询用户列表
 export function getUserList(query: IUserSearchParams) {
   return request({
-    url: '/system/user/list',
-    method: 'get',
-    params: query
-  })
+    url: "/system/user/list",
+    method: "get",
+    params: query,
+  });
 }
 
 // 用户状态修改
-export function changeUserStatus(data: { userId: string; status: string; }) {
-  
+export function changeUserStatus(data: { userId: string; status: string }) {
   return request({
-    url: '/system/user/changeStatus',
-    method: 'put',
-    data: data
-  })
+    url: "/system/user/changeStatus",
+    method: "put",
+    data: data,
+  });
 }
 
 // 查询用户详细
-export function getUser(userId: IUserItem['userId']) {
+export function getUser(userId: IUserItem["userId"]) {
   return request({
-    url: '/system/user/' + userId,
-    method: 'get'
-  })
+    url: "/system/user/" + userId,
+    method: "get",
+  });
 }
 
 // 新增用户
-export function addUser(data) {
+export function addUser(data: any) {
   return request({
-    url: '/system/user',
-    method: 'post',
-    data: data
-  })
+    url: "/system/user",
+    method: "post",
+    data: data,
+  });
 }
 
 // 修改用户
-export function updateUser(data) {
+export function updateUser(data: any) {
   return request({
-    url: '/system/user',
-    method: 'put',
-    data: data
-  })
+    url: "/system/user",
+    method: "put",
+    data: data,
+  });
 }
 
 // 删除用户
 export function delUser(userId: string) {
   return request({
-    url: '/system/user/' + userId,
-    method: 'delete'
-  })
+    url: "/system/user/" + userId,
+    method: "delete",
+  });
 }
 
 // 用户密码重置
 export function resetUserPwd(userId: string, password: string) {
   const data = {
     userId,
-    password
-  }
+    password,
+  };
   return request({
-    url: '/system/user/resetPwd',
-    method: 'put',
-    data: data
-  })
+    url: "/system/user/resetPwd",
+    method: "put",
+    data: data,
+  });
 }
 
 // 导出用户
 export function exportUser() {
   return request({
-    url: '/system/user/export',
-    method: 'post',
-    responseType: 'blob',
+    url: "/system/user/export",
+    method: "post",
+    responseType: "blob",
     // data: params
-  })
+  });
 }
