@@ -28,7 +28,7 @@ const RegisterForm: FC = () => {
         password: encrypt(values.password),
       };
       const { data } = await register(params);
-      console.log("data", data);
+      console.log("data 1", data);
     } catch (error) {
       getCode();
       console.log("error", error);
