@@ -74,3 +74,25 @@ export function exportUser() {
     // data: params
   });
 }
+
+// 导出用户模板
+export function exportUserTemplate() {
+  return request({
+    url: "/system/user/importTemplate",
+    method: "post",
+    responseType: "blob",
+    // data: params
+  });
+}
+
+// 导入用户
+export function importUser(file: FormData, updateSupport?: boolean) {
+  return request({
+    url: `/system/user/importData?updateSupport=${updateSupport}`,
+    method: "post",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data: file,
+  });
+}

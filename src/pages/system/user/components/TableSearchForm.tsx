@@ -19,11 +19,11 @@ const TableSearchForm: FC<ITableSearchFormProps> = ({ onSearch }) => {
       <Form.Item label="用户状态" name="status">
         <Select placeholder="请选择用户状态" className="!w-[230px]" />
       </Form.Item>
-      <Form.Item label="创建时间" name="dateRange">
+      <Form.Item label="创建时间" name="dataScope">
         <RangePicker
           className="!w-[235px]"
           placeholder={["开始日期", "结束日期"]}
-       />
+        />
       </Form.Item>
     </QueryForm>
   );

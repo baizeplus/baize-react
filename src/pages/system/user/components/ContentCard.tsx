@@ -4,13 +4,21 @@ import { Card } from "antd";
 import TableSearchForm from "./TableSearchForm";
 import UserTable from "./UserTable";
 
-const ContentCard: FC = () => {
-  const [searchParams, setSearchParams] = useState<IUserSearchParams>({});
+type IProps = {
+  deptId: string;
+};
 
+const ContentCard: FC<IProps> = ({ deptId }) => {
+  const [searchParams, setSearchParams] = useState<IUserSearchParams>({});
+  const [hideSearch, setHideSearch] = useState(false);
   return (
     <Card className="w-full shadow-sm" classNames={{ body: "!p-4" }}>
-      <TableSearchForm onSearch={setSearchParams}/>
-      <UserTable searchParams={searchParams} />
+      {!hideSearch && <TableSearchForm onSearch={setSearchParams} />}
+      <UserTable
+        searchParams={searchParams}
+        deptId={deptId}
+        onHideSearch={setHideSearch}
+      />
     </Card>
   );
 };

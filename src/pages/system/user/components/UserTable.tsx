@@ -12,7 +12,6 @@ import { getUserList } from "@/api/system/user";
 import {
   AppstoreOutlined,
   CheckCircleOutlined,
-  CloudUploadOutlined,
   DeleteOutlined,
   FormOutlined,
   KeyOutlined,
@@ -21,35 +20,51 @@ import {
   SyncOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
+import { YYYY_MM_DD, YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import TableItemSwitch from "./TableItemSwitch";
 import UpdateUserModal from "./TableActive/UpdateUserModal";
-import DeleteUserModal, { IDeleteUserRefProps } from "./TableActive/DeleteUserModal";
+import DeleteUserModal, {
+  IDeleteUserRefProps,
+} from "./TableActive/DeleteUserModal";
 import ResetPwdModal from "./TableActive/ResetPwdModal";
-import ExportButton from "./ExportButton";
+import ExportButton from "./TableActive/ExportButton";
+import ImportButton from "./TableActive/ImportModal";
 
 type IProps = {
   searchParams: IUserSearchParams;
+  deptId?: string;
+  onHideSearch?: (hide: boolean) => void;
 };
 
-const UserTable: FC<IProps> = ({ searchParams }) => {
+const UserTable: FC<IProps> = ({
+  searchParams,
+  deptId = undefined,
+  onHideSearch,
+}) => {
   const [list, setList] = useState<IUserItem[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [hideSearch, setHideSearch] = useState(false);
   const deleteRef = useRef<IDeleteUserRefProps>(null);
   // const [loading, setLoading] = useState<boolean>(false);
   /** 查询用户列表 */
   const getList = useCallback(async () => {
     try {
       setLoading(true);
-      const { data } = await getUserList(searchParams);
+      const params = {
+        ...searchParams,
+        deptId,
+        beginTime: searchParams?.dataScope?.[0].format(YYYY_MM_DD) || "",
+        endTime: searchParams?.dataScope?.[1].format(YYYY_MM_DD) || "",
+      };
+      const { data } = await getUserList(params);
       setList(data.rows);
       setTotal(data.total);
     } finally {
       setLoading(false);
     }
-  }, [searchParams]);
+  }, [deptId, searchParams]);
 
   useEffect(() => {
     getList();
@@ -146,6 +161,13 @@ const UserTable: FC<IProps> = ({ searchParams }) => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
+  const handleHideSearch = () => {
+    setHideSearch((f) => {
+      onHideSearch?.(!f);
+      return !f;
+    });
+  };
+
   const rowSelection = {
     selectedRowKeys,
     onChange: handleSelectChange,
@@ -160,8 +182,15 @@ const UserTable: FC<IProps> = ({ searchParams }) => {
               新增
             </Button>
           </UpdateUserModal>
-          <UpdateUserModal id={(selectedRowKeys[0] || '') as string} onSuccess={getList}>
-            <Button  disabled={!selectedRowKeys.length || selectedRowKeys.length > 1} type="primary" icon={<FormOutlined />}>
+          <UpdateUserModal
+            id={(selectedRowKeys[0] || "") as string}
+            onSuccess={getList}
+          >
+            <Button
+              disabled={!selectedRowKeys.length || selectedRowKeys.length > 1}
+              type="primary"
+              icon={<FormOutlined />}
+            >
               修改
             </Button>
           </UpdateUserModal>
@@ -178,14 +207,16 @@ const UserTable: FC<IProps> = ({ searchParams }) => {
               删除
             </Button>
           </DeleteUserModal>
-          <Button type="primary" ghost icon={<CloudUploadOutlined />}>
-            导入
-          </Button>
+          <ImportButton />
           <ExportButton />
         </Flex>
         <Flex gap="small">
-          <Tooltip title="隐藏搜索">
-            <Button shape="circle" icon={<SearchOutlined />} />
+          <Tooltip title={hideSearch ? "显示搜索" : "隐藏搜索"}>
+            <Button
+              shape="circle"
+              icon={<SearchOutlined />}
+              onClick={handleHideSearch}
+            />
           </Tooltip>
           <Tooltip title="刷新">
             <Button shape="circle" icon={<SyncOutlined />} onClick={getList} />
