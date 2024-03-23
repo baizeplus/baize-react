@@ -1,5 +1,6 @@
 interface IUserProfile {
   userName: string;
+  nickName: string;
   email: string;
   avatar: string;
   deptName: string;

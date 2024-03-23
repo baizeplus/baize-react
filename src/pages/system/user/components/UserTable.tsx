@@ -18,6 +18,7 @@ import {
   PlusOutlined,
   SearchOutlined,
   SyncOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { YYYY_MM_DD, YYYY_MM_DD_HH_mm } from "@/utils/constant";
@@ -29,6 +30,7 @@ import DeleteUserModal, {
 import ResetPwdModal from "./TableActive/ResetPwdModal";
 import ExportButton from "./TableActive/ExportButton";
 import ImportButton from "./TableActive/ImportModal";
+import UserRoleDrawer from "./UserRoleDrawer/UserRoleDrawer";
 
 type IProps = {
   searchParams: IUserSearchParams;
@@ -129,7 +131,7 @@ const UserTable: FC<IProps> = ({
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 110,
+      width: 130,
       render: (_, r) => {
         return (
           <Flex gap={8}>
@@ -148,9 +150,14 @@ const UserTable: FC<IProps> = ({
                 <KeyOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
             </ResetPwdModal>
-            <Tooltip placement="top" title="分配角色">
-              <CheckCircleOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-            </Tooltip>
+            <UserRoleDrawer id={r.userId}>
+              <Tooltip placement="top" title="分配角色">
+                <CheckCircleOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+              </Tooltip>
+            </UserRoleDrawer>
+            {/* <Tooltip placement="top" title="数据权限">
+              <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+            </Tooltip> */}
           </Flex>
         );
       },
