@@ -44,3 +44,18 @@ interface IUserItem {
   updateBy: number;
   updateTime?: number;
 }
+
+interface IEditUserParams {
+  nickName: string;
+  userId?: string;
+  deptId?: string;
+  phonenumber?: string;
+  email?: string;
+  userName?: string;
+  password?: string;
+  sex?: string;
+  status: string;
+  postIds?: string[];
+  roleIds?: string[];
+  remark?: string;
+}

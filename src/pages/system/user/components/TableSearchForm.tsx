@@ -4,7 +4,7 @@ import QueryForm from "@/components/QueryForm/QueryForm";
 const { RangePicker } = DatePicker;
 
 type ITableSearchFormProps = {
-  onSearch: (params: object) => void;
+  onSearch?: (params: object) => void;
 };
 
 const TableSearchForm: FC<ITableSearchFormProps> = ({ onSearch }) => {

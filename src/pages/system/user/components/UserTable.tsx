@@ -18,7 +18,6 @@ import {
   PlusOutlined,
   SearchOutlined,
   SyncOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { YYYY_MM_DD, YYYY_MM_DD_HH_mm } from "@/utils/constant";

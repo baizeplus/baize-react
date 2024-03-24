@@ -27,7 +27,7 @@ export function getUser(userId: IUserItem["userId"]) {
 }
 
 // 新增用户
-export function addUser(data: any) {
+export function addUser(data: IEditUserParams) {
   return request({
     url: "/system/user",
     method: "post",
@@ -36,7 +36,7 @@ export function addUser(data: any) {
 }
 
 // 修改用户
-export function updateUser(data: any) {
+export function updateUser(data: IEditUserParams) {
   return request({
     url: "/system/user",
     method: "put",

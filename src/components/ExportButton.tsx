@@ -2,19 +2,28 @@ import { FC, useState } from "react";
 import { Button } from "antd";
 
 import { CloudDownloadOutlined } from "@ant-design/icons";
-import { exportUser } from "@/api/system/user";
 import download from "@/utils/download";
 
-const ExportButton: FC = () => {
+type IExportButtonProps = {
+  fileName?: string;
+  fileNamePrefix?: string;
+  exportFn: () => Promise<unknown>;
+};
+
+const ExportButton: FC<IExportButtonProps> = ({
+  fileName,
+  fileNamePrefix,
+  exportFn,
+}) => {
   const [loading, setLoading] = useState(false);
   const handleExport = async () => {
     try {
       setLoading(true);
-      const data = await exportUser();
+      const data = await exportFn();
       if (data) {
         download(
           data as unknown as BlobPart,
-          `user_${new Date().getTime()}.xlsx`,
+          fileName || `${fileNamePrefix + "_"}${new Date().getTime()}.xlsx`,
         );
       }
     } finally {

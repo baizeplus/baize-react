@@ -1,22 +1,27 @@
-import {
-  Navigate,
-  createBrowserRouter,
-  redirect,
-} from "react-router-dom";
+import { Navigate, createBrowserRouter, redirect } from "react-router-dom";
 
-import { Page404,Login, Register, User, Dashboard, Layout, UserProfile } from "./routes";
+import {
+  Page404,
+  Login,
+  Register,
+  User,
+  Dashboard,
+  Layout,
+  UserProfile,
+  Role,
+} from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate  to="/index" />,
+    element: <Navigate to="/index" />,
   },
   {
     path: "/index",
     loader: async () => {
-      if(!getToken()) return redirect('/login');
+      if (!getToken()) return redirect("/login");
 
       await getUserInfo();
       return <Layout />;
@@ -28,13 +33,13 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: 'user',
+        path: "user",
         children: [
           {
-            path: 'profile',
-            element: <UserProfile />
-          }
-        ]
+            path: "profile",
+            element: <UserProfile />,
+          },
+        ],
       },
       {
         path: "system",
@@ -45,7 +50,7 @@ const router = createBrowserRouter([
           },
           {
             path: "role",
-            element: <User />,
+            element: <Role />,
           },
           {
             path: "menu",
@@ -80,8 +85,8 @@ const router = createBrowserRouter([
             element: <User />,
           },
         ],
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/login",
@@ -89,7 +94,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register />
+    element: <Register />,
   },
   {
     path: "*",
