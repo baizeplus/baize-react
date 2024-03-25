@@ -9,6 +9,7 @@ import {
   Layout,
   UserProfile,
   Role,
+  Menu,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
           },
           {
             path: "menu",
-            element: <User />,
+            element: <Menu />,
           },
           {
             path: "dept",

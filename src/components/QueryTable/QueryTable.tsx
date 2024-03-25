@@ -2,13 +2,21 @@ import { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Table, TableProps } from "antd";
 import QueryContext from "./content";
 import { AxiosResponse } from "axios";
+import { handleTree } from "@/utils/baize";
 
 interface IQueryTableProps extends TableProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   queryFn: (params: any) => Promise<AxiosResponse>;
+  isRowSelection?: boolean;
+  isTree?: boolean;
 }
 
-const QueryTable: FC<IQueryTableProps> = ({ queryFn, ...ret }) => {
+const QueryTable: FC<IQueryTableProps> = ({
+  queryFn,
+  isTree,
+  isRowSelection,
+  ...ret
+}) => {
   const { params, selectedRowKeys, setSelectedRowKeys, queryFnRef } =
     useContext(QueryContext);
   const [loading, setLoading] = useState(false);
@@ -22,22 +30,21 @@ const QueryTable: FC<IQueryTableProps> = ({ queryFn, ...ret }) => {
         setLoading(true);
         const _params = {
           ...params,
-          // beginTime: searchParams?.dataScope?.[0].format(YYYY_MM_DD) || "",
-          // endTime: searchParams?.dataScope?.[1].format(YYYY_MM_DD) || "",
         };
         const { data } = await queryFn(_params);
         setTimeout(() => {
           if (type === "del") {
             setSelectedRowKeys([]);
           }
-          setDataSource(data.rows);
+          const list = Array.isArray(data) ? data : data.rows;
+          setDataSource(isTree ? handleTree(list, "menuId", "parentId") : list);
           setTotal(data.total);
         }, 14);
       } finally {
         setLoading(false);
       }
     },
-    [params, queryFn, setSelectedRowKeys],
+    [isTree, params, queryFn, setSelectedRowKeys],
   );
 
   useEffect(() => {
@@ -63,7 +70,7 @@ const QueryTable: FC<IQueryTableProps> = ({ queryFn, ...ret }) => {
     <Table
       loading={loading}
       dataSource={dataSource}
-      rowSelection={rowSelection}
+      rowSelection={isRowSelection ? rowSelection : undefined}
       pagination={{
         showTotal: (total) => `共 ${total} 条`,
         total: total,

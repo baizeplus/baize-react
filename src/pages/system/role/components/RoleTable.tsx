@@ -103,6 +103,7 @@ const RoleTable: FC = () => {
   return (
     <>
       <Query.Table
+        isRowSelection
         rowKey={(e) => e.roleId}
         queryFn={getRoleList}
         columns={columns}
