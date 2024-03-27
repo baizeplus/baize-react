@@ -4,16 +4,16 @@ import { DeleteOutlined, FormOutlined, PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
-import { delRole } from "@/api/system/role";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import { getMenuList } from "@/api/system/menu";
+import { delMenu, getMenuList } from "@/api/system/menu";
+import UpdateMenuDrawer from "./TableActive/UpdateMenuDrawer";
 
 const MenuTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IRoleItem>["columns"] = [
+  const columns: TableProps<IMenuItem>["columns"] = [
     {
       title: "菜单名称",
       dataIndex: "menuName",
@@ -82,18 +82,18 @@ const MenuTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            {/* <UpdateRoleDrawer id={r.roleId}> */}
-            <Tooltip placement="top" title="修改">
-              <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-            </Tooltip>
-            {/* </UpdateRoleDrawer> */}
+            <UpdateMenuDrawer id={r.menuId}>
+              <Tooltip placement="top" title="修改">
+                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+              </Tooltip>
+            </UpdateMenuDrawer>
             <Tooltip placement="top" title="新增">
               <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
             </Tooltip>
             <DeleteConfirm
-              id={r.roleId}
-              tipTag="角色"
-              delFn={delRole}
+              id={r.menuId}
+              tipTag="菜单"
+              delFn={delMenu}
               onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">

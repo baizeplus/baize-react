@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Drawer, Space, Spin } from "antd";
+import { Button, Drawer, DrawerProps, Space, Spin } from "antd";
 
-type IDrawerWarpperProps = {
+interface IDrawerWarpperProps extends DrawerProps {
   children: React.ReactNode;
   title?: string;
   iconBtn?: React.ReactNode;
@@ -12,7 +12,7 @@ type IDrawerWarpperProps = {
    */
   onMount?: () => void;
   onSubmit?: () => Promise<unknown>;
-};
+}
 
 const DrawerWarpper: FC<IDrawerWarpperProps> = ({
   children,
@@ -20,6 +20,7 @@ const DrawerWarpper: FC<IDrawerWarpperProps> = ({
   title,
   onMount,
   onSubmit,
+  ...ret
 }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ const DrawerWarpper: FC<IDrawerWarpperProps> = ({
             </Button>
           </Space>
         }
+        {...ret}
       >
         <Spin spinning={loading}>{children}</Spin>
       </Drawer>

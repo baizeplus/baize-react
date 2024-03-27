@@ -3,6 +3,7 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
+import UpdateMenuDrawer from "./TableActive/UpdateMenuDrawer";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 
 type IMenuToolbarProps = {
@@ -14,11 +15,11 @@ const MenuToolbar: FC<IMenuToolbarProps> = () => {
 
   return (
     <Query.Toolbar>
-      {/* <UpdateRoleDrawer> */}
-      <Button type="primary" icon={<PlusOutlined />}>
-        新增
-      </Button>
-      {/* </UpdateRoleDrawer> */}
+      <UpdateMenuDrawer>
+        <Button type="primary" icon={<PlusOutlined />}>
+          新增
+        </Button>
+      </UpdateMenuDrawer>
       {/* <UpdateRoleDrawer id={selectedRowId[0]}> */}
       {/* <Button
           icon={<SwapOutlined />}
