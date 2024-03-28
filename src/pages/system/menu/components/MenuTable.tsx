@@ -87,9 +87,11 @@ const MenuTable: FC = () => {
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
             </UpdateMenuDrawer>
-            <Tooltip placement="top" title="新增">
-              <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-            </Tooltip>
+            <UpdateMenuDrawer parentId={r.menuId}>
+              <Tooltip placement="top" title="新增">
+                <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+              </Tooltip>
+            </UpdateMenuDrawer>
             <DeleteConfirm
               id={r.menuId}
               tipTag="菜单"

@@ -20,12 +20,14 @@ import { addMenu, getMenu, getTreeSelect, updateMenu } from "@/api/system/menu";
 type IUpdateMenuDrawerProps = {
   children: React.ReactNode;
   id?: React.Key;
+  parentId?: string;
 };
 
 /** 新增/更新Menu数据Drawer */
 const UpdateMenuDrawer: FC<IUpdateMenuDrawerProps> = ({
   children,
   id = "",
+  parentId = "",
 }) => {
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
@@ -55,6 +57,9 @@ const UpdateMenuDrawer: FC<IUpdateMenuDrawerProps> = ({
   const handleMount = () => {
     form.resetFields();
     getCurrMenuTree();
+    if (parentId) {
+      form.setFieldValue("parentId", parentId);
+    }
     if (id) {
       getCurrMenu();
     } else {
