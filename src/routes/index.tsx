@@ -10,6 +10,7 @@ import {
   UserProfile,
   Role,
   Menu,
+  Dept,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
           },
           {
             path: "dept",
-            element: <User />,
+            element: <Dept />,
           },
           {
             path: "post",

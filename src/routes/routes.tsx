@@ -20,5 +20,6 @@ export const Dashboard = WFC(lazy(() => import("@/pages/home/Dashboard")));
 export const User = WFC(lazy(() => import("@/pages/system/user")));
 export const Role = WFC(lazy(() => import("@/pages/system/role/Role")));
 export const Menu = WFC(lazy(() => import("@/pages/system/menu/Menu")));
+export const Dept = WFC(lazy(() => import("@/pages/system/dept/Dept")));
 
 export const Page404 = WFC(lazy(() => import("@/pages/error/404")));

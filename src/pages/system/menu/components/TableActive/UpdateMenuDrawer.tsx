@@ -93,7 +93,7 @@ const UpdateMenuDrawer: FC<IUpdateMenuDrawerProps> = ({
       onSubmit={handleSubmit}
     >
       <Form form={form} layout="vertical">
-        <Form.Item hidden label="角色Id" name="menuId">
+        <Form.Item hidden label="菜单Id" name="menuId">
           <Input />
         </Form.Item>
         <Row gutter={12}>

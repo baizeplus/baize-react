@@ -37,7 +37,7 @@ const QueryTable: FC<IQueryTableProps> = ({
             setSelectedRowKeys([]);
           }
           const list = Array.isArray(data) ? data : data.rows;
-          setDataSource(isTree ? handleTree(list, "menuId", "parentId") : list);
+          setDataSource(isTree ? handleTree(list, "deptId", "parentId") : list);
           setTotal(data.total);
         }, 14);
       } finally {
