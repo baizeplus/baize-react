@@ -7,14 +7,13 @@ import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import { delMenu } from "@/api/system/menu";
-import { getDeptList } from "@/api/system/dept";
+import { delDept, getDeptList } from "@/api/system/dept";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 
 const DeptTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IMenuItem>["columns"] = [
+  const columns: TableProps<IDeptItem>["columns"] = [
     {
       title: "部门名称",
       dataIndex: "deptName",
@@ -74,8 +73,8 @@ const DeptTable: FC = () => {
             </UpdateDrawer>
             <DeleteConfirm
               id={r.deptId}
-              tipTag="部门"
-              delFn={delMenu}
+              text={`是否确认删除名称为"${r.deptName}"的数据项?`}
+              delFn={delDept}
               onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">
@@ -91,11 +90,12 @@ const DeptTable: FC = () => {
   return (
     <>
       <Query.Table
+        idkey="deptId"
+        rowKey={(e) => e.deptId}
         isTree
         expandable={{
           defaultExpandAllRows: true,
         }}
-        rowKey={(e) => e.deptId}
         queryFn={getDeptList}
         columns={columns}
       />

@@ -112,6 +112,7 @@ const MenuTable: FC = () => {
     <>
       <Query.Table
         isTree
+        idkey="menuId"
         rowKey={(e) => e.menuId}
         queryFn={getMenuList}
         columns={columns}

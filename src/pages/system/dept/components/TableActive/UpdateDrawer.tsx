@@ -7,7 +7,6 @@ import {
   InputNumber,
   Radio,
   Row,
-  Select,
   TreeDataNode,
   TreeSelect,
 } from "antd";
@@ -15,7 +14,7 @@ import {
 import QueryTable from "@/components/QueryTable";
 import { handleTree } from "@/utils/baize";
 import { DrawerWarpper } from "@/components";
-import { addMenu, getMenu, getTreeSelect, updateMenu } from "@/api/system/menu";
+import { addDept, getDept, updateDept, getDeptList } from "@/api/system/dept";
 
 type IUpdateDeptDrawerProps = {
   children: React.ReactNode;
@@ -32,12 +31,11 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
   const [form] = Form.useForm();
-  const menuType = Form.useWatch("menuType", form);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
 
   /** 请求当前Menu数据 */
   const getCurrMenu = useCallback(async () => {
-    const { data } = await getMenu(id);
+    const { data } = await getDept(id);
     form.setFieldsValue({
       ...data,
       // menu: { menuCheckStrictly: Boolean(data.menuCheckStrictly) },
@@ -46,10 +44,9 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
 
   /** 请求当前Tree数据 */
   const getCurrMenuTree = useCallback(async () => {
-    const { data } = await getTreeSelect();
-    const list: TreeDataNode[] = handleTree(data, "menuId", "parentId");
-    const menu = [{ menuId: "0", menuName: "主类目", children: list }];
-    setTreeData(menu);
+    const { data } = await getDeptList();
+    const list: TreeDataNode[] = handleTree(data, "deptId", "parentId");
+    setTreeData(list);
     form.setFieldValue("menu", { menuIds: data.checkedKeys });
   }, [form]);
 
@@ -78,7 +75,7 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
     const params = {
       ...values,
     };
-    id ? await updateMenu(params) : await addMenu(params);
+    id ? await updateDept(params) : await addDept(params);
     /** 提交成功后重新请求表格数据 */
     queryFn?.();
     message.success(`${id ? "修改" : "新增"}成功`);

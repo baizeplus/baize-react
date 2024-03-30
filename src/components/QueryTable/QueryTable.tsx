@@ -9,12 +9,14 @@ interface IQueryTableProps extends TableProps {
   queryFn: (params: any) => Promise<AxiosResponse>;
   isRowSelection?: boolean;
   isTree?: boolean;
+  idkey?: string;
 }
 
 const QueryTable: FC<IQueryTableProps> = ({
   queryFn,
   isTree,
   isRowSelection,
+  idkey,
   ...ret
 }) => {
   const { params, selectedRowKeys, setSelectedRowKeys, queryFnRef } =
@@ -37,7 +39,7 @@ const QueryTable: FC<IQueryTableProps> = ({
             setSelectedRowKeys([]);
           }
           const list = Array.isArray(data) ? data : data.rows;
-          setDataSource(isTree ? handleTree(list, "deptId", "parentId") : list);
+          setDataSource(isTree ? handleTree(list, idkey, "parentId") : list);
           setTotal(data.total);
         }, 14);
       } finally {

@@ -7,7 +7,6 @@ import {
   ToolOutlined,
   FundProjectionScreenOutlined,
   GlobalOutlined,
-
   UserOutlined,
   TeamOutlined,
   MenuOutlined,
@@ -18,41 +17,44 @@ import {
   SoundFilled,
   EditFilled,
   EditOutlined,
-  SolutionOutlined
+  SolutionOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 type ISidebarProps = {
   collapsed: boolean;
-}
+};
 
 const Sidebar: FC<ISidebarProps> = ({ collapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedKeys, setSelectedKeys] = useState([location.pathname.replace('/index/', '')]);
-  const [openKeys, setOpenKeys] = useState([location.pathname.split('/')[2]]);
-
+  const [selectedKeys, setSelectedKeys] = useState([
+    location.pathname.replace("/index/", ""),
+  ]);
+  const [openKeys, setOpenKeys] = useState([location.pathname.split("/")[2]]);
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <div className="text-center pt-5 pb-2">
-        <Link to="/index"><Typography.Title ellipsis level={5} className="!text-white">白泽<span className={`${collapsed && 'hidden'}`}>管理系统</span></Typography.Title> </Link>
+        <Link to="/index">
+          <Typography.Title ellipsis level={5} className="!text-white">
+            白泽<span className={`${collapsed && "hidden"}`}>管理系统</span>
+          </Typography.Title>{" "}
+        </Link>
       </div>
       <Menu
         theme="dark"
         mode="inline"
-        
         openKeys={openKeys}
         selectedKeys={selectedKeys}
         onOpenChange={setOpenKeys}
         onSelect={({ key }) => setSelectedKeys([key])}
-        onClick={({key }) => {
-          console.log( key);
-          if(key === 'web') {
-            open('baize.vip');
+        onClick={({ key }) => {
+          if (key === "web") {
+            open("baize.vip");
             return false;
           }
-          navigate(`/index/${key}`)
+          navigate(`/index/${key}`);
         }}
         items={[
           {
@@ -120,9 +122,9 @@ const Sidebar: FC<ISidebarProps> = ({ collapsed }) => {
                     icon: <SolutionOutlined />,
                     label: "登录日志",
                   },
-                ]
+                ],
               },
-            ]
+            ],
           },
           {
             key: "monitor",

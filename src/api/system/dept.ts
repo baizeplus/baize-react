@@ -10,7 +10,7 @@ export function getDeptList(query?: { deptName: string; status: string }) {
 }
 
 // 查询部门详细
-export function getDept(deptId: string) {
+export function getDept(deptId: React.Key) {
   return request({
     url: "/system/dept/" + deptId,
     method: "get",
@@ -18,7 +18,7 @@ export function getDept(deptId: string) {
 }
 
 // 新增部门
-export function addDept(data: any) {
+export function addDept(data: IDeptItem) {
   return request({
     url: "/system/dept",
     method: "post",
@@ -27,7 +27,7 @@ export function addDept(data: any) {
 }
 
 // 修改部门
-export function updateDept(data: any) {
+export function updateDept(data: IDeptItem) {
   return request({
     url: "/system/dept",
     method: "put",

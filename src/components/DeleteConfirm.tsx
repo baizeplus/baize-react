@@ -5,6 +5,7 @@ type IDeleteConfirmProps = {
   children: React.ReactNode;
   id?: string;
   ids?: string;
+  text?: string;
   tipTag?: string;
   delFn: (ids: string) => Promise<unknown>;
   onSuccess?: () => void;
@@ -16,6 +17,7 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
   id = "",
   ids,
   tipTag,
+  text,
   delFn,
   onSuccess,
 }) => {
@@ -26,7 +28,9 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
       title: "系统提示",
       content: (
         <span>
-          是否确认删除编号:「<strong>{ids || id}</strong>」的{tipTag}数据？
+          {text
+            ? text
+            : `是否确认删除编号:「<strong>${ids || id}</strong>」的${tipTag}数据？`}
         </span>
       ),
       onOk: async () => {
