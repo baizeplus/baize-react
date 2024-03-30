@@ -22,7 +22,7 @@ type IUpdateDeptDrawerProps = {
   parentId?: string;
 };
 
-/** 新增/更新Menu数据Drawer */
+/** 新增/更新Dept数据Drawer */
 const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
   children,
   id = "",
@@ -33,12 +33,12 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
   const [form] = Form.useForm();
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
 
-  /** 请求当前Menu数据 */
+  /** 请求当前Dept数据 */
   const getCurrMenu = useCallback(async () => {
     const { data } = await getDept(id);
     form.setFieldsValue({
+      status: "0",
       ...data,
-      // menu: { menuCheckStrictly: Boolean(data.menuCheckStrictly) },
     });
   }, [form, id]);
 
@@ -47,10 +47,9 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
     const { data } = await getDeptList();
     const list: TreeDataNode[] = handleTree(data, "deptId", "parentId");
     setTreeData(list);
-    form.setFieldValue("menu", { menuIds: data.checkedKeys });
-  }, [form]);
+  }, []);
 
-  /** 执行请求menu及tree数据 */
+  /** 执行请求dept及tree数据 */
   const handleMount = () => {
     form.resetFields();
     getCurrMenuTree();
@@ -61,10 +60,7 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
       getCurrMenu();
     } else {
       form.setFieldsValue({
-        menuType: "M",
         status: "0",
-        isFrame: "1",
-        visible: "0",
       });
     }
   };

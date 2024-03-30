@@ -1,58 +1,54 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { Flex, TableProps, Tag, Tooltip } from "antd";
-import { DeleteOutlined, FormOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
-import Query, { IQueryTableRefProps } from "@/components/QueryTable";
+import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import { delMenu, getMenuList } from "@/api/system/menu";
-import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
+import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { delNotice, getNoticeList } from "@/api/system/notice";
 
-const MenuTable: FC = () => {
-  const tableRef = useRef<IQueryTableRefProps>(null);
+const NoticeTable: FC = () => {
+  const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IMenuItem>["columns"] = [
+  const columns: TableProps<IConfigItem>["columns"] = [
     {
-      title: "菜单名称",
-      dataIndex: "menuName",
-      key: "menuName",
+      title: "序号",
+      dataIndex: "noticeId",
+      key: "noticeId",
       align: "center",
       width: 160,
     },
     {
-      title: "图标",
-      dataIndex: "icon",
-      key: "icon",
+      title: "公告标题",
+      dataIndex: "noticeTitle",
+      key: "noticeTitle",
       align: "center",
       ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
+      ),
     },
     {
-      title: "排序",
-      dataIndex: "orderNum",
-      key: "orderNum",
+      title: "公告类型",
+      dataIndex: "noticeType",
+      key: "noticeType",
       align: "center",
       ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
+      ),
     },
     {
-      title: "权限标识",
-      dataIndex: "perms",
-      key: "perms",
-      align: "center",
-      ellipsis: true,
-    },
-    {
-      title: "组件路径",
-      dataIndex: "component",
-      key: "component",
-      align: "center",
-      ellipsis: true,
-    },
-    {
-      title: "状态",
-      dataIndex: "status",
-      key: "status",
+      title: "系统内置",
+      dataIndex: "configType",
+      key: "configType",
       align: "center",
       ellipsis: true,
       render: (t) => (
@@ -62,6 +58,18 @@ const MenuTable: FC = () => {
         >
           {t === "0" ? "正常" : "停用"}
         </Tag>
+      ),
+    },
+    {
+      title: "创建者",
+      dataIndex: "createBy",
+      key: "createBy",
+      align: "center",
+      ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
       ),
     },
     {
@@ -82,21 +90,16 @@ const MenuTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateMenuDrawer id={r.menuId}>
+            <UpdateDrawer id={r.configId}>
               <Tooltip placement="top" title="修改">
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
-            </UpdateMenuDrawer>
-            <UpdateMenuDrawer parentId={r.menuId}>
-              <Tooltip placement="top" title="新增">
-                <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateMenuDrawer>
+            </UpdateDrawer>
             <DeleteConfirm
-              id={r.menuId}
-              tipTag="菜单"
-              delFn={delMenu}
-              onSuccess={tableRef.current?.reload}
+              id={r.configId}
+              text={`是否确认删除参数编号为"${r.configId}"的数据项?`}
+              delFn={delNotice}
+              onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">
                 <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
@@ -111,15 +114,13 @@ const MenuTable: FC = () => {
   return (
     <>
       <Query.Table
-        ref={tableRef}
-        isTree
-        idkey="menuId"
-        rowKey={(e) => e.menuId}
-        queryFn={getMenuList}
+        isRowSelection
+        rowKey={(e) => e.noticeId}
+        queryFn={getNoticeList}
         columns={columns}
       />
     </>
   );
 };
 
-export default MenuTable;
+export default NoticeTable;

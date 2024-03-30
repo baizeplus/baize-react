@@ -11,6 +11,9 @@ import {
   Role,
   Menu,
   Dept,
+  Post,
+  Config,
+  Notice,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -64,7 +67,7 @@ const router = createBrowserRouter([
           },
           {
             path: "post",
-            element: <User />,
+            element: <Post />,
           },
           {
             path: "dict",
@@ -72,11 +75,11 @@ const router = createBrowserRouter([
           },
           {
             path: "config",
-            element: <User />,
+            element: <Config />,
           },
           {
             path: "notice",
-            element: <User />,
+            element: <Notice />,
           },
           {
             path: "operlog",

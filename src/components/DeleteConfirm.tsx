@@ -28,9 +28,13 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
       title: "系统提示",
       content: (
         <span>
-          {text
-            ? text
-            : `是否确认删除编号:「<strong>${ids || id}</strong>」的${tipTag}数据？`}
+          {text ? (
+            text
+          ) : (
+            <>
+              是否确认删除编号:「<strong>{ids || id}</strong>」的{tipTag}数据？
+            </>
+          )}
         </span>
       ),
       onOk: async () => {
@@ -44,7 +48,7 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
     });
   };
 
-  return <div onClick={() => handleDeleteUser()}>{children || "删除"}</div>;
+  return <div onClick={handleDeleteUser}>{children || "删除"}</div>;
 };
 
 export default DeleteConfirm;

@@ -1,10 +1,10 @@
-import { FC, useContext } from "react";
-import { Button, Checkbox, Dropdown, Flex, Tooltip } from "antd";
 import {
   AppstoreOutlined,
   SearchOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
+import { Button, Checkbox, Dropdown, Flex, Tooltip } from "antd";
+import { FC, useContext } from "react";
 import QueryContext from "./content";
 
 export type IQueryProps = {

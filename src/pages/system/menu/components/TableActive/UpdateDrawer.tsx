@@ -17,14 +17,14 @@ import { handleTree } from "@/utils/baize";
 import { DrawerWarpper } from "@/components";
 import { addMenu, getMenu, getTreeSelect, updateMenu } from "@/api/system/menu";
 
-type IUpdateMenuDrawerProps = {
+type IUpdateDrawerProps = {
   children: React.ReactNode;
   id?: React.Key;
   parentId?: string;
 };
 
 /** 新增/更新Menu数据Drawer */
-const UpdateMenuDrawer: FC<IUpdateMenuDrawerProps> = ({
+const UpdateDrawer: FC<IUpdateDrawerProps> = ({
   children,
   id = "",
   parentId = "",
@@ -39,6 +39,8 @@ const UpdateMenuDrawer: FC<IUpdateMenuDrawerProps> = ({
   const getCurrMenu = useCallback(async () => {
     const { data } = await getMenu(id);
     form.setFieldsValue({
+      status: "0",
+      visible: "0",
       ...data,
       // menu: { menuCheckStrictly: Boolean(data.menuCheckStrictly) },
     });
@@ -272,4 +274,4 @@ const UpdateMenuDrawer: FC<IUpdateMenuDrawerProps> = ({
   );
 };
 
-export default UpdateMenuDrawer;
+export default UpdateDrawer;

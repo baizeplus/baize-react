@@ -1,6 +1,6 @@
 import Query from "./Query";
 import QueryForm from "./QueryForm";
-import QueryTable from "./QueryTable";
+import QueryTable, { IQueryTableRefProps } from "./QueryTable";
 import Toolbar from "./Toolbar";
 import useQueryTable from "./useQueryTable";
 
@@ -19,3 +19,5 @@ _Query.Toolbar = Toolbar;
 _Query.useQueryTable = useQueryTable;
 
 export default _Query;
+
+export type { IQueryTableRefProps };

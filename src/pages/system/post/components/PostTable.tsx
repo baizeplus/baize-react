@@ -1,51 +1,44 @@
 import { FC, useRef } from "react";
 import { Flex, TableProps, Tag, Tooltip } from "antd";
-import { DeleteOutlined, FormOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query, { IQueryTableRefProps } from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import { delMenu, getMenuList } from "@/api/system/menu";
-import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
+import { delPost, getPostList } from "@/api/system/post";
+import UpdateDrawer from "./TableActive/UpdateDrawer";
 
-const MenuTable: FC = () => {
+const PostTable: FC = () => {
   const tableRef = useRef<IQueryTableRefProps>(null);
 
-  const columns: TableProps<IMenuItem>["columns"] = [
+  const columns: TableProps<IPostItem>["columns"] = [
     {
-      title: "菜单名称",
-      dataIndex: "menuName",
-      key: "menuName",
+      title: "岗位ID",
+      dataIndex: "postId",
+      key: "postId",
       align: "center",
       width: 160,
     },
     {
-      title: "图标",
-      dataIndex: "icon",
-      key: "icon",
+      title: "岗位编码",
+      dataIndex: "postCode",
+      key: "postCode",
       align: "center",
       ellipsis: true,
     },
     {
-      title: "排序",
-      dataIndex: "orderNum",
-      key: "orderNum",
+      title: "岗位名称",
+      dataIndex: "postName",
+      key: "postName",
       align: "center",
       ellipsis: true,
     },
     {
-      title: "权限标识",
-      dataIndex: "perms",
-      key: "perms",
-      align: "center",
-      ellipsis: true,
-    },
-    {
-      title: "组件路径",
-      dataIndex: "component",
-      key: "component",
+      title: "岗位排序",
+      dataIndex: "postSort",
+      key: "postSort",
       align: "center",
       ellipsis: true,
     },
@@ -82,20 +75,15 @@ const MenuTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateMenuDrawer id={r.menuId}>
+            <UpdateDrawer id={r.postId}>
               <Tooltip placement="top" title="修改">
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
-            </UpdateMenuDrawer>
-            <UpdateMenuDrawer parentId={r.menuId}>
-              <Tooltip placement="top" title="新增">
-                <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateMenuDrawer>
+            </UpdateDrawer>
             <DeleteConfirm
-              id={r.menuId}
-              tipTag="菜单"
-              delFn={delMenu}
+              id={r.postId}
+              text={`是否确认删除岗位编号为"${r.postId}"的数据项?`}
+              delFn={delPost}
               onSuccess={tableRef.current?.reload}
             >
               <Tooltip placement="top" title="删除">
@@ -112,14 +100,13 @@ const MenuTable: FC = () => {
     <>
       <Query.Table
         ref={tableRef}
-        isTree
-        idkey="menuId"
-        rowKey={(e) => e.menuId}
-        queryFn={getMenuList}
+        isRowSelection
+        rowKey={(e) => e.postId}
+        queryFn={getPostList}
         columns={columns}
       />
     </>
   );
 };
 
-export default MenuTable;
+export default PostTable;

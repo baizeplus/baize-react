@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "license": "Apache License",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

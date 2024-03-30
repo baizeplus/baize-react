@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
-import UpdateMenuDrawer from "./TableActive/UpdateMenuDrawer";
+import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 
 type IMenuToolbarProps = {
