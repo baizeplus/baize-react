@@ -14,6 +14,10 @@ import {
   Post,
   Config,
   Notice,
+  Operlog,
+  Logininfor,
+  Dict,
+  DictData,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -71,7 +75,11 @@ const router = createBrowserRouter([
           },
           {
             path: "dict",
-            element: <User />,
+            element: <Dict />,
+          },
+          {
+            path: "dict-type/:dictType",
+            element: <DictData />,
           },
           {
             path: "config",
@@ -83,11 +91,11 @@ const router = createBrowserRouter([
           },
           {
             path: "operlog",
-            element: <User />,
+            element: <Operlog />,
           },
           {
             path: "logininfor",
-            element: <User />,
+            element: <Logininfor />,
           },
         ],
       },

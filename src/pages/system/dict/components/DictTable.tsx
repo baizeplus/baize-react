@@ -4,43 +4,38 @@ import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
-// import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import { delPost, getPostList } from "@/api/system/post";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { delType, getTypeList } from "@/api/system/dict/type";
+import { Link } from "react-router-dom";
 
-const PostTable: FC = () => {
+const DictTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IPostItem>["columns"] = [
+  const columns: TableProps<IDictItem>["columns"] = [
     {
-      title: "岗位ID",
-      dataIndex: "postId",
-      key: "postId",
+      title: "字典编号",
+      dataIndex: "dictId",
+      key: "dictId",
       align: "center",
-      width: 160,
     },
     {
-      title: "岗位编码",
-      dataIndex: "postCode",
-      key: "postCode",
+      title: "字典名称",
+      dataIndex: "dictName",
+      key: "dictName",
       align: "center",
       ellipsis: true,
     },
     {
-      title: "岗位名称",
-      dataIndex: "postName",
-      key: "postName",
+      title: "字典类型",
+      dataIndex: "dictType",
+      key: "dictType",
       align: "center",
       ellipsis: true,
-    },
-    {
-      title: "岗位排序",
-      dataIndex: "postSort",
-      key: "postSort",
-      align: "center",
-      ellipsis: true,
+      render: (t, r) => (
+        <Link to={`/index/system/dict-type/${r.dictType}`}>{t}</Link>
+      ),
     },
     {
       title: "状态",
@@ -58,6 +53,13 @@ const PostTable: FC = () => {
       ),
     },
     {
+      title: "备注",
+      dataIndex: "remark",
+      key: "postSort",
+      align: "center",
+      ellipsis: true,
+    },
+    {
       title: "创建时间",
       dataIndex: "createTime",
       key: "createTime",
@@ -71,19 +73,19 @@ const PostTable: FC = () => {
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 100,
+      width: 70,
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.postId}>
+            <UpdateDrawer id={r.dictId}>
               <Tooltip placement="top" title="修改">
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
             </UpdateDrawer>
             <DeleteConfirm
-              id={r.postId}
-              text={`是否确认删除岗位编号为"${r.postId}"的数据项?`}
-              delFn={delPost}
+              id={r.dictId}
+              text={`是否确认删除字典编号为"${r.dictId}"的数据项?`}
+              delFn={delType}
               onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">
@@ -101,12 +103,12 @@ const PostTable: FC = () => {
       <Query.Table
         isRowSelection
         isPagination
-        rowKey={(e) => e.postId}
-        queryFn={getPostList}
+        rowKey={(e) => e.dictId}
+        queryFn={getTypeList}
         columns={columns}
       />
     </>
   );
 };
 
-export default PostTable;
+export default DictTable;

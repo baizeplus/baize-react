@@ -6,6 +6,7 @@ type IDeleteConfirmProps = {
   id?: string;
   ids?: string;
   text?: string;
+  successText?: string;
   tipTag?: string;
   delFn: (ids: string) => Promise<unknown>;
   onSuccess?: () => void;
@@ -18,6 +19,7 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
   ids,
   tipTag,
   text,
+  successText,
   delFn,
   onSuccess,
 }) => {
@@ -39,7 +41,7 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
       ),
       onOk: async () => {
         await delFn(ids || id);
-        message.success("删除成功");
+        message.success(successText || "删除成功");
         onSuccess?.();
       },
       okText: "删除",

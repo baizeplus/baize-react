@@ -126,6 +126,7 @@ const ConfigTable: FC = () => {
     <>
       <Query.Table
         isRowSelection
+        isPagination
         rowKey={(e) => e.configId}
         queryFn={getConfigList}
         columns={columns}

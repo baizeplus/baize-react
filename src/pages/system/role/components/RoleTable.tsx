@@ -104,6 +104,7 @@ const RoleTable: FC = () => {
     <>
       <Query.Table
         isRowSelection
+        isPagination
         rowKey={(e) => e.roleId}
         queryFn={getRoleList}
         columns={columns}

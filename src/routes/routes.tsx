@@ -22,7 +22,16 @@ export const Role = WFC(lazy(() => import("@/pages/system/role/Role")));
 export const Menu = WFC(lazy(() => import("@/pages/system/menu/Menu")));
 export const Dept = WFC(lazy(() => import("@/pages/system/dept/Dept")));
 export const Post = WFC(lazy(() => import("@/pages/system/post/Post")));
+export const Dict = WFC(lazy(() => import("@/pages/system/dict/Dict")));
+export const DictData = WFC(lazy(() => import("@/pages/system/dict/DictData")));
 export const Config = WFC(lazy(() => import("@/pages/system/config/Config")));
 export const Notice = WFC(lazy(() => import("@/pages/system/notice/Notice")));
+
+export const Operlog = WFC(
+  lazy(() => import("@/pages/monitor/operlog/Operlog")),
+);
+export const Logininfor = WFC(
+  lazy(() => import("@/pages/monitor/logininfor/Logininfor")),
+);
 
 export const Page404 = WFC(lazy(() => import("@/pages/error/404")));

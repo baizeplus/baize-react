@@ -7,6 +7,8 @@ interface IQueryContext {
   setHideSearch: (params: boolean) => void;
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: Dispatch<SetStateAction<React.Key[]>>;
+  selectedRows: unknown[];
+  setSelectedRows: Dispatch<SetStateAction<unknown[]>>;
   handleSetGetList: (fn: (type?: string) => Promise<void>) => void;
   queryFn?: (type?: string) => Promise<void>;
 }
@@ -18,6 +20,8 @@ const QueryContext = createContext<IQueryContext>({
   setHideSearch: () => void 0,
   selectedRowKeys: [],
   setSelectedRowKeys: () => void 0,
+  selectedRows: [],
+  setSelectedRows: () => void 0,
   handleSetGetList: () => Promise.reject(),
   queryFn: undefined,
 });

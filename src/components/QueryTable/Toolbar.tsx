@@ -12,16 +12,14 @@ export type IQueryProps = {
 };
 
 const Toolbar: FC<IQueryProps> = ({ children }) => {
-  const { queryFnRef, hideSearch, setHideSearch } = useContext(QueryContext);
+  const { queryFn, hideSearch, setHideSearch } = useContext(QueryContext);
 
   const handleHideSearch = () => {
     setHideSearch(!hideSearch);
   };
 
   const handleRefresh = () => {
-    if (queryFnRef?.current) {
-      queryFnRef?.current();
-    }
+    queryFn?.();
   };
 
   return (
