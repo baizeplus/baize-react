@@ -3,7 +3,7 @@ import { App, Col, Form, Input, InputNumber, Radio, Row } from "antd";
 
 import QueryTable from "@/components/QueryTable";
 import { DrawerWarpper } from "@/components";
-import { addPost, getPost, updatePost } from "@/api/system/post";
+import { getPost, addPost, updatePost } from "@/api/system/post";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -28,7 +28,6 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
   /** 执行请求Post数据 */
   const handleMount = () => {
     form.resetFields();
-
     if (id) {
       getCurrPost();
     } else {
@@ -46,10 +45,8 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
     };
     id ? await updatePost(params) : await addPost(params);
     /** 提交成功后重新请求表格数据 */
-    setTimeout(() => {
-      queryFn?.();
-    }, 300);
     message.success(`${id ? "修改" : "新增"}成功`);
+    queryFn?.();
   };
 
   return (

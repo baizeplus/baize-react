@@ -2,12 +2,13 @@ import { Dispatch, SetStateAction, createContext } from "react";
 
 interface IQueryContext {
   params: object;
-  queryFnRef?: { current?: (type?: string) => Promise<void> };
   setParams: (params: object) => void;
   hideSearch: boolean;
   setHideSearch: (params: boolean) => void;
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: Dispatch<SetStateAction<React.Key[]>>;
+  handleSetGetList: (fn: (type?: string) => Promise<void>) => void;
+  queryFn?: (type?: string) => Promise<void>;
 }
 
 const QueryContext = createContext<IQueryContext>({
@@ -17,7 +18,8 @@ const QueryContext = createContext<IQueryContext>({
   setHideSearch: () => void 0,
   selectedRowKeys: [],
   setSelectedRowKeys: () => void 0,
-  queryFnRef: { current: undefined },
+  handleSetGetList: () => Promise.reject(),
+  queryFn: undefined,
 });
 
 export default QueryContext;

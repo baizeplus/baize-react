@@ -1,9 +1,9 @@
 import { FC, useCallback } from "react";
-import { App, Col, Form, Input, Radio, Row } from "antd";
+import { App, Col, Form, Input, Radio, Row, Select } from "antd";
 
 import QueryTable from "@/components/QueryTable";
 import { DrawerWarpper } from "@/components";
-import { addConfig, getConfig, updateConfig } from "@/api/system/config";
+import { addNotice, getNotice, updateNotice } from "@/api/system/notice";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -19,9 +19,9 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
 
   /** 请求当前Post数据 */
   const getCurrPost = useCallback(async () => {
-    const { data } = await getConfig(id);
+    const { data } = await getNotice(id);
     form.setFieldsValue({
-      configType: "Y",
+      status: "0",
       ...data,
     });
   }, [form, id]);
@@ -34,7 +34,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
       getCurrPost();
     } else {
       form.setFieldsValue({
-        configType: "Y",
+        status: "0",
       });
     }
   };
@@ -45,7 +45,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
     const params = {
       ...values,
     };
-    id ? await updateConfig(params) : await addConfig(params);
+    id ? await updateNotice(params) : await addNotice(params);
     /** 提交成功后重新请求表格数据 */
     queryFn?.();
     message.success(`${id ? "修改" : "新增"}成功`);
@@ -53,7 +53,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
 
   return (
     <DrawerWarpper
-      title={id ? "修改参数" : "添加参数"}
+      title={id ? "修改公告" : "添加公告"}
       iconBtn={children}
       onMount={handleMount}
       onSubmit={handleSubmit}
@@ -65,46 +65,36 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
         <Row gutter={12}>
           <Col span={24}>
             <Form.Item
-              label="参数名称"
-              name="configName"
-              rules={[{ required: true, message: "请选择参数名称" }]}
+              label="公告标题"
+              name="noticeTitle"
+              rules={[{ required: true, message: "请选择公告标题" }]}
             >
-              <Input placeholder="请输入参数名称" />
+              <Input placeholder="请输入公告标题" />
             </Form.Item>
           </Col>
 
           <Col span={24}>
             <Form.Item
-              label="参数键名"
-              name="configKey"
-              rules={[{ required: true, message: "请输入参数键名" }]}
+              label="公告类型"
+              name="noticeType"
+              rules={[{ required: true, message: "请输选择公告类型" }]}
             >
-              <Input placeholder="请输入参数键名" />
+              <Select placeholder="请输选择公告类型" />
             </Form.Item>
           </Col>
 
           <Col span={12}>
-            <Form.Item
-              label="参数键值"
-              name="configValue"
-              rules={[{ required: true, message: "请输入参数键值" }]}
-            >
-              <Input placeholder="请输入参数键值" className="!w-full" />
-            </Form.Item>
-          </Col>
-
-          <Col span={12}>
-            <Form.Item label="系统内置" name="configType">
+            <Form.Item label="状态" name="status">
               <Radio.Group>
-                <Radio value="Y">是</Radio>
-                <Radio value="N">否</Radio>
+                <Radio value="0">正常</Radio>
+                <Radio value="1">停用</Radio>
               </Radio.Group>
             </Form.Item>
           </Col>
 
           <Col span={24}>
-            <Form.Item label="备注" name="remark">
-              <Input.TextArea placeholder="请输入备注" />
+            <Form.Item label="内容" name="noticeContent">
+              <Input.TextArea placeholder="请输公告内容" rows={6} />
             </Form.Item>
           </Col>
         </Row>

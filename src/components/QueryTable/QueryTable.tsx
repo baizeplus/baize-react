@@ -30,7 +30,7 @@ const QueryTable = forwardRef(
     { queryFn, isTree, isRowSelection, idkey, ...ret }: IQueryTableProps,
     ref: ForwardedRef<IQueryTableRefProps>,
   ) => {
-    const { params, selectedRowKeys, setSelectedRowKeys, queryFnRef } =
+    const { params, selectedRowKeys, setSelectedRowKeys, handleSetGetList } =
       useContext(QueryContext);
     const [loading, setLoading] = useState(false);
     const [dataSource, setDataSource] = useState([]);
@@ -49,9 +49,9 @@ const QueryTable = forwardRef(
             if (type === "del") {
               setSelectedRowKeys([]);
             }
-            const list = Array.isArray(data) ? data : data.rows;
+            const list = Array.isArray(data) ? data : data?.rows || [];
             setDataSource(isTree ? handleTree(list, idkey, "parentId") : list);
-            setTotal(data.total);
+            setTotal(data?.total || list.length);
           }, 14);
         } finally {
           setLoading(false);
@@ -61,10 +61,8 @@ const QueryTable = forwardRef(
     );
 
     useEffect(() => {
-      if (queryFnRef) {
-        queryFnRef.current = getList;
-      }
-    }, [getList, queryFnRef]);
+      handleSetGetList(getList);
+    }, [getList, handleSetGetList]);
 
     useImperativeHandle(ref, () => ({
       reload: getList,

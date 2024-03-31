@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import QueryContext from "./content";
 
 export type IQueryProps = {
@@ -9,7 +9,15 @@ const Query: FC<IQueryProps> = ({ children }) => {
   const [params, setParams] = useState({});
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [hideSearch, setHideSearch] = useState(false);
-  const queryFnRef = useRef();
+  const [queryFn, setQueryFn] = useState<(type?: string) => Promise<void>>();
+
+  const handleSetGetList = useCallback(
+    (fn: (type?: string) => Promise<void>) => {
+      // queryFnRef.current = fn
+      setQueryFn(() => fn);
+    },
+    [],
+  );
 
   return (
     <QueryContext.Provider
@@ -20,7 +28,8 @@ const Query: FC<IQueryProps> = ({ children }) => {
         setSelectedRowKeys,
         hideSearch,
         setHideSearch,
-        queryFnRef,
+        handleSetGetList,
+        queryFn,
       }}
     >
       {children}

@@ -51,6 +51,7 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
 
   /** 执行请求dept及tree数据 */
   const handleMount = () => {
+    console.log("queryFn", queryFn);
     form.resetFields();
     getCurrMenuTree();
     if (parentId) {

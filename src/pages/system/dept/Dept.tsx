@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Card } from "antd";
 
-import Query from "@/components/QueryTable/Query";
+import Query from "@/components/QueryTable";
 
 import TableSearchForm from "./components/TableSearchForm";
 import DeptToolbar from "./components/DeptToolbar";

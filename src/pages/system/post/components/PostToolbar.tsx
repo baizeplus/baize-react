@@ -6,14 +6,13 @@ import Query from "@/components/QueryTable";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { DeleteConfirm, ExportButton } from "@/components";
 import { delPost, exportPost } from "@/api/system/post";
-// import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 
 type IpostToolbarProps = {
   selectedRowKeys?: React.Key[];
 };
 
 const PostToolbar: FC<IpostToolbarProps> = () => {
-  const { selectedRowId, queryFn } = Query.useQueryTable();
+  const { queryFn, selectedRowId } = Query.useQueryTable();
 
   return (
     <Query.Toolbar>

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import QueryContext from "./content";
 
 export default function useQueryTable() {
-  const { queryFnRef, selectedRowKeys } = useContext(QueryContext);
+  const { queryFn, selectedRowKeys } = useContext(QueryContext);
 
-  return { queryFn: queryFnRef?.current, selectedRowId: selectedRowKeys };
+  return { queryFn: queryFn, selectedRowId: selectedRowKeys };
 }

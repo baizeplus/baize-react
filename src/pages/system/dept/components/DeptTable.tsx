@@ -1,9 +1,9 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { Flex, TableProps, Tag, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined, PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
-import Query, { IQueryTableRefProps } from "@/components/QueryTable";
+import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
@@ -11,7 +11,7 @@ import { delDept, getDeptList } from "@/api/system/dept";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 
 const DeptTable: FC = () => {
-  const tableRef = useRef<IQueryTableRefProps>(null);
+  const { queryFn } = Query.useQueryTable();
 
   const columns: TableProps<IDeptItem>["columns"] = [
     {
@@ -75,7 +75,7 @@ const DeptTable: FC = () => {
               id={r.deptId}
               text={`是否确认删除名称为"${r.deptName}"的数据项?`}
               delFn={delDept}
-              onSuccess={tableRef.current?.reload}
+              onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">
                 <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
@@ -90,7 +90,6 @@ const DeptTable: FC = () => {
   return (
     <>
       <Query.Table
-        ref={tableRef}
         idkey="deptId"
         rowKey={(e) => e.deptId}
         isTree

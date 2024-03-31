@@ -4,9 +4,8 @@ import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
-import { DeleteConfirm, ExportButton } from "@/components";
-import { delConfig, exportConfig } from "@/api/system/config";
-import RefreshButton from "./TableActive/RefreshButton";
+import { DeleteConfirm } from "@/components";
+import { delConfig } from "@/api/system/config";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 
 type INoticeToolbarProps = {

@@ -1,9 +1,9 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { Flex, TableProps, Tag, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
-import Query, { IQueryTableRefProps } from "@/components/QueryTable";
+import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
@@ -11,7 +11,7 @@ import { delPost, getPostList } from "@/api/system/post";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 
 const PostTable: FC = () => {
-  const tableRef = useRef<IQueryTableRefProps>(null);
+  const { queryFn } = Query.useQueryTable();
 
   const columns: TableProps<IPostItem>["columns"] = [
     {
@@ -84,7 +84,7 @@ const PostTable: FC = () => {
               id={r.postId}
               text={`是否确认删除岗位编号为"${r.postId}"的数据项?`}
               delFn={delPost}
-              onSuccess={tableRef.current?.reload}
+              onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">
                 <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
@@ -99,7 +99,6 @@ const PostTable: FC = () => {
   return (
     <>
       <Query.Table
-        ref={tableRef}
         isRowSelection
         rowKey={(e) => e.postId}
         queryFn={getPostList}
