@@ -10,7 +10,7 @@ export function getTypeList(query: IDictItem) {
 }
 
 // 查询字典类型详细
-export function getType(dictId: string) {
+export function getType(dictId: React.Key) {
   return request({
     url: "/system/dict/type/" + dictId,
     method: "get",

@@ -10,7 +10,7 @@ export function getDictDataList(query: IDictItem) {
 }
 
 // 查询字典数据详细
-export function getData(dictCode: string) {
+export function getData(dictCode: React.Key) {
   return request({
     url: "/system/dict/data/" + dictCode,
     method: "get",

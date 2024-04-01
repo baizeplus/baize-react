@@ -6,9 +6,9 @@ import dayjs from "dayjs";
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { Link, useParams } from "react-router-dom";
 import { delDictData, getDictDataList } from "@/api/system/dict/data";
+import UpdateDataDrawer from "./TableActive/UpdateDataDrawer";
 
 const DictTypeTable: FC = () => {
   const { dictType } = useParams<"dictType">();
@@ -88,11 +88,11 @@ const DictTypeTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.dictCode}>
+            <UpdateDataDrawer id={r.dictCode}>
               <Tooltip placement="top" title="修改">
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
-            </UpdateDrawer>
+            </UpdateDataDrawer>
             <DeleteConfirm
               id={r.dictCode}
               text={`是否确认删除字典编码为"${r.dictCode}"的数据项?`}

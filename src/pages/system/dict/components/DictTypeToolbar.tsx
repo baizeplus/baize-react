@@ -4,9 +4,9 @@ import { DeleteOutlined, PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 import Query from "@/components/QueryTable";
-import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { DeleteConfirm, ExportButton } from "@/components";
 import { delPost, exportPost } from "@/api/system/post";
+import UpdateDataDrawer from "./TableActive/UpdateDataDrawer";
 
 type IToolbarProps = {
   selectedRowKeys?: React.Key[];
@@ -18,12 +18,12 @@ const DictTypeToolbar: FC<IToolbarProps> = () => {
 
   return (
     <Query.Toolbar>
-      <UpdateDrawer>
+      <UpdateDataDrawer>
         <Button type="primary" icon={<PlusOutlined />}>
           新增
         </Button>
-      </UpdateDrawer>
-      <UpdateDrawer id={selectedRowId[0]}>
+      </UpdateDataDrawer>
+      <UpdateDataDrawer id={selectedRowId[0]}>
         <Button
           type="primary"
           icon={<PlusOutlined />}
@@ -31,7 +31,7 @@ const DictTypeToolbar: FC<IToolbarProps> = () => {
         >
           修改
         </Button>
-      </UpdateDrawer>
+      </UpdateDataDrawer>
       <DeleteConfirm
         id={selectedRowId.join(",")}
         text={`是否确认删除字典编码为"${selectedRowId.join(",")}"的数据项?`}
