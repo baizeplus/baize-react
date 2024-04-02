@@ -7,7 +7,7 @@ import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
-import { delType, getTypeList } from "@/api/system/dict/type";
+import { delDictType, getDictTypeList } from "@/api/system/dict/type";
 import { Link } from "react-router-dom";
 
 const DictTable: FC = () => {
@@ -85,8 +85,8 @@ const DictTable: FC = () => {
             <DeleteConfirm
               id={r.dictId}
               text={`是否确认删除字典编号为"${r.dictId}"的数据项?`}
-              delFn={delType}
-              onSuccess={queryFn}
+              delFn={delDictType}
+              onSuccess={() => queryFn?.("del")}
             >
               <Tooltip placement="top" title="删除">
                 <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
@@ -104,7 +104,7 @@ const DictTable: FC = () => {
         isRowSelection
         isPagination
         rowKey={(e) => e.dictId}
-        queryFn={getTypeList}
+        queryFn={getDictTypeList}
         columns={columns}
       />
     </>

@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 // 查询字典类型列表
-export function getTypeList(query: IDictItem) {
+export function getDictTypeList(query: IDictItem) {
   return request({
     url: "/system/dict/type/list",
     method: "get",
@@ -10,7 +10,7 @@ export function getTypeList(query: IDictItem) {
 }
 
 // 查询字典类型详细
-export function getType(dictId: React.Key) {
+export function getDictType(dictId: React.Key) {
   return request({
     url: "/system/dict/type/" + dictId,
     method: "get",
@@ -18,7 +18,7 @@ export function getType(dictId: React.Key) {
 }
 
 // 新增字典类型
-export function addType(data: IDictItem) {
+export function addDictType(data: IDictItem) {
   return request({
     url: "/system/dict/type",
     method: "post",
@@ -27,7 +27,7 @@ export function addType(data: IDictItem) {
 }
 
 // 修改字典类型
-export function updateType(data: IDictItem) {
+export function updateDictType(data: IDictItem) {
   return request({
     url: "/system/dict/type",
     method: "put",
@@ -36,7 +36,7 @@ export function updateType(data: IDictItem) {
 }
 
 // 删除字典类型
-export function delType(dictId: React.Key) {
+export function delDictType(dictId: React.Key) {
   return request({
     url: "/system/dict/type/" + dictId,
     method: "delete",
@@ -56,5 +56,15 @@ export function optionselect() {
   return request({
     url: "/system/dict/type/optionSelect",
     method: "get",
+  });
+}
+
+/** 导出字典 */
+export function exportDictType() {
+  return request({
+    url: "/system/dict/type/export",
+    method: "post",
+    responseType: "blob",
+    // data: params
   });
 }

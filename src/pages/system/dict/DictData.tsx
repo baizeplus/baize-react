@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Card } from "antd";
 
 import Query from "@/components/QueryTable";
-import DictTypeTable from "./components/DictTypeTable";
-import DictTypeToolbar from "./components/DictTypeToolbar";
+import DictDataTable from "./components/DictDataTable";
+import DictDataToolbar from "./components/DictDataToolbar";
 import TypeTableSearchForm from "./components/TypeTableSearchForm";
 
 const DictData: FC = () => {
@@ -12,8 +12,8 @@ const DictData: FC = () => {
       <TypeTableSearchForm />
 
       <Card className="!my-2 shadow-sm" classNames={{ body: "!p-4" }}>
-        <DictTypeToolbar />
-        <DictTypeTable />
+        <DictDataToolbar />
+        <DictDataTable />
       </Card>
     </Query>
   );

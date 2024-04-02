@@ -5,8 +5,8 @@ import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Query from "@/components/QueryTable";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { DeleteConfirm, ExportButton } from "@/components";
-import { delPost, exportPost } from "@/api/system/post";
 import RefreshButton from "./TableActive/RefreshButton";
+import { delDictType, exportDictType } from "@/api/system/dict/type";
 
 type IToolbarProps = {
   selectedRowKeys?: React.Key[];
@@ -34,7 +34,7 @@ const DictToolbar: FC<IToolbarProps> = () => {
       <DeleteConfirm
         id={selectedRowId.join(",")}
         text={`是否确认删除字典编号为"${selectedRowId.join(",")}"的数据项?`}
-        delFn={delPost}
+        delFn={delDictType}
         onSuccess={() => queryFn?.("del")}
       >
         <Button
@@ -46,7 +46,7 @@ const DictToolbar: FC<IToolbarProps> = () => {
           删除
         </Button>
       </DeleteConfirm>
-      <ExportButton fileNamePrefix="post" exportFn={exportPost} />
+      <ExportButton fileNamePrefix="dict" exportFn={exportDictType} />
       <RefreshButton />
     </Query.Toolbar>
   );

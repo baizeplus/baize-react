@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import Query from "@/components/QueryTable";
 import { DeleteConfirm, ExportButton } from "@/components";
-import { delPost, exportPost } from "@/api/system/post";
 import UpdateDataDrawer from "./TableActive/UpdateDataDrawer";
+import { delDictData, exportDictData } from "@/api/system/dict/data";
 
 type IToolbarProps = {
   selectedRowKeys?: React.Key[];
@@ -35,7 +35,7 @@ const DictTypeToolbar: FC<IToolbarProps> = () => {
       <DeleteConfirm
         id={selectedRowId.join(",")}
         text={`是否确认删除字典编码为"${selectedRowId.join(",")}"的数据项?`}
-        delFn={delPost}
+        delFn={delDictData}
         onSuccess={() => queryFn?.("del")}
       >
         <Button
@@ -47,7 +47,7 @@ const DictTypeToolbar: FC<IToolbarProps> = () => {
           删除
         </Button>
       </DeleteConfirm>
-      <ExportButton fileNamePrefix="post" exportFn={exportPost} />
+      <ExportButton fileNamePrefix="dict_data" exportFn={exportDictData} />
       <Button onClick={() => navigate(-1)} icon={<CloseOutlined />}>
         关闭
       </Button>

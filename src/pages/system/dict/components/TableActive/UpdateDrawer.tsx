@@ -3,7 +3,11 @@ import { App, Col, Form, Input, Radio, Row } from "antd";
 
 import QueryTable from "@/components/QueryTable";
 import { DrawerWarpper } from "@/components";
-import { addType, getType, updateType } from "@/api/system/dict/type";
+import {
+  addDictType,
+  getDictType,
+  updateDictType,
+} from "@/api/system/dict/type";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -18,7 +22,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
 
   /** 请求当前Post数据 */
   const getCurrPost = useCallback(async () => {
-    const { data } = await getType(id);
+    const { data } = await getDictType(id);
     form.setFieldsValue({
       ...data,
     });
@@ -42,7 +46,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
     const params = {
       ...values,
     };
-    id ? await updateType(params) : await addType(params);
+    id ? await updateDictType(params) : await addDictType(params);
     /** 提交成功后重新请求表格数据 */
     message.success(`${id ? "修改" : "新增"}成功`);
     queryFn?.();

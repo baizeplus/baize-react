@@ -10,7 +10,7 @@ export function getDictDataList(query: IDictItem) {
 }
 
 // 查询字典数据详细
-export function getData(dictCode: React.Key) {
+export function getDictData(dictCode: React.Key) {
   return request({
     url: "/system/dict/data/" + dictCode,
     method: "get",
@@ -26,7 +26,7 @@ export function getDicts(dictType: string) {
 }
 
 // 新增字典数据
-export function addData(data: IDictItem) {
+export function addDictData(data: IDictItem) {
   return request({
     url: "/system/dict/data",
     method: "post",
@@ -35,7 +35,7 @@ export function addData(data: IDictItem) {
 }
 
 // 修改字典数据
-export function updateData(data: IDictItem) {
+export function updateDictData(data: IDictItem) {
   return request({
     url: "/system/dict/data",
     method: "put",
@@ -48,5 +48,15 @@ export function delDictData(dictCode: string) {
   return request({
     url: "/system/dict/data/" + dictCode,
     method: "delete",
+  });
+}
+
+/** 导出字典数据 */
+export function exportDictData() {
+  return request({
+    url: "/system/dict/data/export",
+    method: "post",
+    responseType: "blob",
+    // data: params
   });
 }

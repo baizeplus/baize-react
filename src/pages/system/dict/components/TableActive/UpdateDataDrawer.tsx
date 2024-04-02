@@ -3,7 +3,11 @@ import { App, Col, Form, Input, InputNumber, Radio, Row, Select } from "antd";
 
 import QueryTable from "@/components/QueryTable";
 import { DrawerWarpper } from "@/components";
-import { addData, getData, updateData } from "@/api/system/dict/data";
+import {
+  addDictData,
+  getDictData,
+  updateDictData,
+} from "@/api/system/dict/data";
 import { useParams } from "react-router-dom";
 
 type IUpdateDataDrawerProps = {
@@ -23,7 +27,7 @@ const UpdateDataDrawer: FC<IUpdateDataDrawerProps> = ({
 
   /** 请求当前Post数据 */
   const getCurrData = useCallback(async () => {
-    const { data } = await getData(id);
+    const { data } = await getDictData(id);
     form.setFieldsValue({
       ...data,
     });
@@ -51,7 +55,7 @@ const UpdateDataDrawer: FC<IUpdateDataDrawerProps> = ({
     const params = {
       ...values,
     };
-    id ? await updateData(params) : await addData(params);
+    id ? await updateDictData(params) : await addDictData(params);
     /** 提交成功后重新请求表格数据 */
     message.success(`${id ? "修改" : "新增"}成功`);
     queryFn?.();

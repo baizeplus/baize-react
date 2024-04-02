@@ -6,7 +6,6 @@ import {
   forwardRef,
   useImperativeHandle,
   ForwardedRef,
-  // useRef,
 } from "react";
 import { Table, TableProps } from "antd";
 import QueryContext from "./content";
@@ -54,6 +53,7 @@ const QueryTable = forwardRef(
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
     const [total, setTotal] = useState(0);
+    // const totalRef = useRef(0);
     // const [isPagination, setIsPagination] = useState(false);
     // const isPaginationRef = useRef(false);
 
@@ -85,10 +85,10 @@ const QueryTable = forwardRef(
         }
       },
       [
-        params,
-        isPagination,
         page,
         size,
+        params,
+        isPagination,
         queryFn,
         isTree,
         idkey,
@@ -135,6 +135,7 @@ const QueryTable = forwardRef(
             pageSize: size,
             current: page,
             onChange(page, pageSize) {
+              console.log("page", page, "pageSize", pageSize);
               setPage(page);
               setSize(pageSize);
             },
