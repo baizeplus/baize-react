@@ -6,6 +6,7 @@ import {
   forwardRef,
   useImperativeHandle,
   ForwardedRef,
+  useRef,
 } from "react";
 import { Table, TableProps } from "antd";
 import QueryContext from "./content";
@@ -53,19 +54,26 @@ const QueryTable = forwardRef(
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
     const [total, setTotal] = useState(0);
-    // const totalRef = useRef(0);
-    // const [isPagination, setIsPagination] = useState(false);
-    // const isPaginationRef = useRef(false);
+    const totalRef = useRef(0);
 
     // 表格请求参数，依赖外部传入
     const getList = useCallback(
       async (type?: string) => {
         try {
+          let _page = page;
+          // 计算删除数据为空自动退后page
+          if (type === "del" && totalRef.current > 1) {
+            _page =
+              Math.ceil((totalRef.current - 1) / size) < page ? page - 1 : page;
+            if (_page !== page) {
+              return setPage(_page);
+            }
+          }
           setLoading(true);
           const _params = {
             ...params,
             ...(isPagination && {
-              pageNum: page,
+              pageNum: _page,
               pageSize: size,
             }),
           };
@@ -78,6 +86,7 @@ const QueryTable = forwardRef(
             setDataSource(isTree ? handleTree(list, idkey, "parentId") : list);
             if (!isTree) {
               setTotal(data?.total || list.length);
+              totalRef.current = data?.total || list.length;
             }
           }, 14);
         } finally {
