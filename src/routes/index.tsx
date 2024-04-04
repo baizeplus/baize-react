@@ -25,13 +25,12 @@ import { getUserInfo } from "@/store/user";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/index" />,
+    element: <Navigate to="/index/" />,
   },
   {
     path: "/index",
     loader: async () => {
       if (!getToken()) return redirect("/login");
-
       await getUserInfo();
       return <Layout />;
     },
@@ -39,6 +38,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
+        element: <Navigate to="/index/" />,
+      },
+      {
+        path: "index",
         element: <Dashboard />,
       },
       {

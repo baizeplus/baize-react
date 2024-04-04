@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useSize } from 'ahooks';
+import { useSize } from "ahooks";
 import { Layout as AntdLayout, theme } from "antd";
 import { Content } from "antd/es/layout/layout";
-import Sidebar from "./components/Sidebar";
-
+import Sidebar from "./components/Sidebar/Sidebar";
 
 import Navbar from "./components/Navbar";
 
@@ -14,15 +13,22 @@ type IBaizeLayoutProps = {
 
 const Layout: FC<IBaizeLayoutProps> = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const size = useSize(document.querySelector('body'));
+  const size = useSize(document.querySelector("body"));
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
 
   useEffect(() => {
-    if(size?.width) {
-      if (size.width < 1280) setCollapsed(true);
-      else {
+    if (size?.width) {
+      if (size.width < 1280 && size.width > 1024) {
+        setCollapsed(() => true);
+        return;
+      }
+
+      if (size.width < 1024) {
+        setCollapsed(() => false);
+        return;
+      } else {
         setCollapsed(false);
       }
     }
@@ -30,11 +36,11 @@ const Layout: FC<IBaizeLayoutProps> = () => {
 
   return (
     <AntdLayout className="h-full overflow-x-hidden overflow-y-auto">
-      <Sidebar collapsed={collapsed} />
+      <Sidebar collapsed={collapsed} onCollapsed={setCollapsed} />
       <AntdLayout>
-        <Navbar collapsed={collapsed} onCollapsedIcon={setCollapsed}/>
+        <Navbar collapsed={collapsed} onCollapsedIcon={setCollapsed} />
         <Content
-         className="h-full overflow-x-hidden overflow-y-auto"
+          className="h-full overflow-x-hidden overflow-y-auto"
           style={{
             padding: 8,
             marginBottom: 8,
@@ -42,7 +48,7 @@ const Layout: FC<IBaizeLayoutProps> = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-            <Outlet />
+          <Outlet />
         </Content>
       </AntdLayout>
     </AntdLayout>
