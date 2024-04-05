@@ -18,6 +18,7 @@ import {
   EditFilled,
   EditOutlined,
   SolutionOutlined,
+  WifiOutlined,
 } from "@ant-design/icons";
 
 const SideMenu: FC = () => {
@@ -125,6 +126,13 @@ const SideMenu: FC = () => {
           key: "monitor",
           icon: <FundProjectionScreenOutlined />,
           label: "系统监控",
+          children: [
+            {
+              key: "monitor/online",
+              icon: <WifiOutlined />,
+              label: "在线用户",
+            },
+          ],
         },
         {
           key: "tool",

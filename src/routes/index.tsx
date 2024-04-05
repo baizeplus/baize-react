@@ -18,6 +18,7 @@ import {
   Logininfor,
   Dict,
   DictData,
+  OnLine,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -99,6 +100,15 @@ const router = createBrowserRouter([
           {
             path: "logininfor",
             element: <Logininfor />,
+          },
+        ],
+      },
+      {
+        path: "monitor",
+        children: [
+          {
+            path: "online",
+            element: <OnLine />,
           },
         ],
       },
