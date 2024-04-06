@@ -19,6 +19,7 @@ import {
   EditOutlined,
   SolutionOutlined,
   WifiOutlined,
+  FieldTimeOutlined,
 } from "@ant-design/icons";
 
 const SideMenu: FC = () => {
@@ -131,6 +132,11 @@ const SideMenu: FC = () => {
               key: "monitor/online",
               icon: <WifiOutlined />,
               label: "在线用户",
+            },
+            {
+              key: "monitor/job",
+              icon: <FieldTimeOutlined />,
+              label: "定时任务",
             },
           ],
         },

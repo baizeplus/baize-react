@@ -12,14 +12,14 @@ const Table: FC = () => {
   const { queryFn } = Query.useQueryTable();
 
   const columns: TableProps<IOnLineItem>["columns"] = [
-    {
-      title: "序号",
-      dataIndex: "index",
-      key: "index",
-      align: "center",
-      ellipsis: true,
-      width: 60,
-    },
+    // {
+    //   title: "序号",
+    //   dataIndex: "index",
+    //   key: "index",
+    //   align: "center",
+    //   ellipsis: true,
+    //   width: 60,
+    // },
     {
       title: "会话编号",
       dataIndex: "tokenId",

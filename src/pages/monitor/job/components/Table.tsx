@@ -1,46 +1,70 @@
-import { FC, useCallback } from "react";
+import { FC } from "react";
 import { Flex, TableProps, Tag, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
-import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import { useParams } from "react-router-dom";
-import { delDictData, getDictDataList } from "@/api/system/dict/data";
-import UpdateDataDrawer from "./TableActive/UpdateDataDrawer";
+import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { delJob, getJobList } from "@/api/monitor/job";
 
-const DictTypeTable: FC = () => {
-  const { dictType } = useParams<"dictType">();
+const Table: FC = () => {
   const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IDictItem>["columns"] = [
+  const columns: TableProps<IJobItem>["columns"] = [
     {
-      title: "字典编码",
-      dataIndex: "dictCode",
-      key: "dictCode",
+      title: "任务编号",
+      dataIndex: "jobId",
+      key: "jobId",
       align: "center",
+      width: 160,
     },
     {
-      title: "字典标签",
-      dataIndex: "dictLabel",
-      key: "dictLabel",
+      title: "任务名称",
+      dataIndex: "jobName",
+      key: "jobName",
       align: "center",
       ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
+      ),
     },
     {
-      title: "字典键值",
-      dataIndex: "dictValue",
-      key: "dictValue",
+      title: "任务组名",
+      dataIndex: "jobGroup",
+      key: "jobGroup",
       align: "center",
       ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
+      ),
     },
     {
-      title: "字典排序",
-      dataIndex: "dictSort",
-      key: "dictSort",
+      title: "调用目标字符串",
+      dataIndex: "invokeTarget",
+      key: "invokeTarget",
       align: "center",
       ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
+      ),
+    },
+    {
+      title: "cron执行表达式",
+      dataIndex: "cronExpression",
+      key: "cronExpression",
+      align: "center",
+      ellipsis: true,
+      render: (text) => (
+        <Tooltip title={text} placement="topLeft">
+          {text}
+        </Tooltip>
+      ),
     },
     {
       title: "状态",
@@ -58,39 +82,23 @@ const DictTypeTable: FC = () => {
       ),
     },
     {
-      title: "备注",
-      dataIndex: "remark",
-      key: "postSort",
-      align: "center",
-      ellipsis: true,
-    },
-    {
-      title: "创建时间",
-      dataIndex: "createTime",
-      key: "createTime",
-      align: "center",
-      width: 160,
-      ellipsis: true,
-      render: (t: string) => dayjs(t).format(YYYY_MM_DD_HH_mm),
-    },
-    {
       title: "操作",
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 70,
+      width: 100,
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDataDrawer id={r.dictCode}>
+            <UpdateDrawer id={r.jobId}>
               <Tooltip placement="top" title="修改">
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
-            </UpdateDataDrawer>
+            </UpdateDrawer>
             <DeleteConfirm
-              id={r.dictCode}
-              text={`是否确认删除字典编码为"${r.dictCode}"的数据项?`}
-              delFn={delDictData}
+              id={r.jobId}
+              text={`是否确认删除定时任务编号为"${r.jobId}"的数据项?`}
+              delFn={delJob}
               onSuccess={queryFn}
             >
               <Tooltip placement="top" title="删除">
@@ -103,22 +111,17 @@ const DictTypeTable: FC = () => {
     },
   ];
 
-  const getList = useCallback(
-    (ret: IDictItem) => getDictDataList({ ...ret, dictType: dictType || "" }),
-    [dictType],
-  );
-
   return (
     <>
       <Query.Table
-        rowKey={(e) => e.dictCode}
-        isPagination
         isRowSelection
-        queryFn={getList}
+        isPagination
+        rowKey={(e) => e.jobId}
+        queryFn={getJobList}
         columns={columns}
       />
     </>
   );
 };
 
-export default DictTypeTable;
+export default Table;

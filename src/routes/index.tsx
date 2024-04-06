@@ -19,6 +19,8 @@ import {
   Dict,
   DictData,
   OnLine,
+  Job,
+  JobLog,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -109,6 +111,14 @@ const router = createBrowserRouter([
           {
             path: "online",
             element: <OnLine />,
+          },
+          {
+            path: "job",
+            element: <Job />,
+          },
+          {
+            path: "job-log/:jobLogId",
+            element: <JobLog />,
           },
         ],
       },
