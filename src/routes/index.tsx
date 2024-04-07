@@ -21,6 +21,7 @@ import {
   OnLine,
   Job,
   JobLog,
+  Server,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
           {
             path: "job-log/:jobLogId",
             element: <JobLog />,
+          },
+          {
+            path: "server",
+            element: <Server />,
           },
         ],
       },

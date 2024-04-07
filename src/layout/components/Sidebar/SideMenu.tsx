@@ -138,6 +138,11 @@ const SideMenu: FC = () => {
               icon: <FieldTimeOutlined />,
               label: "定时任务",
             },
+            {
+              key: "monitor/server",
+              icon: <FundProjectionScreenOutlined />,
+              label: "服务监控",
+            },
           ],
         },
         {

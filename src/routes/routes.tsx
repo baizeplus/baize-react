@@ -37,5 +37,6 @@ export const Logininfor = WFC(
 export const OnLine = WFC(lazy(() => import("@/pages/monitor/onLine/OnLine")));
 export const Job = WFC(lazy(() => import("@/pages/monitor/job/Job")));
 export const JobLog = WFC(lazy(() => import("@/pages/monitor/job/JobLog")));
+export const Server = WFC(lazy(() => import("@/pages/monitor/server/Server")));
 
 export const Page404 = WFC(lazy(() => import("@/pages/error/404")));
