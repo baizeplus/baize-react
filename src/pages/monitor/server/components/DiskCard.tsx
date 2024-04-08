@@ -14,13 +14,14 @@ const DiskCard: FC<IProps> = ({ data }) => {
       key: "path",
       align: "center",
       width: 160,
+      fixed: "left",
     },
     {
       title: "文件系统",
       dataIndex: "fstype",
       key: "fstype",
       align: "center",
-      width: 160,
+      width: 120,
     },
     {
       title: "总大小",
@@ -48,7 +49,7 @@ const DiskCard: FC<IProps> = ({ data }) => {
       dataIndex: "usedPercent",
       key: "usedPercent",
       align: "center",
-      width: 160,
+      width: 120,
       render: (t) => (
         <span className={`${t > 80 ? "text-red-500" : ""}`}>{t}%</span>
       ),
@@ -56,7 +57,6 @@ const DiskCard: FC<IProps> = ({ data }) => {
   ];
   return (
     <Card
-      className="!mt-3"
       title={
         <div>
           <HddOutlined className="mr-2" />
@@ -67,6 +67,7 @@ const DiskCard: FC<IProps> = ({ data }) => {
       <Table
         rowKey={(e) => e.index}
         columns={columns}
+        scroll={{ x: 800 }}
         dataSource={
           data?.diskList?.map((item, index) => ({ ...item, index })) || []
         }

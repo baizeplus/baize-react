@@ -9,6 +9,7 @@ type IProps = {
 const MemCard: FC<IProps> = ({ data }) => {
   return (
     <Card
+      className="h-full"
       title={
         <div>
           <DatabaseOutlined className="mr-2" />

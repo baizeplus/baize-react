@@ -22,6 +22,7 @@ import {
   Job,
   JobLog,
   Server,
+  Swagger,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -42,10 +43,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Navigate to="/index/" />,
+        element: <Navigate to="/index/dashboard" />,
       },
       {
-        path: "index",
+        path: "dashboard",
         element: <Dashboard />,
       },
       {
@@ -124,6 +125,15 @@ const router = createBrowserRouter([
           {
             path: "server",
             element: <Server />,
+          },
+        ],
+      },
+      {
+        path: "tool",
+        children: [
+          {
+            path: "swagger",
+            element: <Swagger />,
           },
         ],
       },

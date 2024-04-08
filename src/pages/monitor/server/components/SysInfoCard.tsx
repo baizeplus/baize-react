@@ -9,7 +9,6 @@ type IProps = {
 const SysInfoCard: FC<IProps> = ({ data }) => {
   return (
     <Card
-      className="!mt-3"
       title={
         <div>
           <DesktopOutlined className="mr-2" />

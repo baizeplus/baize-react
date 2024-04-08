@@ -39,4 +39,6 @@ export const Job = WFC(lazy(() => import("@/pages/monitor/job/Job")));
 export const JobLog = WFC(lazy(() => import("@/pages/monitor/job/JobLog")));
 export const Server = WFC(lazy(() => import("@/pages/monitor/server/Server")));
 
+export const Swagger = WFC(lazy(() => import("@/pages/tool/swagger/Swagger")));
+
 export const Page404 = WFC(lazy(() => import("@/pages/error/404")));

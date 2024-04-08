@@ -1,29 +1,30 @@
 import { FC } from "react";
 import { Flex, TableProps, Tag, Tooltip } from "antd";
-import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
-// import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
-import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { delNotice, getNoticeList } from "@/api/system/notice";
 
 const NoticeTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IConfigItem>["columns"] = [
+  const columns: TableProps<INoticeItem>["columns"] = [
     {
       title: "序号",
-      dataIndex: "noticeId",
-      key: "noticeId",
+      dataIndex: "index",
+      key: "index",
       align: "center",
-      width: 160,
+      width: 80,
+      render: (_, _r, index) => {
+        return index + 1;
+      },
     },
     {
       title: "公告标题",
-      dataIndex: "noticeTitle",
+      dataIndex: "title",
       key: "noticeTitle",
       align: "center",
       ellipsis: true,
@@ -35,35 +36,20 @@ const NoticeTable: FC = () => {
     },
     {
       title: "公告类型",
-      dataIndex: "noticeType",
-      key: "noticeType",
-      align: "center",
-      ellipsis: true,
-      render: (text) => (
-        <Tooltip title={text} placement="topLeft">
-          {text}
-        </Tooltip>
-      ),
-    },
-    {
-      title: "系统内置",
-      dataIndex: "configType",
-      key: "configType",
+      dataIndex: "type",
+      key: "type",
       align: "center",
       ellipsis: true,
       render: (t) => (
-        <Tag
-          color={t === "0" ? "#e6f4ff" : "#fff1f0"}
-          className={t === "0" ? "!text-primary" : "!text-[#ff4d4f]"}
-        >
-          {t === "0" ? "正常" : "停用"}
+        <Tag color={t === "1" ? "warning" : "success"}>
+          {t === "1" ? "通知" : "公告"}
         </Tag>
       ),
     },
     {
       title: "创建者",
-      dataIndex: "createBy",
-      key: "createBy",
+      dataIndex: "createName",
+      key: "createName",
       align: "center",
       ellipsis: true,
       render: (text) => (
@@ -90,14 +76,9 @@ const NoticeTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.configId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
             <DeleteConfirm
-              id={r.configId}
-              text={`是否确认删除参数编号为"${r.configId}"的数据项?`}
+              id={r.id}
+              text={`是否确认删除通知编号为"${r.id}"的数据项?`}
               delFn={delNotice}
               onSuccess={queryFn}
             >
@@ -115,7 +96,7 @@ const NoticeTable: FC = () => {
     <>
       <Query.Table
         isRowSelection
-        rowKey={(e) => e.noticeId}
+        rowKey={(e) => e.id}
         queryFn={getNoticeList}
         columns={columns}
       />

@@ -20,6 +20,7 @@ import {
   SolutionOutlined,
   WifiOutlined,
   FieldTimeOutlined,
+  ControlOutlined,
 } from "@ant-design/icons";
 
 const SideMenu: FC = () => {
@@ -55,7 +56,7 @@ const SideMenu: FC = () => {
       }}
       items={[
         {
-          key: "",
+          key: "dashboard",
           icon: <DashboardOutlined />,
           label: "首页",
         },
@@ -149,6 +150,13 @@ const SideMenu: FC = () => {
           key: "tool",
           icon: <ToolOutlined />,
           label: "系统工具",
+          children: [
+            {
+              key: "tool/swagger",
+              icon: <ControlOutlined />,
+              label: "系统接口",
+            },
+          ],
         },
         {
           key: "web",

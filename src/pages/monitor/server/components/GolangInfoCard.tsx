@@ -9,7 +9,6 @@ type IProps = {
 const GolangInfoCard: FC<IProps> = ({ data }) => {
   return (
     <Card
-      className="!mt-3"
       title={
         <div>
           <GoogleOutlined className="mr-2" />

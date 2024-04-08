@@ -27,19 +27,19 @@ const Server: FC = () => {
   return (
     <Spin spinning={loading}>
       <Row gutter={12}>
-        <Col span={12}>
+        <Col xs={24} md={12} className="!mb-3">
           <CpuInfoCard data={data} />
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12} className="!mb-3">
           <MemCard data={data} />
         </Col>
       </Row>
 
       <Row gutter={12}>
-        <Col span={12}>
+        <Col xs={24} md={12} className="!mb-3">
           <SysInfoCard data={data} />
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12} className="!mb-3">
           <GolangInfoCard data={data} />
         </Col>
       </Row>

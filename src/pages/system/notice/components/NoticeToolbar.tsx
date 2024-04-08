@@ -33,7 +33,7 @@ const NoticeToolbar: FC<INoticeToolbarProps> = () => {
       </UpdateDrawer>
       <DeleteConfirm
         id={selectedRowId.join(",")}
-        text={`是否确认删除参数编号为"${selectedRowId.join(",")}"的数据项?`}
+        text={`是否确认删除通知编号为"${selectedRowId.join(",")}"的数据项?`}
         delFn={delConfig}
         onSuccess={() => queryFn?.("del")}
       >
