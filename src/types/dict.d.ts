@@ -3,6 +3,10 @@ interface IDictItem {
   dictCode: string;
   dictName: string;
   dictType: string;
+  dictLabel: string;
+  listClass: string;
+  cssClass: string;
+  dictValue: string;
   status: string;
   remark: string;
   createTime: string;

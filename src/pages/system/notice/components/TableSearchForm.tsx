@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Form, Input, Select } from "antd";
 import { Dayjs } from "dayjs";
 import Query from "@/components/QueryTable";
+import useDict from "@/hooks/useDict";
 
 type ISearchParams = {
   roleName?: string;
@@ -14,6 +15,11 @@ type ITableSearchFormProps = {
 };
 
 const TableSearchForm: FC<ITableSearchFormProps> = () => {
+  const [sys_notice_status, sys_notice_type] = useDict([
+    "sys_notice_status",
+    "sys_notice_type",
+  ]);
+  console.log("sys_notice_type", sys_notice_type);
   return (
     <Query.Form>
       <Form.Item label="公告标题" name="noticeTitle">
@@ -23,7 +29,11 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
         <Input placeholder="请输入操作人员" className="!w-[230px]" />
       </Form.Item>
       <Form.Item label="类型" name="noticeType">
-        <Select placeholder="请选择公告类型" className="!w-[230px]" />
+        <Select
+          placeholder="请选择公告类型"
+          className="!w-[230px]"
+          options={sys_notice_status}
+        />
       </Form.Item>
     </Query.Form>
   );
