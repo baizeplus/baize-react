@@ -15,11 +15,7 @@ type ITableSearchFormProps = {
 };
 
 const TableSearchForm: FC<ITableSearchFormProps> = () => {
-  const [sys_notice_status, sys_notice_type] = useDict([
-    "sys_notice_status",
-    "sys_notice_type",
-  ]);
-  console.log("sys_notice_type", sys_notice_type);
+  const [sys_notice_type] = useDict(["sys_notice_type"]);
   return (
     <Query.Form>
       <Form.Item label="公告标题" name="noticeTitle">
@@ -32,7 +28,7 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
         <Select
           placeholder="请选择公告类型"
           className="!w-[230px]"
-          options={sys_notice_status}
+          options={sys_notice_type}
         />
       </Form.Item>
     </Query.Form>

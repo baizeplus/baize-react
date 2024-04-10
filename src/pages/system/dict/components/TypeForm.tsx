@@ -1,9 +1,11 @@
 import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Form, Input, Select } from "antd";
+import useDict from "@/hooks/useDict";
 
 const TypeForm: FC = () => {
   const { dictType } = useParams<"dictType">();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
   const form = Form.useFormInstance();
 
   useEffect(() => {
@@ -19,7 +21,12 @@ const TypeForm: FC = () => {
         <Input placeholder="请输入字典标签" className="!w-[230px]" />
       </Form.Item>
       <Form.Item label="状态" name="status">
-        <Select placeholder="请选择菜单状态" className="!w-[230px]" />
+        <Select
+          allowClear
+          placeholder="请选择数据状态"
+          className="!w-[230px]"
+          options={sys_normal_disable}
+        />
       </Form.Item>
     </>
   );
