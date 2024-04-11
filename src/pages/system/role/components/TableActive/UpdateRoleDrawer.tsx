@@ -18,6 +18,7 @@ import QueryTable from "@/components/QueryTable";
 import TreeForm from "@/components/TreeForm/TreeForm";
 import { handleTree } from "@/utils/baize";
 import { DrawerWarpper } from "@/components";
+import useDict from "@/hooks/useDict";
 
 type IUpdateRoleDrawerProps = {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ const UpdateRoleDrawer: FC<IUpdateRoleDrawerProps> = ({
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
   const [form] = Form.useForm();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
 
   /** 请求当前Role数据 */
@@ -130,10 +132,7 @@ const UpdateRoleDrawer: FC<IUpdateRoleDrawerProps> = ({
 
           <Col span={12}>
             <Form.Item label="状态" name="status">
-              <Radio.Group>
-                <Radio value="0">正常</Radio>
-                <Radio value="1">停用</Radio>
-              </Radio.Group>
+              <Radio.Group options={sys_normal_disable} />
             </Form.Item>
           </Col>
 

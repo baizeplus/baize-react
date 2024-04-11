@@ -3,6 +3,7 @@ import { Form, Input, DatePicker, Select } from "antd";
 import { Dayjs } from "dayjs";
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD } from "@/utils/constant";
+import useDict from "@/hooks/useDict";
 const RangePicker = DatePicker.RangePicker;
 
 type ISearchParams = {
@@ -16,6 +17,8 @@ type ITableSearchFormProps = {
 };
 
 const TableSearchForm: FC<ITableSearchFormProps> = () => {
+  const [sys_common_status] = useDict(["sys_common_status"]);
+
   const handleParamsFormat = (params: ISearchParams) => {
     const { dataScope } = params;
     delete params.dataScope;
@@ -36,7 +39,11 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
         <Input placeholder="请输入用户名称" className="!w-[230px]" />
       </Form.Item>
       <Form.Item label="状态" name="status">
-        <Select placeholder="请选择登录状态" className="!w-[230px]" />
+        <Select
+          placeholder="请选择登录状态"
+          className="!w-[230px]"
+          options={sys_common_status}
+        />
       </Form.Item>
       <Form.Item label="登录时间" name="dataScope">
         <RangePicker

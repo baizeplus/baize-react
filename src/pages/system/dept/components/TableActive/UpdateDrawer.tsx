@@ -15,6 +15,7 @@ import QueryTable from "@/components/QueryTable";
 import { handleTree } from "@/utils/baize";
 import { DrawerWarpper } from "@/components";
 import { addDept, getDept, updateDept, getDeptList } from "@/api/system/dept";
+import useDict from "@/hooks/useDict";
 
 type IUpdateDeptDrawerProps = {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
   const [form] = Form.useForm();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
 
   /** 请求当前Dept数据 */
@@ -51,7 +53,6 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
 
   /** 执行请求dept及tree数据 */
   const handleMount = () => {
-    console.log("queryFn", queryFn);
     form.resetFields();
     getCurrMenuTree();
     if (parentId) {
@@ -157,10 +158,7 @@ const UpdateDeptDrawer: FC<IUpdateDeptDrawerProps> = ({
 
           <Col span={12}>
             <Form.Item label="部门状态" name="status">
-              <Radio.Group>
-                <Radio value="0">正常</Radio>
-                <Radio value="1">停用</Radio>
-              </Radio.Group>
+              <Radio.Group options={sys_normal_disable} />
             </Form.Item>
           </Col>
         </Row>

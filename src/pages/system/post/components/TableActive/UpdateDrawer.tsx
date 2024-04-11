@@ -4,6 +4,7 @@ import { App, Col, Form, Input, InputNumber, Radio, Row } from "antd";
 import QueryTable from "@/components/QueryTable";
 import { DrawerWarpper } from "@/components";
 import { getPost, addPost, updatePost } from "@/api/system/post";
+import useDict from "@/hooks/useDict";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
   const [form] = Form.useForm();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
 
   /** 请求当前Post数据 */
   const getCurrPost = useCallback(async () => {
@@ -97,10 +99,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
 
           <Col span={12}>
             <Form.Item label="岗位状态" name="status">
-              <Radio.Group>
-                <Radio value="0">正常</Radio>
-                <Radio value="1">停用</Radio>
-              </Radio.Group>
+              <Radio.Group options={sys_normal_disable} />
             </Form.Item>
           </Col>
 
