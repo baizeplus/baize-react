@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Flex, TableProps, Tag, Tooltip } from "antd";
+import { Flex, TableProps, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
@@ -7,9 +7,12 @@ import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
 import { delNotice, getNoticeList } from "@/api/system/notice";
+import DictTag from "@/components/DictTag";
+import useDict from "@/hooks/useDict";
 
 const NoticeTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
+  const [sys_notice_type] = useDict(["sys_notice_type"]);
 
   const columns: TableProps<INoticeItem>["columns"] = [
     {
@@ -40,11 +43,7 @@ const NoticeTable: FC = () => {
       key: "type",
       align: "center",
       ellipsis: true,
-      render: (t) => (
-        <Tag color={t === "1" ? "warning" : "success"}>
-          {t === "1" ? "通知" : "公告"}
-        </Tag>
-      ),
+      render: (t) => <DictTag options={sys_notice_type} value={t} />,
     },
     {
       title: "创建者",

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Flex, TableProps, Tag, Tooltip } from "antd";
+import { Flex, TableProps, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
@@ -8,9 +8,12 @@ import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { delConfig, getConfigList } from "@/api/system/config";
+import DictTag from "@/components/DictTag";
+import useDict from "@/hooks/useDict";
 
 const ConfigTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
+  const [sys_yes_no] = useDict(["sys_yes_no"]);
 
   const columns: TableProps<IConfigItem>["columns"] = [
     {
@@ -62,14 +65,7 @@ const ConfigTable: FC = () => {
       key: "configType",
       align: "center",
       ellipsis: true,
-      render: (t) => (
-        <Tag
-          color={t === "Y" ? "#e6f4ff" : "#fff1f0"}
-          className={t === "Y" ? "!text-primary" : "!text-[#ff4d4f]"}
-        >
-          {t === "Y" ? "是" : "否"}
-        </Tag>
-      ),
+      render: (t) => <DictTag options={sys_yes_no} value={t} />,
     },
     {
       title: "备注",

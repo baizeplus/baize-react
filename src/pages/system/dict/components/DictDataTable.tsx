@@ -1,18 +1,20 @@
 import { FC, useCallback } from "react";
-import { Flex, TableProps, Tag, Tooltip } from "antd";
+import { Flex, TableProps, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
+import { DeleteConfirm, DictTag } from "@/components";
 import { useParams } from "react-router-dom";
 import { delDictData, getDictDataList } from "@/api/system/dict/data";
 import UpdateDataDrawer from "./TableActive/UpdateDataDrawer";
+import useDict from "@/hooks/useDict";
 
 const DictTypeTable: FC = () => {
   const { dictType } = useParams<"dictType">();
   const { queryFn } = Query.useQueryTable();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
 
   const columns: TableProps<IDictItem>["columns"] = [
     {
@@ -48,14 +50,7 @@ const DictTypeTable: FC = () => {
       key: "status",
       align: "center",
       ellipsis: true,
-      render: (t) => (
-        <Tag
-          color={t === "0" ? "#e6f4ff" : "#fff1f0"}
-          className={t === "0" ? "!text-primary" : "!text-[#ff4d4f]"}
-        >
-          {t === "0" ? "正常" : "停用"}
-        </Tag>
-      ),
+      render: (t) => <DictTag options={sys_normal_disable} value={t} />,
     },
     {
       title: "备注",

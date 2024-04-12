@@ -8,6 +8,7 @@ import {
   getDictType,
   updateDictType,
 } from "@/api/system/dict/type";
+import useDict from "@/hooks/useDict";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ type IUpdateDrawerProps = {
 const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
   const [form] = Form.useForm();
 
   /** 请求当前Post数据 */
@@ -86,10 +88,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({ children, id = "" }) => {
 
           <Col span={12}>
             <Form.Item label="状态" name="status">
-              <Radio.Group>
-                <Radio value="0">正常</Radio>
-                <Radio value="1">停用</Radio>
-              </Radio.Group>
+              <Radio.Group options={sys_normal_disable} />
             </Form.Item>
           </Col>
 

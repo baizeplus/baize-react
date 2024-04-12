@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Flex, TableProps, Tag, Tooltip } from "antd";
+import { Flex, TableProps, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
@@ -9,9 +9,12 @@ import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { DeleteConfirm } from "@/components";
 import { delPost, getPostList } from "@/api/system/post";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
+import DictTag from "@/components/DictTag";
+import useDict from "@/hooks/useDict";
 
 const PostTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
 
   const columns: TableProps<IPostItem>["columns"] = [
     {
@@ -48,14 +51,7 @@ const PostTable: FC = () => {
       key: "status",
       align: "center",
       ellipsis: true,
-      render: (t) => (
-        <Tag
-          color={t === "0" ? "#e6f4ff" : "#fff1f0"}
-          className={t === "0" ? "!text-primary" : "!text-[#ff4d4f]"}
-        >
-          {t === "0" ? "正常" : "停用"}
-        </Tag>
-      ),
+      render: (t) => <DictTag options={sys_normal_disable} value={t} />,
     },
     {
       title: "创建时间",

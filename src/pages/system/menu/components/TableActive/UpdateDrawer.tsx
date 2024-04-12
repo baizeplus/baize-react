@@ -16,6 +16,7 @@ import QueryTable from "@/components/QueryTable";
 import { handleTree } from "@/utils/baize";
 import { DrawerWarpper } from "@/components";
 import { addMenu, getMenu, getTreeSelect, updateMenu } from "@/api/system/menu";
+import useDict from "@/hooks/useDict";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -31,6 +32,10 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({
 }) => {
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
+  const [sys_show_hide, sys_normal_disable] = useDict([
+    "sys_show_hide",
+    "sys_normal_disable",
+  ]);
   const [form] = Form.useForm();
   const menuType = Form.useWatch("menuType", form);
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
@@ -248,10 +253,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({
                 name="visible"
                 tooltip="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问"
               >
-                <Radio.Group>
-                  <Radio value="0">显示</Radio>
-                  <Radio value="1">隐藏</Radio>
-                </Radio.Group>
+                <Radio.Group options={sys_show_hide} />
               </Form.Item>
             </Col>
           )}
@@ -262,10 +264,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({
               name="status"
               tooltip="选择停用则路由将不会出现在侧边栏，也不能被访问"
             >
-              <Radio.Group>
-                <Radio value="0">正常</Radio>
-                <Radio value="1">停用</Radio>
-              </Radio.Group>
+              <Radio.Group options={sys_normal_disable} />
             </Form.Item>
           </Col>
         </Row>

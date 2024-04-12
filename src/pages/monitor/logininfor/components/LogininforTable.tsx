@@ -1,12 +1,15 @@
 import { FC } from "react";
-import { TableProps, Tag, Tooltip } from "antd";
+import { TableProps, Tooltip } from "antd";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { getLogininforList } from "@/api/monitor/logininfor";
+import useDict from "@/hooks/useDict";
+import { DictTag } from "@/components";
 
 const Table: FC = () => {
+  const [sys_common_status] = useDict(["sys_common_status"]);
   const columns: TableProps<ILogininforItem>["columns"] = [
     {
       title: "访问编号",
@@ -89,14 +92,7 @@ const Table: FC = () => {
       align: "center",
       ellipsis: true,
       width: 90,
-      render: (t) => (
-        <Tag
-          color={t === 0 ? "#e6f4ff" : "#fff1f0"}
-          className={t === 0 ? "!text-primary" : "!text-[#ff4d4f]"}
-        >
-          {t === 0 ? "成功" : "失败"}
-        </Tag>
-      ),
+      render: (t) => <DictTag options={sys_common_status} value={String(t)} />,
     },
     {
       title: "描述",

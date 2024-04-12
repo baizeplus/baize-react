@@ -17,8 +17,9 @@ export default function useDict(dictType: string[]) {
     return data.map((item) => ({
       label: item.dictLabel,
       value: item.dictValue,
-      elTagType: item.listClass,
-      elTagClass: item.cssClass,
+      listClass: item.listClass,
+      elTagType: item.elTagType,
+      elTagClass: item.elTagClass,
     }));
   };
 

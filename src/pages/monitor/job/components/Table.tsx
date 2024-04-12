@@ -1,14 +1,16 @@
 import { FC } from "react";
-import { Flex, TableProps, Tag, Tooltip } from "antd";
+import { Flex, TableProps, Tooltip } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
-import { DeleteConfirm } from "@/components";
+import { DeleteConfirm, DictTag } from "@/components";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { delJob, getJobList } from "@/api/monitor/job";
+import useDict from "@/hooks/useDict";
 
 const Table: FC = () => {
   const { queryFn } = Query.useQueryTable();
+  const [sys_job_status] = useDict(["sys_job_status"]);
 
   const columns: TableProps<IJobItem>["columns"] = [
     {
@@ -72,14 +74,7 @@ const Table: FC = () => {
       key: "status",
       align: "center",
       ellipsis: true,
-      render: (t) => (
-        <Tag
-          color={t === "0" ? "#e6f4ff" : "#fff1f0"}
-          className={t === "0" ? "!text-primary" : "!text-[#ff4d4f]"}
-        >
-          {t === "0" ? "正常" : "停用"}
-        </Tag>
-      ),
+      render: (t) => <DictTag options={sys_job_status} value={String(t)} />,
     },
     {
       title: "操作",

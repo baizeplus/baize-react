@@ -6,6 +6,8 @@ interface IDictItem {
   dictLabel: string;
   listClass: string;
   cssClass: string;
+  elTagType: string;
+  elTagClass: string;
   dictValue: string;
   status: string;
   remark: string;

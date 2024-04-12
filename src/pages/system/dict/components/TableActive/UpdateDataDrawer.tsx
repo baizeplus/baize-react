@@ -9,6 +9,7 @@ import {
   updateDictData,
 } from "@/api/system/dict/data";
 import { useParams } from "react-router-dom";
+import useDict from "@/hooks/useDict";
 
 type IUpdateDataDrawerProps = {
   children: React.ReactNode;
@@ -23,6 +24,7 @@ const UpdateDataDrawer: FC<IUpdateDataDrawerProps> = ({
   const { dictType } = useParams<"dictType">();
   const { message } = App.useApp();
   const { queryFn } = QueryTable.useQueryTable();
+  const [sys_normal_disable] = useDict(["sys_normal_disable"]);
   const [form] = Form.useForm();
 
   /** 请求当前Post数据 */
@@ -127,10 +129,7 @@ const UpdateDataDrawer: FC<IUpdateDataDrawerProps> = ({
 
           <Col span={12}>
             <Form.Item label="状态" name="status">
-              <Radio.Group>
-                <Radio value="0">正常</Radio>
-                <Radio value="1">停用</Radio>
-              </Radio.Group>
+              <Radio.Group options={sys_normal_disable} />
             </Form.Item>
           </Col>
 
