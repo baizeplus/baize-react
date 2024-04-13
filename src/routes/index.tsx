@@ -30,13 +30,13 @@ import { getUserInfo } from "@/store/user";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/index/" />,
+    element: <Navigate to="/index" />,
   },
   {
     path: "/index",
     loader: async () => {
       if (!getToken()) return redirect("/login");
-      await getUserInfo();
+      getUserInfo();
       return <Layout />;
     },
     element: <Layout />,
@@ -98,11 +98,11 @@ const router = createBrowserRouter([
             element: <Notice />,
           },
           {
-            path: "operlog",
+            path: "log/operlog",
             element: <Operlog />,
           },
           {
-            path: "logininfor",
+            path: "log/logininfor",
             element: <Logininfor />,
           },
         ],

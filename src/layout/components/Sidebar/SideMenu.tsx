@@ -32,11 +32,8 @@ const SideMenu: FC = () => {
   useEffect(() => {
     const pathname = location.pathname;
     setSelectedKeys([pathname.replace("/index/", "")]);
-    setOpenKeys(
-      pathname.split("/")[2]
-        ? [`${pathname.split("/")[2]}`]
-        : [`/${pathname.split("/")[1]}/`],
-    );
+    console.log('athname.split("/")', pathname.split("/"));
+    setOpenKeys(pathname.split("/"));
   }, [location.pathname, navigate]);
   return (
     <Menu
@@ -111,12 +108,12 @@ const SideMenu: FC = () => {
               label: "日志管理",
               children: [
                 {
-                  key: "system/operlog",
+                  key: "system/log/operlog",
                   icon: <EditOutlined />,
                   label: "操作日志",
                 },
                 {
-                  key: "system/logininfor",
+                  key: "system/log/logininfor",
                   icon: <SolutionOutlined />,
                   label: "登录日志",
                 },
