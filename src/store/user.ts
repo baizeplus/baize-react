@@ -4,8 +4,8 @@ import { getInfo, logout as logoutApi } from "@/api/login";
 import { removeToken } from "@/utils/auth";
 
 type IUserInfo = {
-  userId: string;
-  userName: string;
+  userId?: string;
+  userName?: string;
   avatar?: string;
 };
 
@@ -57,5 +57,12 @@ export const logout = async () => {
     return new Error("退出错误");
   }
 };
+export const setAvatar = (avatar: string) =>
+  useUserStore.setState((state) => ({
+    user: {
+      ...state.user,
+      avatar: avatar,
+    },
+  }));
 
 export default useUserStore;

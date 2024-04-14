@@ -45,3 +45,13 @@ export function updateAuthRole(data: { userId: string; roleIds: string }) {
     params: data,
   });
 }
+
+// 用户头像上传
+export function uploadAvatar(data: FormData) {
+  return request({
+    url: "/system/user/profile/avatar",
+    method: "post",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    data,
+  });
+}

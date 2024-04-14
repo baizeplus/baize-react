@@ -20,9 +20,9 @@ const UserProfile: FC = () => {
 
   return (
     <div className="h-full">
-      <Row gutter={8} >
+      <Row gutter={8}>
         <Col span={8} xs={24} sm={24} md={12} lg={8} className="mb-2">
-          <UserInfoCard user={user} />
+          <UserInfoCard user={user} onUpdate={getUser} />
         </Col>
         <Col xs={24} sm={24} md={12} lg={16}>
           <BaseInfoCard user={user} />
