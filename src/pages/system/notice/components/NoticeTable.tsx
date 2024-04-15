@@ -1,29 +1,26 @@
 import { FC } from "react";
-import { Flex, TableProps, Tooltip } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { TableProps, Tooltip } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
-import { delNotice, getNoticeList } from "@/api/system/notice";
+import { getNoticeList } from "@/api/system/notice";
 import DictTag from "@/components/DictTag";
 import useDict from "@/hooks/useDict";
+import UpdateDrawer from "./TableActive/UpdateDrawer";
 
 const NoticeTable: FC = () => {
-  const { queryFn } = Query.useQueryTable();
   const [sys_notice_type] = useDict(["sys_notice_type"]);
 
   const columns: TableProps<INoticeItem>["columns"] = [
     {
-      title: "序号",
-      dataIndex: "index",
-      key: "index",
+      title: "编号",
+      dataIndex: "id",
+      key: "id",
       align: "center",
-      width: 80,
-      render: (_, _r, index) => {
-        return index + 1;
-      },
+      width: 190,
+      ellipsis: true,
     },
     {
       title: "公告标题",
@@ -71,23 +68,14 @@ const NoticeTable: FC = () => {
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 100,
-      render: (_, r) => {
-        return (
-          <Flex gap={8}>
-            <DeleteConfirm
-              id={r.id}
-              text={`是否确认删除通知编号为"${r.id}"的数据项?`}
-              delFn={delNotice}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
-          </Flex>
-        );
-      },
+      width: 80,
+      render: (_, r) => (
+        <UpdateDrawer id={r.id}>
+          <Tooltip placement="top" title="查看">
+            <EyeOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+          </Tooltip>
+        </UpdateDrawer>
+      ),
     },
   ];
 

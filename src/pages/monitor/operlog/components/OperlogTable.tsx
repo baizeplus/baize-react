@@ -91,14 +91,14 @@ const Table: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.operId}>
+            <UpdateDrawer id={r.postId}>
               <Tooltip placement="top" title="修改">
                 <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
             </UpdateDrawer>
             <DeleteConfirm
-              id={r.operId}
-              text={`是否确认删除操作编号为"${r.operId}"的数据项?`}
+              id={r.postId}
+              text={`是否确认删除操作编号为"${r.postId}"的数据项?`}
               delFn={delOperlog}
               onSuccess={queryFn}
             >

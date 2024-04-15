@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 // 查询登录日志列表
-export function getLogininforList(query) {
+export function getLogininforList(query: Record<string, string>) {
   return request({
     url: "/monitor/logininfor/list",
     method: "get",

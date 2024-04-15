@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 // 查询公告列表
-export function getNoticeList(query) {
+export function getNoticeList(query: INoticeItem) {
   return request({
     url: "/system/notice/list",
     method: "get",
@@ -18,7 +18,7 @@ export function getNotice(noticeId: React.Key) {
 }
 
 // 新增公告
-export function addNotice(data) {
+export function addNotice(data: INoticeItem) {
   return request({
     url: "/system/notice",
     method: "post",
@@ -27,7 +27,7 @@ export function addNotice(data) {
 }
 
 // 修改公告
-export function updateNotice(data) {
+export function updateNotice(data: INoticeItem) {
   return request({
     url: "/system/notice",
     method: "put",
@@ -40,5 +40,14 @@ export function delNotice(noticeId: React.Key) {
   return request({
     url: "/system/notice/" + noticeId,
     method: "delete",
+  });
+}
+
+export function postUploadFile(data: FormData) {
+  return request({
+    url: "file/uploadFileRandomName",
+    method: "post",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    data: data,
   });
 }

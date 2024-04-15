@@ -56,7 +56,7 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({
     const { data } = await getTreeSelect();
     const list: TreeDataNode[] = handleTree(data, "menuId", "parentId");
     const menu = [{ menuId: "0", menuName: "主类目", children: list }];
-    setTreeData(menu);
+    setTreeData(menu as any);
     form.setFieldValue("menu", { menuIds: data.checkedKeys });
   }, [form]);
 

@@ -5,6 +5,7 @@ interface IDrawerWarpperProps extends DrawerProps {
   children: React.ReactNode;
   title?: string;
   iconBtn?: React.ReactNode;
+  isEdit?: boolean;
   /**
    * onMount方法是打开Drawer后的后调
    * @ 建议使用useCallback包裹后再传入
@@ -18,6 +19,7 @@ const DrawerWarpper: FC<IDrawerWarpperProps> = ({
   children,
   iconBtn,
   title,
+  isEdit = true,
   onMount,
   onSubmit,
   ...ret
@@ -60,9 +62,11 @@ const DrawerWarpper: FC<IDrawerWarpperProps> = ({
         extra={
           <Space size="middle">
             <Button onClick={handleClose}>取消</Button>
-            <Button onClick={handleSubmit} type="primary" loading={loading}>
-              提交
-            </Button>
+            {isEdit && (
+              <Button onClick={handleSubmit} type="primary" loading={loading}>
+                提交
+              </Button>
+            )}
           </Space>
         }
         {...ret}

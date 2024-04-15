@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 // 查询操作日志列表
-export function getOperlogList(query) {
+export function getOperlogList(query: Record<string, string>) {
   return request({
     url: "/monitor/operlog/list",
     method: "get",

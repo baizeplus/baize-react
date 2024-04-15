@@ -1,0 +1,6 @@
+.ql-toolbar.ql-snow {
+  border-radius: 8px 8px 0 0;
+}
+.ql-container.ql-snow {
+  border-radius: 0 0 8px 8px;
+}
