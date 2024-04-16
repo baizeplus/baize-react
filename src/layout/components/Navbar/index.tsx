@@ -6,7 +6,16 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, Flex, MenuProps, Modal, message, theme } from "antd";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Flex,
+  MenuProps,
+  Modal,
+  message,
+  theme,
+} from "antd";
 import { Header } from "antd/es/layout/layout";
 
 import ScreenfullBtn from "./ScreenfullBtn";
@@ -15,6 +24,7 @@ import DocBtn from "./DocBtn";
 import SearchBtn from "./SearchBtn";
 import useUser from "@/hooks/useUser";
 import { logout } from "@/store/user";
+import NoticeBtn from "./NoticeBtn";
 
 type INavbarProps = {
   collapsed: boolean;
@@ -24,7 +34,7 @@ type INavbarProps = {
 const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
   const { avatar } = useUser();
   const navigate = useNavigate();
-  const [modal,contextHolder] = Modal.useModal();
+  const [modal, contextHolder] = Modal.useModal();
 
   const {
     token: { colorBgContainer },
@@ -37,12 +47,12 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
       onOk: async () => {
         try {
           await logout();
-          location.href = '/login'
+          location.href = "/login";
         } catch (error) {
-          message.error('退出失败');
+          message.error("退出失败");
           return error;
         }
-      }
+      },
     });
   };
 
@@ -82,6 +92,7 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
           <GitBtn />
           <DocBtn />
           <ScreenfullBtn />
+          <NoticeBtn />
           <Dropdown
             arrow
             menu={{
@@ -90,7 +101,7 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
                 if (key === "logout") {
                   handleLogout();
                 }
-                if(key === "/index/user/profile") {
+                if (key === "/index/user/profile") {
                   navigate("/index/user/profile");
                 }
               },
