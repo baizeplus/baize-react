@@ -51,3 +51,20 @@ export function postUploadFile(data: FormData) {
     data: data,
   });
 }
+
+// 新消息数量
+export function getNewMessage() {
+  return request({
+    url: "/system/consumption/newMessage",
+    method: "get",
+  });
+}
+
+// 消息列表
+export function getUserNoticeList(query: Record<string, unknown>) {
+  return request({
+    url: "/system/consumption/userNoticeList",
+    method: "get",
+    params: query,
+  });
+}

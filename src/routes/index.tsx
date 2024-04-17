@@ -23,6 +23,7 @@ import {
   JobLog,
   Server,
   Swagger,
+  UserNotice,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { getUserInfo } from "@/store/user";
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
             element: <UserProfile />,
           },
         ],
+      },
+      {
+        path: "userNotice",
+        element: <UserNotice />,
+      },
+      {
+        path: "userNotice/:id",
+        element: <UserNotice />,
       },
       {
         path: "system",

@@ -1,7 +1,10 @@
 import { FC } from "react";
+import { useParams } from "react-router-dom";
 
 const UserNotice: FC = () => {
-  return <div>UserNotice</div>;
+  const { id } = useParams<"id">();
+
+  return <div>UserNotice {id}</div>;
 };
 
 export default UserNotice;

@@ -1,34 +1,110 @@
+import { useEffect, useState } from "react";
+import { Badge, Button, Popover, Table, TableProps, Tooltip } from "antd";
 import { BellOutlined } from "@ant-design/icons";
-import { Badge, Popover, Table, Tooltip } from "antd";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { getNewMessage, getUserNoticeList } from "@/api/system/notice";
+import dayjs from "dayjs";
+import { MM_DD_HH_MM } from "@/utils/constant";
+import { DictTag } from "@/components";
+import useDict from "@/hooks/useDict";
 
 const NoticeBtn = () => {
+  const navigate = useNavigate();
+  const [sys_notice_type] = useDict(["sys_notice_type"]);
   const [clicked, setClicked] = useState(false);
+  const [data, setData] = useState([]);
+  const [dot, setdot] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const columns = [
+  const columns: TableProps<INoticeItem>["columns"] = [
     {
       title: "",
       dataIndex: "title",
       key: "title",
+      render: (t, r) => {
+        return (
+          <div>
+            <h5 className="flex max-w-[240px]">
+              <span className="truncate mr-2 text-sm">{t}</span>
+              <DictTag options={sys_notice_type} value={r.type} />
+            </h5>
+            <div
+              dangerouslySetInnerHTML={{ __html: r.txt }}
+              className="w-[180px] truncate text-xs text-gray-400"
+            />
+          </div>
+        );
+      },
     },
     {
       title: "",
-      dataIndex: "createName",
-      key: "createName",
+      dataIndex: "createTime",
+      key: "createTime",
+      width: 120,
+      render: (t) => (
+        <span className="text-sm text-gray-400">
+          {dayjs(t).format(MM_DD_HH_MM)}
+        </span>
+      ),
     },
   ];
+
+  const getData = async () => {
+    try {
+      setLoading(true);
+      const { data } = await getUserNoticeList({ page: 1, size: 5 });
+      setData(data.rows);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getNewMessageNum = async () => {
+    const { data } = await getNewMessage();
+    setdot(data !== 0);
+  };
+
+  useEffect(() => {
+    if (clicked) {
+      getData();
+      getNewMessageNum();
+    }
+  }, [clicked]);
 
   return (
     <Tooltip placement="top" title="消息">
       <Popover
         placement="bottomRight"
-        overlayClassName="w-[42git reset --hard upstream/master 0px]"
-        content={<Table showHeader={false} columns={columns} />}
+        arrow={{ pointAtCenter: true }}
+        overlayClassName="w-[350px]"
+        content={
+          <>
+            <Table
+              size="small"
+              rowKey={(e) => e.id}
+              loading={loading}
+              showHeader={false}
+              columns={columns}
+              dataSource={data}
+              pagination={false}
+              onRow={(record) => ({
+                onClick: () => navigate(`/index/userNotice/${record.id}`),
+              })}
+            />
+            <Button
+              className="w-full mt-2"
+              onClick={() => navigate(`/index/userNotice`)}
+            >
+              全部
+            </Button>
+          </>
+        }
         trigger="click"
         open={clicked}
         onOpenChange={() => setClicked(!clicked)}
       >
-        <Badge dot offset={[-4, 4]} className="!mr-3">
+        <Badge dot={dot} offset={[-4, 4]} className="!mr-3">
           <BellOutlined className="text-[20px]" />
         </Badge>
       </Popover>

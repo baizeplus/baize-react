@@ -15,6 +15,9 @@ export const Register = WFC(lazy(() => import("@/pages/login/Register")));
 
 export const Layout = WFC(lazy(() => import("@/layout")));
 export const UserProfile = WFC(lazy(() => import("@/pages/home/userProfile")));
+export const UserNotice = WFC(
+  lazy(() => import("@/pages/home/userNotice/UserNotice")),
+);
 export const Dashboard = WFC(lazy(() => import("@/pages/home/Dashboard")));
 
 export const User = WFC(lazy(() => import("@/pages/system/user")));
