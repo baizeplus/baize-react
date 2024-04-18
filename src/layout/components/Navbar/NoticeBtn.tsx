@@ -72,6 +72,15 @@ const NoticeBtn = () => {
     }
   }, [clicked]);
 
+  const handleNavigate = (id?: string) => {
+    setClicked(false);
+    if (id) {
+      navigate(`/index/userNotice/${id}`);
+    } else {
+      navigate(`/index/userNotice`);
+    }
+  };
+
   return (
     <Tooltip placement="top" title="消息">
       <Popover
@@ -89,13 +98,10 @@ const NoticeBtn = () => {
               dataSource={data}
               pagination={false}
               onRow={(record) => ({
-                onClick: () => navigate(`/index/userNotice/${record.id}`),
+                onClick: () => handleNavigate(record.id),
               })}
             />
-            <Button
-              className="w-full mt-2"
-              onClick={() => navigate(`/index/userNotice`)}
-            >
+            <Button className="w-full mt-2" onClick={() => handleNavigate()}>
               全部
             </Button>
           </>
