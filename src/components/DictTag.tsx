@@ -17,7 +17,7 @@ const colorMap: Record<string, string> = {
 const DictTag: FC<IDictTagProps> = ({ options, value }) => {
   const [data, setData] = useState<Record<string, string>>();
   useEffect(() => {
-    const data = options.find((item) => item.value === value);
+    const data = options?.find((item) => item.value === value);
     setData(data);
   }, [options, value]);
   return (

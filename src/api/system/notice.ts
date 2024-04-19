@@ -68,3 +68,27 @@ export function getUserNoticeList(query: Record<string, unknown>) {
     params: query,
   });
 }
+
+// 改为已读
+export function noticeRead(noticeId: string) {
+  return request({
+    url: "/system/consumption/noticeRead/" + noticeId,
+    method: "put",
+  });
+}
+
+// 全部已读
+export function noticeReadAll() {
+  return request({
+    url: "/system/consumption/noticeReadAll",
+    method: "put",
+  });
+}
+
+// 删除消息
+export function noticeDelete(noticeIds: string) {
+  return request({
+    url: "/system/consumption/noticeDelete/" + noticeIds,
+    method: "delete",
+  });
+}
