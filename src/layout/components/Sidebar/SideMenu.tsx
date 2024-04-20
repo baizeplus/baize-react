@@ -32,7 +32,6 @@ const SideMenu: FC = () => {
   useEffect(() => {
     const pathname = location.pathname;
     setSelectedKeys([pathname.replace("/index/", "")]);
-    console.log('athname.split("/")', pathname.split("/"));
     setOpenKeys(pathname.split("/"));
   }, [location.pathname, navigate]);
   return (

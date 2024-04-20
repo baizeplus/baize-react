@@ -3,6 +3,7 @@ interface INoticeItem {
   title: string;
   txt: string;
   type: string;
+  status: string;
   deptIds: string[];
   createName: string;
   createBy: number;

@@ -3,15 +3,20 @@ import { create } from "zustand";
 type UserNoticeStoreProps = {
   noticeType: "" | "1" | "2";
   status: "" | "1" | "2";
-  selectedRowKeys: string[];
+  dot: boolean;
+  selectedRowKeys: React.Key[];
   noticeData?: INoticeItem;
 };
 
 const UserNoticeStore = create<UserNoticeStoreProps>(() => ({
   noticeType: "",
   status: "",
+  dot: false,
   selectedRowKeys: [],
 }));
+
+export const setDot = (dot: UserNoticeStoreProps["dot"]) =>
+  UserNoticeStore.setState({ dot });
 
 export const setNoticeType = (noticeType: UserNoticeStoreProps["noticeType"]) =>
   UserNoticeStore.setState({ noticeType });
