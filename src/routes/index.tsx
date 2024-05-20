@@ -162,4 +162,54 @@ const router = createBrowserRouter([
   },
 ]);
 
+export const constantRoutes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navigate to="/index" />,
+  },
+  {
+    path: "/index",
+    loader: async () => {
+      if (!getToken()) return redirect("/login");
+      getUserInfo();
+      return <Layout />;
+    },
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <Navigate to="/index/dashboard" />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "user",
+        children: [
+          {
+            path: "profile",
+            element: <UserProfile />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/login",
+    Component: Login,
+    // hidden: true
+  },
+  {
+    path: "/register",
+    Component: Register,
+    // hidden: true
+  },
+  {
+    path: "*",
+    Component: Page404,
+    // hidden: true
+  },
+]);
+
 export default router;

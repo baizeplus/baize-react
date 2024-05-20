@@ -111,39 +111,41 @@ const NoticeBtn = () => {
   };
 
   return (
-    <Tooltip placement="top" title="消息">
-      <Popover
-        placement="bottomRight"
-        arrow={{ pointAtCenter: true }}
-        overlayClassName="w-[350px]"
-        content={
-          <>
-            <Table
-              size="small"
-              rowKey={(e) => e.id}
-              loading={loading}
-              showHeader={false}
-              columns={columns}
-              dataSource={data}
-              pagination={false}
-              onRow={(record) => ({
-                onClick: () => handleNavigate(record),
-              })}
-            />
-            <Button className="w-full mt-2" onClick={() => handleNavigate()}>
-              全部
-            </Button>
-          </>
-        }
-        trigger="click"
-        open={clicked}
-        onOpenChange={() => setClicked(!clicked)}
-      >
-        <Badge dot={dot} offset={[-4, 4]} className="!mr-3">
-          <BellOutlined className="text-[20px] cursor-pointer" />
-        </Badge>
-      </Popover>
-    </Tooltip>
+    <div>
+      <Tooltip placement="top" title="消息">
+        <Popover
+          placement="bottomRight"
+          arrow={{ pointAtCenter: true }}
+          overlayClassName="w-[350px]"
+          content={
+            <>
+              <Table
+                size="small"
+                rowKey={(e) => e.id}
+                loading={loading}
+                showHeader={false}
+                columns={columns}
+                dataSource={data}
+                pagination={false}
+                onRow={(record) => ({
+                  onClick: () => handleNavigate(record),
+                })}
+              />
+              <Button className="w-full mt-2" onClick={() => handleNavigate()}>
+                全部
+              </Button>
+            </>
+          }
+          trigger="click"
+          open={clicked}
+          onOpenChange={() => setClicked(!clicked)}
+        >
+          <Badge dot={dot} offset={[-4, 4]} className="!mr-3">
+            <BellOutlined className="text-[20px] cursor-pointer" />
+          </Badge>
+        </Popover>
+      </Tooltip>
+    </div>
   );
 };
 

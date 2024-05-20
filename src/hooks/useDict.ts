@@ -1,7 +1,7 @@
 import { useRequest } from "ahooks";
 import { getDicts } from "@/api/system/dict/data";
 export default function useDict(dictType: string[]) {
-  const { data = [] } = useRequest(
+  const { data } = useRequest(
     () => Promise.all(dictType.map(async (type) => getDicts(type))),
     {
       cacheKey: dictType.join(","),
@@ -23,5 +23,5 @@ export default function useDict(dictType: string[]) {
     }));
   };
 
-  return data?.map((item) => handleConvert(item?.data));
+  return data?.map((item) => handleConvert(item?.data)) ?? [];
 }
