@@ -2,8 +2,8 @@ import { RouterProvider } from "react-router-dom";
 import { ConfigProvider, App as AntdApp } from "antd";
 import { StyleProvider } from "@ant-design/cssinjs";
 import "./App.css";
-import router, { constantRoutes } from "./routes";
-import { getRouters } from "./api/router";
+import router from "./routes";
+// import { useRouter } from "./hooks/useRouter";
 
 function App() {
   // const getRouter = async () => {
@@ -36,7 +36,7 @@ function App() {
     >
       <StyleProvider hashPriority="high">
         <AntdApp className="h-full">
-          <RouterProvider router={constantRoutes} />
+          <RouterProvider router={router} />
         </AntdApp>
       </StyleProvider>
     </ConfigProvider>

@@ -25,7 +25,14 @@ const LoginForm: FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { uuid, registerEnabled, captchaEnabled, loading: codeLoading, img: codeImg, getCode } = useCaptcCode();
+  const {
+    uuid,
+    registerEnabled,
+    captchaEnabled,
+    loading: codeLoading,
+    img: codeImg,
+    getCode,
+  } = useCaptcCode();
 
   const getCookie = useCallback(() => {
     const username = Cookies.get("username");
@@ -111,7 +118,12 @@ const LoginForm: FC = () => {
       </Form.Item>
       {/* 验证码Form Item */}
 
-      <CodeFormItem loading={codeLoading} codeImg={codeImg} captchaEnabled={captchaEnabled} getCode={getCode}/>
+      <CodeFormItem
+        loading={codeLoading}
+        codeImg={codeImg}
+        captchaEnabled={captchaEnabled}
+        getCode={getCode}
+      />
       <Form.Item name="rememberMe" valuePropName="checked">
         <Checkbox>记住密码</Checkbox>
       </Form.Item>
@@ -119,19 +131,19 @@ const LoginForm: FC = () => {
         type="primary"
         size="large"
         htmlType="submit"
-        className="mb-2"
+        className={`${registerEnabled ? "mb-2" : "mb-4"}`}
         block
         loading={loading}
       >
         {loading ? "登 录 中..." : "登 录"}
       </Button>
-      {
-        registerEnabled && <div className="pb-6">
+      {registerEnabled && (
+        <div className="pb-6">
           <Link to="/register" className="text-xs">
             立即注册
           </Link>
         </div>
-      }
+      )}
     </Form>
   );
 };
