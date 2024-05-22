@@ -11,6 +11,7 @@ export function useRouter() {
   const [sidebarRoutes, setSidebarRoutes] = useState([]);
   const getData = async () => {
     const { data } = await getRouters();
+    console.log("meta", data);
     const sidebarRoutes = filterAsyncRouter(data);
     setSidebarRoutes(sidebarRoutes);
     console.log("sidebarRoutes", sidebarRoutes);
@@ -27,18 +28,23 @@ export function useRouter() {
 function filterAsyncRouter(asyncRouterMap: any) {
   return asyncRouterMap.map((route: Record<string, any>) => {
     if (route.children) {
+      delete route.alwaysShow;
       return {
         ...route,
         label: route.meta.title,
         key: String(route.name).toLowerCase(),
-        children: filterChildren(route.children),
+        children: filterChildren(
+          route.children,
+          true,
+          String(route.name).toLowerCase(),
+        ),
       };
     }
 
     if (route.component) {
-      // if(route.component === 'Layout') {
-      //   return false;
-      // }
+      if (route.component === "Layout") {
+        return false;
+      }
       route.component = loadView(route.component);
     }
 
@@ -51,18 +57,24 @@ function filterAsyncRouter(asyncRouterMap: any) {
   });
 }
 
-function filterChildren(childrenMap: any, lastRouter = false) {
+function filterChildren(
+  childrenMap: any,
+  lastRouter = false,
+  fatherKey?: string,
+) {
   let children: any = [];
   childrenMap.forEach((el: any) => {
     if (el.hidden) return;
     // el.path = el.path
-    el.key = el.component.replace("/index", "");
+    delete el.alwaysShow;
+    el.key = `${fatherKey}/${el.path}`;
     el.label = el.meta.title;
     if (el.children && el.children.length) {
-      if (el.component === "ParentView" && !lastRouter) {
+      if (el.component === "ParentView") {
         el.children.forEach((c: any) => {
-          c.path = el.path + "/" + c.path;
-          c.key = c.component.replace("/index", "");
+          delete c.alwaysShow;
+          c.path = `${el.path}/${c.path}`;
+          c.key = `${fatherKey}/${c.path}`;
           c.label = c.meta.title;
           if (c.children && c.children.length) {
             children = children.concat(filterChildren(c.children, c));
@@ -73,17 +85,17 @@ function filterChildren(childrenMap: any, lastRouter = false) {
         return;
       }
     }
-    // if (lastRouter) {
-    //   el.key = el.component.replace("/index", "")
-    //   el.name = lastRouter.meta.title
-    //   if (el.children && el.children.length) {
-    //     children = children.concat(filterChildren(el.children, el))
-    //     return
-    //   }
-    // }
+    if (lastRouter) {
+      // console.log('什么来这', lastRouter)
+      el.key = `${fatherKey}/${el.path}`;
+      el.name = lastRouter?.meta?.title;
+      if (el.children && el.children.length) {
+        children = children.concat(filterChildren(el.children, el));
+        return;
+      }
+    }
     children = children.concat(el);
   });
-  console.log("children", children);
   return children;
 }
 

@@ -106,19 +106,19 @@ const router = createBrowserRouter([
             path: "notice",
             element: <Notice />,
           },
+          {
+            path: "log/operlog",
+            element: <Operlog />,
+          },
+          {
+            path: "log/logininfor",
+            element: <Logininfor />,
+          },
         ],
       },
       {
         path: "monitor",
         children: [
-          {
-            path: "operlog",
-            element: <Operlog />,
-          },
-          {
-            path: "logininfor",
-            element: <Logininfor />,
-          },
           {
             path: "online",
             element: <OnLine />,
