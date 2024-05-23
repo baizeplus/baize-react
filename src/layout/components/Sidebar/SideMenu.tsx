@@ -46,9 +46,8 @@ const SideMenu: FC = () => {
       onOpenChange={setOpenKeys}
       onSelect={({ key }) => setSelectedKeys([key])}
       onClick={({ key }) => {
-        console.log("key", key);
         if (key === "web") {
-          open("baize.vip");
+          open("http://react.ibaize.vip");
           return false;
         }
         navigate(`/index/${key}`);
