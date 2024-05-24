@@ -35,7 +35,7 @@ const SideMenu: FC = () => {
     const pathname = location.pathname;
     setSelectedKeys([pathname.replace("/index/", "")]);
     setOpenKeys(pathname.split("/"));
-  }, [sidebarRoutes, location.pathname, navigate]);
+  }, [location.pathname, navigate]);
 
   return (
     <Menu

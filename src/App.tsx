@@ -1,20 +1,14 @@
 import { RouterProvider } from "react-router-dom";
 import { ConfigProvider, App as AntdApp } from "antd";
 import { StyleProvider } from "@ant-design/cssinjs";
+// import router from "./routes";
+
 import "./App.css";
-import router from "./routes";
-// import { useRouter } from "./hooks/useRouter";
+import { useRouter } from "./hooks/useRouter";
 
 function App() {
-  // const getRouter = async () => {
-  //   const { data } = await getRouters();
-  //   const route = data.map(item => ({
-  //     path: item.path,
-  //     element: item.component,
-  //   }))
-  // };
+  const { router } = useRouter();
 
-  // getRouter();
   return (
     <ConfigProvider
       theme={{

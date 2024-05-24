@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     path: "/index",
     loader: async () => {
       if (!getToken()) return redirect("/login");
-      getUserInfo();
+      // getUserInfo();
       return <Layout />;
     },
     element: <Layout />,
@@ -162,7 +162,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-export const constantRoutes = createBrowserRouter([
+export const constantRoutes = [
   {
     path: "/",
     element: <Navigate to="/index" />,
@@ -171,7 +171,7 @@ export const constantRoutes = createBrowserRouter([
     path: "/index",
     loader: async () => {
       if (!getToken()) return redirect("/login");
-      getUserInfo();
+      // getUserInfo();
       return <Layout />;
     },
     element: <Layout />,
@@ -210,6 +210,6 @@ export const constantRoutes = createBrowserRouter([
     Component: Page404,
     // hidden: true
   },
-]);
+];
 
 export default router;

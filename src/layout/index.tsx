@@ -1,22 +1,33 @@
 import { FC, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useSize } from "ahooks";
 import { Layout as AntdLayout, theme } from "antd";
 import { Content } from "antd/es/layout/layout";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 import Navbar from "./components/Navbar";
+import useRouterStore, { getRouterConfig } from "@/store/router";
+import { getUserInfo } from "@/store/user";
 
 type IBaizeLayoutProps = {
   // children: ReactNode;
 };
 
 const Layout: FC<IBaizeLayoutProps> = () => {
+  const location = useLocation();
+  const routesConfig = useRouterStore((state) => state.routesConfig);
   const [collapsed, setCollapsed] = useState(false);
   const size = useSize(document.querySelector("body"));
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    // if(!routesConfig.length && location.pathname.includes('index')) {
+    getUserInfo();
+    getRouterConfig();
+    // }
+  }, []);
 
   useEffect(() => {
     if (size?.width) {
