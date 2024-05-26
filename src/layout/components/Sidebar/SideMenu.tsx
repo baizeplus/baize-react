@@ -22,14 +22,14 @@ import {
   FieldTimeOutlined,
   ControlOutlined,
 } from "@ant-design/icons";
-import { useRouter } from "@/hooks/useRouter";
+import useRouterStore from "@/store/router";
 
 const SideMenu: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const { sidebarRoutes } = useRouter();
+  const sidebarRoutes = useRouterStore((state) => state.sidebarRoutes);
 
   useEffect(() => {
     const pathname = location.pathname;

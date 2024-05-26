@@ -1,13 +1,12 @@
 import { RouterProvider } from "react-router-dom";
 import { ConfigProvider, App as AntdApp } from "antd";
 import { StyleProvider } from "@ant-design/cssinjs";
-// import router from "./routes";
+import useRouterStore from "@/store/router";
 
 import "./App.css";
-import { useRouter } from "./hooks/useRouter";
 
 function App() {
-  const { router } = useRouter();
+  const router = useRouterStore((state) => state.router);
 
   return (
     <ConfigProvider

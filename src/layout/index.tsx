@@ -26,6 +26,7 @@ const Layout: FC<IBaizeLayoutProps> = () => {
     // if(!routesConfig.length && location.pathname.includes('index')) {
     getUserInfo();
     getRouterConfig();
+
     // }
   }, []);
 

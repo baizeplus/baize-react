@@ -1,34 +1,19 @@
-import { Navigate, createBrowserRouter, redirect } from "react-router-dom";
+import { Navigate, RouteObject, redirect } from "react-router-dom";
 
 import {
   Page404,
   Login,
   Register,
-  User,
   Dashboard,
   Layout,
   UserProfile,
-  Role,
-  Menu,
-  Dept,
-  Post,
-  Config,
-  Notice,
-  Operlog,
-  Logininfor,
-  Dict,
   DictData,
-  OnLine,
-  Job,
   JobLog,
-  Server,
-  Swagger,
-  UserNotice,
 } from "./routes";
 import { getToken } from "@/utils/auth";
-import { getUserInfo } from "@/store/user";
+import { Skeleton } from "antd";
 
-const router = createBrowserRouter([
+export const constantRoutes: RouteObject[] = [
   {
     path: "/",
     element: <Navigate to="/index" />,
@@ -60,138 +45,17 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "userNotice",
-        element: <UserNotice />,
+        path: "system/dict-type/:dictType",
+        element: <DictData />,
       },
       {
-        path: "userNotice/:id",
-        element: <UserNotice />,
+        path: "monitor/job-log/:jobLogId",
+        element: <JobLog />,
       },
       {
-        path: "system",
-        children: [
-          {
-            path: "user",
-            element: <User />,
-          },
-          {
-            path: "role",
-            element: <Role />,
-          },
-          {
-            path: "menu",
-            element: <Menu />,
-          },
-          {
-            path: "dept",
-            element: <Dept />,
-          },
-          {
-            path: "post",
-            element: <Post />,
-          },
-          {
-            path: "dict",
-            element: <Dict />,
-          },
-          {
-            path: "dict-type/:dictType",
-            element: <DictData />,
-          },
-          {
-            path: "config",
-            element: <Config />,
-          },
-          {
-            path: "notice",
-            element: <Notice />,
-          },
-          {
-            path: "log/operlog",
-            element: <Operlog />,
-          },
-          {
-            path: "log/logininfor",
-            element: <Logininfor />,
-          },
-        ],
-      },
-      {
-        path: "monitor",
-        children: [
-          {
-            path: "online",
-            element: <OnLine />,
-          },
-          {
-            path: "job",
-            element: <Job />,
-          },
-          {
-            path: "job-log/:jobLogId",
-            element: <JobLog />,
-          },
-          {
-            path: "server",
-            element: <Server />,
-          },
-        ],
-      },
-      {
-        path: "tool",
-        children: [
-          {
-            path: "swagger",
-            element: <Swagger />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "*",
-    element: <Page404 />,
-  },
-]);
-
-export const constantRoutes = [
-  {
-    path: "/",
-    element: <Navigate to="/index" />,
-  },
-  {
-    path: "/index",
-    loader: async () => {
-      if (!getToken()) return redirect("/login");
-      // getUserInfo();
-      return <Layout />;
-    },
-    element: <Layout />,
-    children: [
-      {
-        path: "",
-        element: <Navigate to="/index/dashboard" />,
-      },
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "user",
-        children: [
-          {
-            path: "profile",
-            element: <UserProfile />,
-          },
-        ],
+        path: "*",
+        Component: Skeleton,
+        // hidden: true
       },
     ],
   },
@@ -211,5 +75,3 @@ export const constantRoutes = [
     // hidden: true
   },
 ];
-
-export default router;

@@ -92,7 +92,7 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
           <GitBtn />
           <DocBtn />
           <ScreenfullBtn />
-          {/* <NoticeBtn /> */}
+          <NoticeBtn />
           <Dropdown
             arrow
             menu={{

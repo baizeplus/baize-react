@@ -1,4 +1,3 @@
-// import { Spin } from 'antd';
 import { FC, Suspense, lazy } from "react";
 
 export const WFC =
@@ -37,7 +36,7 @@ export const Logininfor = WFC(
   lazy(() => import("@/pages/monitor/logininfor/Logininfor")),
 );
 
-export const OnLine = WFC(lazy(() => import("@/pages/monitor/onLine/OnLine")));
+export const OnLine = WFC(lazy(() => import("@/pages/monitor/online/OnLine")));
 export const Job = WFC(lazy(() => import("@/pages/monitor/job/Job")));
 export const JobLog = WFC(lazy(() => import("@/pages/monitor/job/JobLog")));
 export const Server = WFC(lazy(() => import("@/pages/monitor/server/Server")));
