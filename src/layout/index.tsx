@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useSize } from "ahooks";
 import { Layout as AntdLayout, theme } from "antd";
 import { Content } from "antd/es/layout/layout";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 import Navbar from "./components/Navbar";
-import useRouterStore, { getRouterConfig } from "@/store/router";
+import { getRouterConfig } from "@/store/router";
 import { getUserInfo } from "@/store/user";
 
 type IBaizeLayoutProps = {
@@ -14,8 +14,6 @@ type IBaizeLayoutProps = {
 };
 
 const Layout: FC<IBaizeLayoutProps> = () => {
-  const location = useLocation();
-  const routesConfig = useRouterStore((state) => state.routesConfig);
   const [collapsed, setCollapsed] = useState(false);
   const size = useSize(document.querySelector("body"));
   const {
@@ -47,7 +45,7 @@ const Layout: FC<IBaizeLayoutProps> = () => {
   }, [size]);
 
   return (
-    <AntdLayout className="h-full overflow-x-hidden overflow-y-auto">
+    <AntdLayout className="h-full overflow-x-hidden overflow-y-auto !flex !flex-row">
       <Sidebar collapsed={collapsed} onCollapsed={setCollapsed} />
       <AntdLayout>
         <Navbar collapsed={collapsed} onCollapsedIcon={setCollapsed} />
@@ -56,7 +54,6 @@ const Layout: FC<IBaizeLayoutProps> = () => {
           style={{
             padding: 8,
             marginBottom: 8,
-            // background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
         >

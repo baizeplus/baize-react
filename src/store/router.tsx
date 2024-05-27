@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense } from "react";
+import { FC, lazy, ReactElement, Suspense } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
 import { create } from "zustand";
@@ -7,6 +7,7 @@ import { Spin } from "antd";
 import { getRouters } from "@/api/router";
 import Page404 from "@/pages/error/404";
 import { constantRoutes } from "@/routes";
+import SvgIcon from "@/components/SvgIcon";
 
 const modules = import.meta.glob(
   [
@@ -37,7 +38,7 @@ interface RouterConfigItem {
 interface RouterConfigNode extends RouterConfigItem {
   key: string;
   label: string;
-  icon: string; // 从meta中平铺
+  icon: ReactElement; // 从meta中平铺
 }
 
 interface RouterStoreProps {
@@ -85,7 +86,7 @@ function processTree(
           ? fullPath.replace(/^\/|\/$/, "")
           : String(node.name).toLocaleLowerCase(), // 设置key
         label: node.meta.title, // 设置label，从meta中的title获取
-        icon: "", // node.meta.icon, // 从meta中平铺icon
+        icon: <SvgIcon name={node.meta.icon} />, // node.meta.icon, // 从meta中平铺icon
         children: node.children
           ? processTree(node.children, fullPath.replace("/", ""))
           : undefined, // 递归处理子节点

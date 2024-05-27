@@ -11,6 +11,7 @@ import { delMenu, getMenuList } from "@/api/system/menu";
 import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
 import useDict from "@/hooks/useDict";
 import DictTag from "@/components/DictTag";
+import SvgIcon from "@/components/SvgIcon";
 
 const MenuTable: FC = () => {
   const [sys_normal_disable] = useDict(["sys_normal_disable"]);
@@ -28,7 +29,12 @@ const MenuTable: FC = () => {
       dataIndex: "icon",
       key: "icon",
       align: "center",
-      ellipsis: true,
+      width: 60,
+      render: (t) => (
+        <Flex justify="center">
+          <SvgIcon name={t} />
+        </Flex>
+      ),
     },
     {
       title: "排序",
