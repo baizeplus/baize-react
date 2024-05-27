@@ -1,17 +1,17 @@
 import { FC } from "react";
-import { Flex, TableProps, Tag, Tooltip } from "antd";
-import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import { TableProps, Tag, Tooltip } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
-import UpdateDrawer from "./TableActive/UpdateDrawer";
-import { delOperlog, getOperlogList } from "@/api/monitor/operlog";
+import { Auth } from "@/components";
+// import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { getOperlogList } from "@/api/monitor/operlog";
 
 const Table: FC = () => {
-  const { queryFn } = Query.useQueryTable();
+  // const { queryFn } = Query.useQueryTable();
 
   const columns: TableProps<IPostItem>["columns"] = [
     {
@@ -88,25 +88,13 @@ const Table: FC = () => {
       key: "active",
       align: "center",
       width: 100,
-      render: (_, r) => {
+      render: () => {
         return (
-          <Flex gap={8}>
-            <UpdateDrawer id={r.postId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
-            <DeleteConfirm
-              id={r.postId}
-              text={`是否确认删除操作编号为"${r.postId}"的数据项?`}
-              delFn={delOperlog}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
-          </Flex>
+          <Auth role="monitor:operlog:query">
+            <Tooltip placement="top" title="查看">
+              <EyeOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+            </Tooltip>
+          </Auth>
         );
       },
     },

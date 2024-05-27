@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm, DictTag } from "@/components";
+import { Auth, DeleteConfirm, DictTag } from "@/components";
 import { useParams } from "react-router-dom";
 import { delDictData, getDictDataList } from "@/api/system/dict/data";
 import UpdateDataDrawer from "./TableActive/UpdateDataDrawer";
@@ -77,21 +77,25 @@ const DictTypeTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDataDrawer id={r.dictCode}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDataDrawer>
-            <DeleteConfirm
-              id={r.dictCode}
-              text={`是否确认删除字典编码为"${r.dictCode}"的数据项?`}
-              delFn={delDictData}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
+            <Auth role="system:dict:edit">
+              <UpdateDataDrawer id={r.dictCode}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateDataDrawer>
+            </Auth>
+            <Auth role="system:dict:remove">
+              <DeleteConfirm
+                id={r.dictCode}
+                text={`是否确认删除字典编码为"${r.dictCode}"的数据项?`}
+                delFn={delDictData}
+                onSuccess={queryFn}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
           </Flex>
         );
       },

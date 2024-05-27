@@ -4,7 +4,7 @@ import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
-import { DeleteConfirm, ExportButton } from "@/components";
+import { Auth, DeleteConfirm, ExportButton } from "@/components";
 import { delPost, exportPost } from "@/api/system/post";
 
 type IpostToolbarProps = {
@@ -16,36 +16,44 @@ const PostToolbar: FC<IpostToolbarProps> = () => {
 
   return (
     <Query.Toolbar>
-      <UpdateDrawer>
-        <Button type="primary" icon={<PlusOutlined />}>
-          新增
-        </Button>
-      </UpdateDrawer>
-      <UpdateDrawer id={selectedRowId[0]}>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          disabled={!selectedRowId.length || selectedRowId.length > 1}
+      <Auth role="system:post:add">
+        <UpdateDrawer>
+          <Button type="primary" icon={<PlusOutlined />}>
+            新增
+          </Button>
+        </UpdateDrawer>
+      </Auth>
+      <Auth role="system:post:edit">
+        <UpdateDrawer id={selectedRowId[0]}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            disabled={!selectedRowId.length || selectedRowId.length > 1}
+          >
+            修改
+          </Button>
+        </UpdateDrawer>
+      </Auth>
+      <Auth role="system:post:remove">
+        <DeleteConfirm
+          id={selectedRowId.join(",")}
+          text={`是否确认删除岗位编号为"${selectedRowId.join(",")}"的数据项?`}
+          delFn={delPost}
+          onSuccess={() => queryFn?.("del")}
         >
-          修改
-        </Button>
-      </UpdateDrawer>
-      <DeleteConfirm
-        id={selectedRowId.join(",")}
-        text={`是否确认删除岗位编号为"${selectedRowId.join(",")}"的数据项?`}
-        delFn={delPost}
-        onSuccess={() => queryFn?.("del")}
-      >
-        <Button
-          danger
-          ghost
-          disabled={!selectedRowId.length}
-          icon={<DeleteOutlined />}
-        >
-          删除
-        </Button>
-      </DeleteConfirm>
-      <ExportButton fileNamePrefix="post" exportFn={exportPost} />
+          <Button
+            danger
+            ghost
+            disabled={!selectedRowId.length}
+            icon={<DeleteOutlined />}
+          >
+            删除
+          </Button>
+        </DeleteConfirm>
+      </Auth>
+      <Auth role="system:post:export">
+        <ExportButton fileNamePrefix="post" exportFn={exportPost} />
+      </Auth>
     </Query.Toolbar>
   );
 };

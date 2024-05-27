@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { Auth } from "@/components";
 
 type INoticeToolbarProps = {
   selectedRowKeys?: React.Key[];
@@ -12,11 +13,13 @@ type INoticeToolbarProps = {
 const NoticeToolbar: FC<INoticeToolbarProps> = () => {
   return (
     <Query.Toolbar>
-      <UpdateDrawer>
-        <Button type="primary" icon={<PlusOutlined />}>
-          新增
-        </Button>
-      </UpdateDrawer>
+      <Auth role="system:notice:add">
+        <UpdateDrawer>
+          <Button type="primary" icon={<PlusOutlined />}>
+            新增
+          </Button>
+        </UpdateDrawer>
+      </Auth>
     </Query.Toolbar>
   );
 };

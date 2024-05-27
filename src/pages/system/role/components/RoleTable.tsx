@@ -7,7 +7,7 @@ import Query from "@/components/QueryTable";
 import { changeRoleStatus, delRole, getRoleList } from "@/api/system/role";
 import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm, TableItemSwitch } from "@/components";
+import { Auth, DeleteConfirm, TableItemSwitch } from "@/components";
 
 const RoleTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
@@ -76,24 +76,30 @@ const RoleTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateRoleDrawer id={r.roleId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+            <Auth role="system:role:edit">
+              <UpdateRoleDrawer id={r.roleId}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateRoleDrawer>
+            </Auth>
+            <Auth role="system:role:remove">
+              <DeleteConfirm
+                id={r.roleId}
+                tipTag="角色"
+                delFn={delRole}
+                onSuccess={queryFn}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
+            <Auth role="system:role:edit">
+              <Tooltip placement="top" title="分配用户">
+                <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
               </Tooltip>
-            </UpdateRoleDrawer>
-            <DeleteConfirm
-              id={r.roleId}
-              tipTag="角色"
-              delFn={delRole}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
-            <Tooltip placement="top" title="分配用户">
-              <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-            </Tooltip>
+            </Auth>
           </Flex>
         );
       },

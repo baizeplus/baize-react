@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
+import { Auth, DeleteConfirm } from "@/components";
 import { delMenu, getMenuList } from "@/api/system/menu";
 import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
 import useDict from "@/hooks/useDict";
@@ -91,26 +91,32 @@ const MenuTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateMenuDrawer id={r.menuId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateMenuDrawer>
-            <UpdateMenuDrawer parentId={r.menuId}>
-              <Tooltip placement="top" title="新增">
-                <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateMenuDrawer>
-            <DeleteConfirm
-              id={r.menuId}
-              tipTag="菜单"
-              delFn={delMenu}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
+            <Auth role="system:menu:edit">
+              <UpdateMenuDrawer id={r.menuId}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateMenuDrawer>
+            </Auth>
+            <Auth role="system:menu:add">
+              <UpdateMenuDrawer parentId={r.menuId}>
+                <Tooltip placement="top" title="新增">
+                  <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateMenuDrawer>
+            </Auth>
+            <Auth role="system:menu:remove">
+              <DeleteConfirm
+                id={r.menuId}
+                tipTag="菜单"
+                delFn={delMenu}
+                onSuccess={queryFn}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
           </Flex>
         );
       },

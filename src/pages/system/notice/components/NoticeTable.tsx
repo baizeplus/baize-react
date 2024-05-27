@@ -9,6 +9,7 @@ import { getNoticeList } from "@/api/system/notice";
 import DictTag from "@/components/DictTag";
 import useDict from "@/hooks/useDict";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { Auth } from "@/components";
 
 const NoticeTable: FC = () => {
   const [sys_notice_type] = useDict(["sys_notice_type"]);
@@ -70,11 +71,13 @@ const NoticeTable: FC = () => {
       align: "center",
       width: 80,
       render: (_, r) => (
-        <UpdateDrawer id={r.id}>
-          <Tooltip placement="top" title="查看">
-            <EyeOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-          </Tooltip>
-        </UpdateDrawer>
+        <Auth role="system:notice:query">
+          <UpdateDrawer id={r.id}>
+            <Tooltip placement="top" title="查看">
+              <EyeOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+            </Tooltip>
+          </UpdateDrawer>
+        </Auth>
       ),
     },
   ];

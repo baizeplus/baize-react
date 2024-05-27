@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
+import { Auth, DeleteConfirm } from "@/components";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { delConfig, getConfigList } from "@/api/system/config";
 import DictTag from "@/components/DictTag";
@@ -97,21 +97,25 @@ const ConfigTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.configId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
-            <DeleteConfirm
-              id={r.configId}
-              text={`是否确认删除参数编号为"${r.configId}"的数据项?`}
-              delFn={delConfig}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
+            <Auth role="system:config:edit">
+              <UpdateDrawer id={r.configId}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateDrawer>
+            </Auth>
+            <Auth role="system:config:remove">
+              <DeleteConfirm
+                id={r.configId}
+                text={`是否确认删除参数编号为"${r.configId}"的数据项?`}
+                delFn={delConfig}
+                onSuccess={queryFn}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
           </Flex>
         );
       },

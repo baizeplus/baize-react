@@ -30,6 +30,7 @@ import ResetPwdModal from "./TableActive/ResetPwdModal";
 import ExportButton from "./TableActive/ExportButton";
 import ImportButton from "./TableActive/ImportModal";
 import UserRoleDrawer from "./UserRoleDrawer/UserRoleDrawer";
+import { Auth } from "@/components";
 
 type IProps = {
   searchParams: IUserSearchParams;
@@ -134,26 +135,34 @@ const UserTable: FC<IProps> = ({
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateUserModal id={r.userId} onSuccess={getList}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateUserModal>
-            <DeleteUserModal id={r.userId} onSuccess={getList}>
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteUserModal>
-            <ResetPwdModal id={r.userId} name={r.userName}>
-              <Tooltip placement="top" title="重置密码">
-                <KeyOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </ResetPwdModal>
-            <UserRoleDrawer id={r.userId}>
-              <Tooltip placement="top" title="分配角色">
-                <CheckCircleOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UserRoleDrawer>
+            <Auth role="system:user:edit">
+              <UpdateUserModal id={r.userId} onSuccess={getList}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateUserModal>
+            </Auth>
+            <Auth role="system:user:remove">
+              <DeleteUserModal id={r.userId} onSuccess={getList}>
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteUserModal>
+            </Auth>
+            <Auth role="system:user:resetPwd">
+              <ResetPwdModal id={r.userId} name={r.userName}>
+                <Tooltip placement="top" title="重置密码">
+                  <KeyOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </ResetPwdModal>
+            </Auth>
+            <Auth role="system:user:edit">
+              <UserRoleDrawer id={r.userId}>
+                <Tooltip placement="top" title="分配角色">
+                  <CheckCircleOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UserRoleDrawer>
+            </Auth>
             {/* <Tooltip placement="top" title="数据权限">
               <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
             </Tooltip> */}
@@ -183,38 +192,48 @@ const UserTable: FC<IProps> = ({
     <div>
       <Flex justify="space-between" className="mb-2">
         <Flex gap="small">
-          <UpdateUserModal onSuccess={getList}>
-            <Button type="primary" icon={<PlusOutlined />}>
-              新增
-            </Button>
-          </UpdateUserModal>
-          <UpdateUserModal
-            id={(selectedRowKeys[0] || "") as string}
-            onSuccess={getList}
-          >
-            <Button
-              disabled={!selectedRowKeys.length || selectedRowKeys.length > 1}
-              type="primary"
-              icon={<FormOutlined />}
+          <Auth role="system:user:add">
+            <UpdateUserModal onSuccess={getList}>
+              <Button type="primary" icon={<PlusOutlined />}>
+                新增
+              </Button>
+            </UpdateUserModal>
+          </Auth>
+          <Auth role="system:user:edit">
+            <UpdateUserModal
+              id={(selectedRowKeys[0] || "") as string}
+              onSuccess={getList}
             >
-              修改
-            </Button>
-          </UpdateUserModal>
-          <DeleteUserModal ref={deleteRef} onSuccess={getList}>
-            <Button
-              danger
-              ghost
-              disabled={!selectedRowKeys.length}
-              icon={<DeleteOutlined />}
-              onClick={() =>
-                deleteRef.current?.deleteUser(selectedRowKeys.join(","))
-              }
-            >
-              删除
-            </Button>
-          </DeleteUserModal>
-          <ImportButton />
-          <ExportButton />
+              <Button
+                disabled={!selectedRowKeys.length || selectedRowKeys.length > 1}
+                type="primary"
+                icon={<FormOutlined />}
+              >
+                修改
+              </Button>
+            </UpdateUserModal>
+          </Auth>
+          <Auth role="system:user:remove">
+            <DeleteUserModal ref={deleteRef} onSuccess={getList}>
+              <Button
+                danger
+                ghost
+                disabled={!selectedRowKeys.length}
+                icon={<DeleteOutlined />}
+                onClick={() =>
+                  deleteRef.current?.deleteUser(selectedRowKeys.join(","))
+                }
+              >
+                删除
+              </Button>
+            </DeleteUserModal>
+          </Auth>
+          <Auth role="system:user:import">
+            <ImportButton />
+          </Auth>
+          <Auth role="system:user:export">
+            <ExportButton />
+          </Auth>
         </Flex>
         <Flex gap="small">
           <Tooltip title={hideSearch ? "显示搜索" : "隐藏搜索"}>

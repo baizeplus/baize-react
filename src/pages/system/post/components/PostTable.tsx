@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
+import { Auth, DeleteConfirm } from "@/components";
 import { delPost, getPostList } from "@/api/system/post";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import DictTag from "@/components/DictTag";
@@ -71,21 +71,25 @@ const PostTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.postId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
-            <DeleteConfirm
-              id={r.postId}
-              text={`是否确认删除岗位编号为"${r.postId}"的数据项?`}
-              delFn={delPost}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
+            <Auth role="system:post:edit">
+              <UpdateDrawer id={r.postId}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateDrawer>
+            </Auth>
+            <Auth role="system:post:remove">
+              <DeleteConfirm
+                id={r.postId}
+                text={`是否确认删除岗位编号为"${r.postId}"的数据项?`}
+                delFn={delPost}
+                onSuccess={queryFn}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
           </Flex>
         );
       },

@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm } from "@/components";
+import { Auth, DeleteConfirm } from "@/components";
 import { delDept, getDeptList } from "@/api/system/dept";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import useDict from "@/hooks/useDict";
@@ -57,26 +57,32 @@ const DeptTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.deptId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
-            <UpdateDrawer parentId={r.deptId}>
-              <Tooltip placement="top" title="新增">
-                <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
-            <DeleteConfirm
-              id={r.deptId}
-              text={`是否确认删除名称为"${r.deptName}"的数据项?`}
-              delFn={delDept}
-              onSuccess={queryFn}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
+            <Auth role="system:dept:edit">
+              <UpdateDrawer id={r.deptId}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateDrawer>
+            </Auth>
+            <Auth role="system:dept:add">
+              <UpdateDrawer parentId={r.deptId}>
+                <Tooltip placement="top" title="新增">
+                  <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateDrawer>
+            </Auth>
+            <Auth role="system:dept:remove">
+              <DeleteConfirm
+                id={r.deptId}
+                text={`是否确认删除名称为"${r.deptName}"的数据项?`}
+                delFn={delDept}
+                onSuccess={queryFn}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
           </Flex>
         );
       },

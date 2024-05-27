@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
-import { DeleteConfirm, DictTag } from "@/components";
+import { Auth, DeleteConfirm, DictTag } from "@/components";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { delDictType, getDictTypeList } from "@/api/system/dict/type";
 import { Link } from "react-router-dom";
@@ -72,21 +72,25 @@ const DictTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <UpdateDrawer id={r.dictId}>
-              <Tooltip placement="top" title="修改">
-                <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </UpdateDrawer>
-            <DeleteConfirm
-              id={r.dictId}
-              text={`是否确认删除字典编号为"${r.dictId}"的数据项?`}
-              delFn={delDictType}
-              onSuccess={() => queryFn?.("del")}
-            >
-              <Tooltip placement="top" title="删除">
-                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
-            </DeleteConfirm>
+            <Auth role="system:dict:edit">
+              <UpdateDrawer id={r.dictId}>
+                <Tooltip placement="top" title="修改">
+                  <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateDrawer>
+            </Auth>
+            <Auth role="system:dict:remove">
+              <DeleteConfirm
+                id={r.dictId}
+                text={`是否确认删除字典编号为"${r.dictId}"的数据项?`}
+                delFn={delDictType}
+                onSuccess={() => queryFn?.("del")}
+              >
+                <Tooltip placement="top" title="删除">
+                  <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </DeleteConfirm>
+            </Auth>
           </Flex>
         );
       },

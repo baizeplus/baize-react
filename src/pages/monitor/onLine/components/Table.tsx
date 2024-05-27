@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import Query from "@/components/QueryTable";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { forceLogout, getOnList } from "@/api/monitor/online";
-import { DeleteConfirm } from "@/components";
+import { Auth, DeleteConfirm } from "@/components";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const Table: FC = () => {
@@ -122,16 +122,18 @@ const Table: FC = () => {
       width: 100,
       render: (_, r) => {
         return (
-          <DeleteConfirm
-            id={r.tokenId}
-            text={`是否确认强退名称为"${r.userName}"的用户?`}
-            delFn={forceLogout}
-            onSuccess={queryFn}
-          >
-            <Tooltip placement="top" title="强退">
-              <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-            </Tooltip>
-          </DeleteConfirm>
+          <Auth role="monitor:online:forceLogout">
+            <DeleteConfirm
+              id={r.tokenId}
+              text={`是否确认强退名称为"${r.userName}"的用户?`}
+              delFn={forceLogout}
+              onSuccess={queryFn}
+            >
+              <Tooltip placement="top" title="强退">
+                <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+              </Tooltip>
+            </DeleteConfirm>
+          </Auth>
         );
       },
     },

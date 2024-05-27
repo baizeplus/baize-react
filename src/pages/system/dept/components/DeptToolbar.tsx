@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import Query from "@/components/QueryTable";
 import UpdateDrawer from "./TableActive/UpdateDrawer";
+import { Auth } from "@/components";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 
 type IMenuToolbarProps = {
@@ -15,11 +16,13 @@ const DeptToolbar: FC<IMenuToolbarProps> = () => {
 
   return (
     <Query.Toolbar>
-      <UpdateDrawer>
-        <Button type="primary" icon={<PlusOutlined />}>
-          新增
-        </Button>
-      </UpdateDrawer>
+      <Auth role="system:dept:add">
+        <UpdateDrawer>
+          <Button type="primary" icon={<PlusOutlined />}>
+            新增
+          </Button>
+        </UpdateDrawer>
+      </Auth>
       {/* <UpdateRoleDrawer id={selectedRowId[0]}> */}
       {/* <Button
           icon={<SwapOutlined />}
