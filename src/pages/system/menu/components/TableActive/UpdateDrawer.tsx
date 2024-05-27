@@ -2,6 +2,7 @@ import { FC, useCallback, useState } from "react";
 import {
   App,
   Col,
+  Flex,
   Form,
   Input,
   InputNumber,
@@ -14,9 +15,11 @@ import {
 
 import QueryTable from "@/components/QueryTable";
 import { handleTree } from "@/utils/baize";
-import { DrawerWarpper } from "@/components";
+import { DrawerWarpper, SvgIcon } from "@/components";
 import { addMenu, getMenu, getTreeSelect, updateMenu } from "@/api/system/menu";
 import useDict from "@/hooks/useDict";
+
+import iconsOptions from "./iconOptions";
 
 type IUpdateDrawerProps = {
   children: React.ReactNode;
@@ -165,7 +168,25 @@ const UpdateDrawer: FC<IUpdateDrawerProps> = ({
                 name="icon"
                 rules={[{ required: true, message: "请输入菜单图标" }]}
               >
-                <Select placeholder="请选择菜单图标" className="!w-full" />
+                <Select
+                  showSearch
+                  placeholder="请选择菜单图标"
+                  className="!w-full"
+                  filterOption={(input, option) =>
+                    String(option?.value ?? "")?.includes(input)
+                  }
+                >
+                  {iconsOptions.map((text) => {
+                    return (
+                      <Select.Option key={text} value={text}>
+                        <Flex align="center">
+                          <SvgIcon name={text} className="mr-2" />
+                          {text}
+                        </Flex>
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
               </Form.Item>
             </Col>
           )}

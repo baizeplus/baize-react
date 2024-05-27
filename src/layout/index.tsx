@@ -45,7 +45,7 @@ const Layout: FC<IBaizeLayoutProps> = () => {
   }, [size]);
 
   return (
-    <AntdLayout className="h-full overflow-x-hidden overflow-y-auto !flex !flex-row">
+    <AntdLayout className="h-full overflow-x-hidden overflow-y-auto">
       <Sidebar collapsed={collapsed} onCollapsed={setCollapsed} />
       <AntdLayout>
         <Navbar collapsed={collapsed} onCollapsedIcon={setCollapsed} />
