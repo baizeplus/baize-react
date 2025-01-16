@@ -21,7 +21,9 @@ const QueryForm: FC<IQueryFormProps> = ({ children, onSearch }) => {
             <Button htmlType="submit" icon={<SearchOutlined />} type="primary">
               查询
             </Button>
-            <Button icon={<RedoOutlined />}>重置</Button>
+            <Button icon={<RedoOutlined />} htmlType="reset">
+              重置
+            </Button>
           </Flex>
         </Form.Item>
       </Flex>
