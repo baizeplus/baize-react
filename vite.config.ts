@@ -23,7 +23,7 @@ export default defineConfig(() => {
       proxy: {
         // https://cn.vitejs.dev/config/#server-proxy
         "/dev-api": {
-          target: "http://api.ibaize.vip",
+          target: "https://api.ibaize.vip",
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/dev-api/, ""),
         },
