@@ -22,9 +22,10 @@ const Layout: FC<IBaizeLayoutProps> = () => {
 
   useEffect(() => {
     // if(!routesConfig.length && location.pathname.includes('index')) {
-    getUserInfo();
-    getRouterConfig();
-
+    (async () => {
+      await getUserInfo();
+      getRouterConfig();
+    })();
     // }
   }, []);
 
