@@ -1,17 +1,19 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { Flex, TableProps, Tag } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
-import { delRole, getRoleList } from "@/api/system/role";
+import { allocatedUserList, authUserCancel } from "@/api/system/role";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { Auth, DeleteConfirm } from "@/components";
+import { useParams } from "react-router-dom";
 
 const AuthUserTable: FC = () => {
+  const { roleId } = useParams();
   const { queryFn } = Query.useQueryTable();
 
-  const columns: TableProps<IRoleItem>["columns"] = [
+  const columns: TableProps<IUserItem>["columns"] = [
     {
       title: "用户名称",
       dataIndex: "userName",
@@ -75,9 +77,10 @@ const AuthUserTable: FC = () => {
           <Auth role="system:role:remove">
             <DeleteConfirm
               id={r.roleId}
-              tipTag="s"
-              delFn={delRole}
-              onSuccess={queryFn}
+              text={`确认要取消「${r.userName}」用户的角色？`}
+              delFn={() => authUserCancel({ roleId: roleId, userId: r.userId })}
+              okText="确认"
+              onSuccess={() => queryFn?.("del")}
             >
               <Flex
                 gap={4}
@@ -92,14 +95,20 @@ const AuthUserTable: FC = () => {
       },
     },
   ];
+  const _queryFn = useCallback(
+    (...args: Parameters<typeof allocatedUserList>) => {
+      return allocatedUserList({ roleId, ...args[0] });
+    },
+    [roleId],
+  );
 
   return (
     <>
       <Query.Table
         isRowSelection
         isPagination
-        rowKey={(e) => e.roleId}
-        queryFn={getRoleList}
+        rowKey={(e) => e.userId}
+        queryFn={_queryFn}
         columns={columns}
       />
     </>

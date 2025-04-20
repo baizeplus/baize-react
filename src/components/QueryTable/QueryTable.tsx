@@ -119,6 +119,13 @@ const QueryTable = forwardRef(
       }
     }, [authQuery, getList]);
 
+    useEffect(() => {
+      return () => {
+        setSelectedRowKeys([]);
+        setSelectedRows([]);
+      };
+    }, [setSelectedRowKeys, setSelectedRows]);
+
     const handleSelectChange = (
       newSelectedRowKeys: React.Key[],
       newSelectedRow: unknown[],

@@ -26,7 +26,7 @@ const RoleToolbar: FC<IRoleToolbarProps> = () => {
       <Auth role="system:role:edit">
         <UpdateRoleDrawer id={selectedRowId[0]}>
           <Button
-            disabled={!selectedRowId.length || selectedRowId.length > 1}
+            disabled={!selectedRowId.length}
             type="primary"
             icon={<FormOutlined />}
           >

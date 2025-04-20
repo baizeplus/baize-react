@@ -1,11 +1,12 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Button } from "antd";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Query from "@/components/QueryTable";
 import { Auth, DeleteConfirm } from "@/components";
-import { delRole } from "@/api/system/role";
+import { authUserCancelAll } from "@/api/system/role";
+import AddUserDrawer from "./UserRoleDrawer/AddUserDrawer";
 
 type IAuthUserToolbarProps = {
   selectedRowKeys?: React.Key[];
@@ -13,23 +14,33 @@ type IAuthUserToolbarProps = {
 
 const AuthUserToolbar: FC<IAuthUserToolbarProps> = () => {
   const navigate = useNavigate();
+  const { roleId } = useParams();
   const { selectedRowId, queryFn } = Query.useQueryTable();
+
+  useEffect(() => {
+    console.log(selectedRowId);
+  }, [selectedRowId]);
 
   return (
     <Query.Toolbar>
       <Auth role="system:role:add">
-        {/* <UpdateRoleDrawer> */}
-        <Button type="primary" icon={<PlusOutlined />}>
-          添加用户
-        </Button>
-        {/* </UpdateRoleDrawer> */}
+        <AddUserDrawer>
+          <Button type="primary" icon={<PlusOutlined />}>
+            添加用户
+          </Button>
+        </AddUserDrawer>
       </Auth>
 
       <Auth role="system:role:remove">
         <DeleteConfirm
-          id={selectedRowId.join(",")}
-          tipTag="角色"
-          delFn={delRole}
+          text="是否取消选中用户授权数据项?"
+          delFn={() =>
+            authUserCancelAll({
+              roleId: roleId,
+              userIds: selectedRowId.join(","),
+            })
+          }
+          okText="确认"
           onSuccess={() => queryFn?.("del")}
         >
           <Button

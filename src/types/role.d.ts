@@ -29,3 +29,13 @@ interface IEditRoleParams {
   menuCheckStrictly: boolean;
   menuIds: string[];
 }
+
+interface IAuthUserCancelAllParams {
+  roleId?: string;
+  userIds: string;
+}
+
+interface IAuthUserCancelParams {
+  roleId?: string;
+  userId: string;
+}

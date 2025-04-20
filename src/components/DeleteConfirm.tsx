@@ -6,6 +6,8 @@ type IDeleteConfirmProps = {
   id?: string;
   ids?: string;
   text?: string;
+  okText?: string;
+  cancelText?: string;
   successText?: string;
   tipTag?: string;
   delFn: (ids: string) => Promise<unknown>;
@@ -18,6 +20,8 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
   id = "",
   ids,
   tipTag,
+  okText,
+  cancelText,
   text,
   successText,
   delFn,
@@ -44,9 +48,9 @@ const DeleteConfirm: FC<IDeleteConfirmProps> = ({
         message.success(successText || "删除成功");
         onSuccess?.();
       },
-      okText: "删除",
+      okText: okText || "删除",
       okType: "danger",
-      cancelText: "取消",
+      cancelText: cancelText || "取消",
     });
   };
 
