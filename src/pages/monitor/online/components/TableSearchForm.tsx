@@ -29,10 +29,18 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
   return (
     <Query.Form onParamsFormat={handleParamsFormat}>
       <Form.Item label="登录地址" name="ipaddr">
-        <Input placeholder="请输入登录地址" className="!w-[230px]" />
+        <Input
+          placeholder="请输入登录地址"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="用户名称" name="userName">
-        <Input placeholder="请输入用户名称" className="!w-[230px]" />
+        <Input
+          placeholder="请输入用户名称"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
     </Query.Form>
   );

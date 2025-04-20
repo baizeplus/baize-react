@@ -21,7 +21,7 @@ const ConfigTable: FC = () => {
       dataIndex: "configId",
       key: "configId",
       align: "center",
-      width: 160,
+      ellipsis: true,
     },
     {
       title: "参数名称",
@@ -93,7 +93,7 @@ const ConfigTable: FC = () => {
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 100,
+      ellipsis: true,
       render: (_, r) => {
         return (
           <Flex gap={8}>

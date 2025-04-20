@@ -21,6 +21,7 @@ const MenuTable: FC = () => {
       dataIndex: "permissionName",
       key: "permissionName",
       align: "center",
+      ellipsis: true,
       width: 160,
     },
     {
@@ -99,6 +100,7 @@ const MenuTable: FC = () => {
     <>
       <Query.Table
         isTree
+        scroll={{ x: 750 }}
         idkey="permissionId"
         rowKey={(e) => e.permissionId}
         queryFn={getPermissionList}

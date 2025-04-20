@@ -8,6 +8,7 @@ import { changeRoleStatus, delRole, getRoleList } from "@/api/system/role";
 import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { Auth, DeleteConfirm, TableItemSwitch } from "@/components";
+import { Link } from "react-router-dom";
 
 const RoleTable: FC = () => {
   const { queryFn } = Query.useQueryTable();
@@ -18,7 +19,7 @@ const RoleTable: FC = () => {
       dataIndex: "roleId",
       key: "roleId",
       align: "center",
-      width: 120,
+      ellipsis: true,
     },
     {
       title: "角色名称",
@@ -96,9 +97,11 @@ const RoleTable: FC = () => {
               </DeleteConfirm>
             </Auth>
             <Auth role="system:role:edit">
-              <Tooltip placement="top" title="分配用户">
-                <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-              </Tooltip>
+              <Link to={`../system/role-auth/user/${r.roleId}`}>
+                <Tooltip placement="top" title="分配用户">
+                  <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </Link>
             </Auth>
           </Flex>
         );

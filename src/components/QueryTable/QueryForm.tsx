@@ -22,7 +22,7 @@ const QForm: FC<IQueryFormProps> = ({ children, params, onParamsFormat }) => {
   }, [params, setParams]);
 
   return hideSearch ? null : (
-    <Card className="shadow-sm" classNames={{ body: "!p-4 !pb-0" }}>
+    <Card className="shadow-sm " classNames={{ body: "!p-4 !pb-0" }}>
       <QueryForm onSearch={onSearch}>{children}</QueryForm>
     </Card>
   );

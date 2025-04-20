@@ -25,7 +25,7 @@ export const JobLog = WFC(lazy(() => import("@/pages/monitor/job/JobLog")));
 
 export const Page404 = WFC(lazy(() => import("@/pages/error/404")));
 
-export const homeRoutes = [
+export const routes = [
   {
     name: "System",
     path: "/system",
@@ -53,10 +53,6 @@ export const homeRoutes = [
     permissions: ["tool"],
     meta: { title: "系统工具", icon: "tool", noCache: false },
   },
-];
-
-//菜单路由，基于用户权限动态去加载
-export const permissionRoutes = [
   {
     name: "User",
     parentName: "System",
@@ -71,10 +67,18 @@ export const permissionRoutes = [
     name: "Role",
     parentName: "System",
     path: "role",
-    hidden: false,
     component: () => import("@/pages/system/role"),
     permissions: ["system:role"],
     meta: { title: "角色管理", icon: "peoples", noCache: false },
+  },
+  {
+    name: "RoleAuth",
+    parentName: "System",
+    path: "role-auth/user/:roleId",
+    component: () => import("@/pages/system/role/AuthUser"),
+    hidden: true,
+    permissions: ["system:role"],
+    meta: { title: "分配用户", icon: "dict", noCache: false },
   },
   {
     name: "Permission",
@@ -112,6 +116,15 @@ export const permissionRoutes = [
     component: () => import("@/pages/system/dict"),
     permissions: ["system:dict"],
     meta: { title: "字典管理", icon: "dict", noCache: false },
+  },
+  {
+    name: "DictData",
+    parentName: "System",
+    path: "/dict-type/:dictType",
+    component: () => import("@/pages/system/dict/DictData"),
+    hidden: true,
+    permissions: ["system:dict"],
+    meta: { title: "字典数据", icon: "dict", noCache: false },
   },
   {
     name: "Config",

@@ -15,16 +15,24 @@ const TypeForm: FC = () => {
   return (
     <>
       <Form.Item label="字典名称" name="dictType">
-        <Select placeholder="请选择字典名称" className="!w-[230px]" />
+        <Select
+          placeholder="请选择字典名称"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="字典标签" name="dictLabel">
-        <Input placeholder="请输入字典标签" className="!w-[230px]" />
+        <Input
+          placeholder="请输入字典标签"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="状态" name="status">
         <Select
           allowClear
           placeholder="请选择数据状态"
-          className="!w-[230px]"
+          className="min-w-[230px]"
           options={sys_normal_disable}
         />
       </Form.Item>

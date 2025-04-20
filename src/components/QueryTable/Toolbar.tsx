@@ -23,9 +23,8 @@ const Toolbar: FC<IQueryProps> = ({ children }) => {
   };
 
   return (
-    <Flex justify="space-between" className="mb-2">
-      <Flex gap="small">
-        <span />
+    <Flex gap={12} className="mb-2" wrap="wrap">
+      <Flex gap="small" wrap="wrap">
         {children}
       </Flex>
       <Flex gap="small">

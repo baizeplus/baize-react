@@ -137,6 +137,7 @@ const QueryTable = forwardRef(
         loading={loading}
         dataSource={dataSource}
         rowSelection={isRowSelection ? rowSelection : undefined}
+        scroll={{ x: true }}
         pagination={{
           ...(!isTree && { showTotal: (total) => `共 ${total} 条` }),
           total: total,

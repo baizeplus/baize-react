@@ -23,13 +23,17 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
   return (
     <Query.Form>
       <Form.Item label="任务名称" name="jobName">
-        <Input placeholder="请输入任务名称" className="!w-[230px]" />
+        <Input
+          placeholder="请输入任务名称"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="任务组名" name="jobGroup">
         <Select
           allowClear
           placeholder="请输入任务组名"
-          className="!w-[230px]"
+          className="min-w-[230px]"
           options={sys_job_group}
         />
       </Form.Item>
@@ -37,7 +41,7 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
         <Select
           allowClear
           placeholder="请选择任务状态"
-          className="!w-[230px]"
+          className="min-w-[230px]"
           options={sys_job_status}
         />
       </Form.Item>

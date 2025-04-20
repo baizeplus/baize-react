@@ -22,7 +22,7 @@ const PostTable: FC = () => {
       dataIndex: "postId",
       key: "postId",
       align: "center",
-      width: 160,
+      ellipsis: true,
     },
     {
       title: "岗位编码",

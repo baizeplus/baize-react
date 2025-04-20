@@ -19,7 +19,7 @@ const Table: FC = () => {
       dataIndex: "operId",
       key: "operId",
       align: "center",
-      width: 160,
+      ellipsis: true,
     },
     {
       title: "系统模块",
@@ -87,7 +87,7 @@ const Table: FC = () => {
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 100,
+      ellipsis: true,
       render: () => {
         return (
           <Auth role="monitor:operlog:query">

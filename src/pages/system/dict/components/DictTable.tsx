@@ -21,6 +21,7 @@ const DictTable: FC = () => {
       dataIndex: "dictId",
       key: "dictId",
       align: "center",
+      ellipsis: true,
     },
     {
       title: "字典名称",

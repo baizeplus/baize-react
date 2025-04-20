@@ -22,7 +22,7 @@ const DeptTable: FC = () => {
       dataIndex: "deptName",
       key: "deptName",
       align: "center",
-      width: 160,
+      ellipsis: true,
     },
     {
       title: "排序",
@@ -95,6 +95,7 @@ const DeptTable: FC = () => {
         idkey="deptId"
         rowKey={(e) => e.deptId}
         isTree
+        scroll={{ x: 750 }}
         expandable={{
           defaultExpandAllRows: true,
         }}

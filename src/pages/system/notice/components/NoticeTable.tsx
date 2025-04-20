@@ -70,6 +70,7 @@ const NoticeTable: FC = () => {
       key: "active",
       align: "center",
       width: 80,
+      ellipsis: true,
       render: (_, r) => (
         <Auth role="system:notice:query">
           <UpdateDrawer id={r.id}>

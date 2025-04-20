@@ -13,10 +13,10 @@ const QueryForm: FC<IQueryFormProps> = ({ children, onSearch }) => {
 
   // const handleSearch = () =
   return (
-    <Form form={form} onFinish={onSearch} className="query-form">
-      <Flex gap="middle" wrap="wrap">
+    <Form form={form} onFinish={onSearch} className="query-form w-full">
+      <Flex gap="middle" wrap="wrap" className="flex-col md:flex-row">
         {children}
-        <Form.Item>
+        <Form.Item className="!mb-0 self-end md:self-auto">
           <Flex gap={10}>
             <Button htmlType="submit" icon={<SearchOutlined />} type="primary">
               查询

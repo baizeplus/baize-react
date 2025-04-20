@@ -80,7 +80,7 @@ const UserTable: FC<IProps> = ({
       dataIndex: "userId",
       key: "userId",
       align: "center",
-      width: 120,
+      ellipsis: true,
     },
     {
       title: "用户名称",
@@ -200,8 +200,8 @@ const UserTable: FC<IProps> = ({
 
   return (
     <div>
-      <Flex justify="space-between" className="mb-2">
-        <Flex gap="small">
+      <Flex gap={12} justify="space-between" className="mb-2" wrap="wrap">
+        <Flex gap="small" wrap="wrap">
           <Auth role="system:user:add">
             <UpdateUserModal onSuccess={getList}>
               <Button type="primary" icon={<PlusOutlined />}>
@@ -281,6 +281,7 @@ const UserTable: FC<IProps> = ({
         rowSelection={rowSelection}
         dataSource={list}
         loading={loading}
+        scroll={{ x: true }}
         pagination={{
           showTotal: (total) => `共 ${total} 条`,
           total: total,

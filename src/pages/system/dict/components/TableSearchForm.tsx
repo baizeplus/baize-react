@@ -34,22 +34,30 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
   return (
     <Query.Form onParamsFormat={handleParamsFormat}>
       <Form.Item label="字典名称" name="dictName">
-        <Input placeholder="请输入字典名称" className="!w-[230px]" />
+        <Input
+          placeholder="请输入字典名称"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="字典类型" name="dictType">
-        <Input placeholder="请输入字典类型" className="!w-[230px]" />
+        <Input
+          placeholder="请输入字典类型"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="状态" name="status">
         <Select
           allowClear
           placeholder="请选择状态"
-          className="!w-[230px]"
+          className="min-w-[230px]"
           options={sys_normal_disable}
         />
       </Form.Item>
       <Form.Item label="创建时间" name="dataScope">
         <RangePicker
-          className="!w-[235px]"
+          className="w-full"
           placeholder={["开始日期", "结束日期"]}
         />
       </Form.Item>

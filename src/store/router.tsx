@@ -5,11 +5,11 @@ import { create } from "zustand";
 import { Spin } from "antd";
 
 import { constantRoutes } from "@/routes";
-import { homeRoutes, permissionRoutes } from "@/routes/routes";
+import { routes } from "@/routes/routes";
 import SvgIcon from "@/components/SvgIcon";
 import useUserStore from "./user";
 
-// 使用更准确的类型定义
+// 使用更通用的类型定义
 type ComponentLoader = () => Promise<{ default: React.ComponentType }>;
 
 interface RouterConfigItem {
@@ -69,7 +69,7 @@ const filterRoutesByAuth = (routes: RouterConfigItem[]): RouterConfigItem[] => {
 // 将扁平的权限路由转换为树形结构
 const buildRoutesTree = (): RouterConfigItem[] => {
   // 合并所有路由
-  const allRoutes = [...homeRoutes, ...permissionRoutes];
+  const allRoutes = [...routes] as RouterConfigItem[];
 
   // 过滤出用户有权限的路由
   const filteredRoutes = filterRoutesByAuth(allRoutes);

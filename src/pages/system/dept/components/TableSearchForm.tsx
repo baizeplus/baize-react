@@ -20,13 +20,17 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
   return (
     <Query.Form>
       <Form.Item label="部门名称" name="deptName">
-        <Input placeholder="请输入菜单名称" className="!w-[230px]" />
+        <Input
+          placeholder="请输入部门名称"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="状态" name="status">
         <Select
           allowClear
-          placeholder="请选择菜单状态"
-          className="!w-[230px]"
+          placeholder="请选择状态"
+          className="min-w-[230px]"
           options={sys_normal_disable}
         />
       </Form.Item>

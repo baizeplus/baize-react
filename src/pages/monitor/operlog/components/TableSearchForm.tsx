@@ -30,23 +30,35 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
   return (
     <Query.Form onParamsFormat={handleParamsFormat}>
       <Form.Item label="操作地址" name="operIp">
-        <Input placeholder="请输入操作地址" className="!w-[230px]" />
+        <Input
+          placeholder="请输入操作地址"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="系统模块" name="title">
-        <Input placeholder="请输入系统模块" className="!w-[230px]" />
+        <Input
+          placeholder="请输入系统模块"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="操作人员" name="operName">
-        <Input placeholder="请输入操作人员" className="!w-[230px]" />
+        <Input
+          placeholder="请输入操作人员"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="类型" name="businessType">
-        <Select placeholder="请选择操作类型" className="!w-[230px]" />
+        <Select placeholder="请选择操作类型" className="min-w-[230px]" />
       </Form.Item>
       <Form.Item label="状态" name="status">
-        <Select placeholder="请选择菜单状态" className="!w-[230px]" />
+        <Select placeholder="请选择菜单状态" className="min-w-[230px]" />
       </Form.Item>
       <Form.Item label="创建时间" name="dataScope">
         <RangePicker
-          className="!w-[235px]"
+          className="w-full"
           placeholder={["开始日期", "结束日期"]}
         />
       </Form.Item>

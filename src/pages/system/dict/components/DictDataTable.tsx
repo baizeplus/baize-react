@@ -22,6 +22,7 @@ const DictTypeTable: FC = () => {
       dataIndex: "dictCode",
       key: "dictCode",
       align: "center",
+      ellipsis: true,
     },
     {
       title: "字典标签",

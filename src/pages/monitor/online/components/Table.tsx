@@ -119,7 +119,7 @@ const Table: FC = () => {
       dataIndex: "active",
       key: "active",
       align: "center",
-      width: 100,
+      ellipsis: true,
       render: (_, r) => {
         return (
           <Auth role="monitor:online:forceLogout">

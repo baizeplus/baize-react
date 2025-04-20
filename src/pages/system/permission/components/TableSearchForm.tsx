@@ -20,13 +20,17 @@ const TableSearchForm: FC<ITableSearchFormProps> = () => {
   return (
     <Query.Form>
       <Form.Item label="权限名称" name="permissionName">
-        <Input placeholder="请输入权限名称" className="!w-[230px]" />
+        <Input
+          placeholder="请输入权限名称"
+          className="min-w-[230px]"
+          allowClear
+        />
       </Form.Item>
       <Form.Item label="状态" name="status">
         <Select
           allowClear
           placeholder="请选择权限状态"
-          className="!w-[230px]"
+          className="min-w-[230px]"
           options={sys_normal_disable}
         />
       </Form.Item>
