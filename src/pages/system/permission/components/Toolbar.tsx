@@ -7,16 +7,16 @@ import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
 import { Auth } from "@/components";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 
-type IMenuToolbarProps = {
+type IPermissionToolbarProps = {
   selectedRowKeys?: React.Key[];
 };
 
-const MenuToolbar: FC<IMenuToolbarProps> = () => {
+const PermissionToolbar: FC<IPermissionToolbarProps> = () => {
   // const { queryFn } = Query.useQueryTable();
 
   return (
     <Query.Toolbar>
-      <Auth role="system:menu:add">
+      <Auth role="system:permission:add">
         <UpdateMenuDrawer>
           <Button type="primary" icon={<PlusOutlined />}>
             新增
@@ -35,4 +35,4 @@ const MenuToolbar: FC<IMenuToolbarProps> = () => {
   );
 };
 
-export default MenuToolbar;
+export default PermissionToolbar;

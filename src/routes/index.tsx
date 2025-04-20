@@ -7,8 +7,6 @@ import {
   Dashboard,
   Layout,
   UserProfile,
-  DictData,
-  JobLog,
 } from "./routes";
 import { getToken } from "@/utils/auth";
 import { Skeleton } from "antd";
@@ -43,14 +41,6 @@ export const constantRoutes: RouteObject[] = [
             element: <UserProfile />,
           },
         ],
-      },
-      {
-        path: "system/dict-type/:dictType",
-        element: <DictData />,
-      },
-      {
-        path: "monitor/job-log/:jobLogId",
-        element: <JobLog />,
       },
       {
         path: "*",

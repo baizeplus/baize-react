@@ -59,3 +59,9 @@ interface IEditUserParams {
   roleIds?: string[];
   remark?: string;
 }
+
+interface IUpdateUserDataScopeParams {
+  userId: string;
+  dataScope: string;
+  deptIds: string[];
+}

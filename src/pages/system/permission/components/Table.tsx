@@ -7,53 +7,33 @@ import Query from "@/components/QueryTable";
 // import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { Auth, DeleteConfirm } from "@/components";
-import { delMenu, getMenuList } from "@/api/system/menu";
+import { delPermission, getPermissionList } from "@/api/system/permission";
 import UpdateMenuDrawer from "./TableActive/UpdateDrawer";
 import useDict from "@/hooks/useDict";
 import DictTag from "@/components/DictTag";
-import SvgIcon from "@/components/SvgIcon";
 
 const MenuTable: FC = () => {
   const [sys_normal_disable] = useDict(["sys_normal_disable"]);
   const { queryFn } = Query.useQueryTable();
-  const columns: TableProps<IMenuItem>["columns"] = [
+  const columns: TableProps<IPermissionItem>["columns"] = [
     {
-      title: "菜单名称",
-      dataIndex: "menuName",
-      key: "menuName",
+      title: "权限名称",
+      dataIndex: "permissionName",
+      key: "permissionName",
       align: "center",
       width: 160,
     },
     {
-      title: "图标",
-      dataIndex: "icon",
-      key: "icon",
-      align: "center",
-      width: 60,
-      render: (t) => (
-        <Flex justify="center">
-          <SvgIcon name={t} />
-        </Flex>
-      ),
-    },
-    {
       title: "排序",
-      dataIndex: "orderNum",
-      key: "orderNum",
+      dataIndex: "sort",
+      key: "sort",
       align: "center",
       ellipsis: true,
     },
     {
       title: "权限标识",
-      dataIndex: "perms",
-      key: "perms",
-      align: "center",
-      ellipsis: true,
-    },
-    {
-      title: "组件路径",
-      dataIndex: "component",
-      key: "component",
+      dataIndex: "permission",
+      key: "permission",
       align: "center",
       ellipsis: true,
     },
@@ -63,15 +43,7 @@ const MenuTable: FC = () => {
       key: "status",
       align: "center",
       ellipsis: true,
-      render: (t) => (
-        <DictTag options={sys_normal_disable} value={t} />
-        // <Tag
-        //   color={t === "0" ? "#e6f4ff" : "#fff1f0"}
-        //   className={t === "0" ? "!text-primary" : "!text-[#ff4d4f]"}
-        // >
-        //   {t === "0" ? "正常" : "停用"}
-        // </Tag>
-      ),
+      render: (t) => <DictTag options={sys_normal_disable} value={t} />,
     },
     {
       title: "创建时间",
@@ -91,25 +63,25 @@ const MenuTable: FC = () => {
       render: (_, r) => {
         return (
           <Flex gap={8}>
-            <Auth role="system:menu:edit">
-              <UpdateMenuDrawer id={r.menuId}>
+            <Auth role="system:permission:edit">
+              <UpdateMenuDrawer id={r.permissionId}>
                 <Tooltip placement="top" title="修改">
                   <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
                 </Tooltip>
               </UpdateMenuDrawer>
             </Auth>
-            <Auth role="system:menu:add">
-              <UpdateMenuDrawer parentId={r.menuId}>
+            <Auth role="system:permission:add">
+              <UpdateMenuDrawer parentId={r.permissionId}>
                 <Tooltip placement="top" title="新增">
                   <PlusOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
                 </Tooltip>
               </UpdateMenuDrawer>
             </Auth>
-            <Auth role="system:menu:remove">
+            <Auth role="system:permission:remove">
               <DeleteConfirm
-                id={r.menuId}
-                tipTag="菜单"
-                delFn={delMenu}
+                id={r.permissionId}
+                tipTag="权限"
+                delFn={delPermission}
                 onSuccess={queryFn}
               >
                 <Tooltip placement="top" title="删除">
@@ -127,9 +99,9 @@ const MenuTable: FC = () => {
     <>
       <Query.Table
         isTree
-        idkey="menuId"
-        rowKey={(e) => e.menuId}
-        queryFn={getMenuList}
+        idkey="permissionId"
+        rowKey={(e) => e.permissionId}
+        queryFn={getPermissionList}
         columns={columns}
       />
     </>

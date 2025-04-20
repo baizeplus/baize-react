@@ -44,6 +44,23 @@ export function updateUser(data: IEditUserParams) {
   });
 }
 
+// 请求用户数据权限
+export function selectUserDataScope(userId: IUserItem["userId"] = "") {
+  return request({
+    url: "/system/user/dataScope/" + userId,
+    method: "get",
+  });
+}
+
+// 修改用户数据权限
+export function updateUserDataScope(data: IUpdateUserDataScopeParams) {
+  return request({
+    url: "/system/user/dataScope",
+    method: "put",
+    data: data,
+  });
+}
+
 // 删除用户
 export function delUser(userId: string) {
   return request({

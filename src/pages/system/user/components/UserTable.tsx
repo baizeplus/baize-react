@@ -18,6 +18,7 @@ import {
   PlusOutlined,
   SearchOutlined,
   SyncOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { YYYY_MM_DD, YYYY_MM_DD_HH_mm } from "@/utils/constant";
@@ -31,6 +32,7 @@ import ExportButton from "./TableActive/ExportButton";
 import ImportButton from "./TableActive/ImportModal";
 import UserRoleDrawer from "./UserRoleDrawer/UserRoleDrawer";
 import { Auth } from "@/components";
+import UpdateUserDataScopeModal from "./UpdateUserDataScopeModal";
 
 type IProps = {
   searchParams: IUserSearchParams;
@@ -163,9 +165,17 @@ const UserTable: FC<IProps> = ({
                 </Tooltip>
               </UserRoleDrawer>
             </Auth>
-            {/* <Tooltip placement="top" title="数据权限">
-              <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
-            </Tooltip> */}
+            <Auth role="system:user:edit">
+              <UpdateUserDataScopeModal
+                id={r.userId}
+                userName={r.userName}
+                onSuccess={getList}
+              >
+                <Tooltip placement="top" title="数据权限">
+                  <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
+                </Tooltip>
+              </UpdateUserDataScopeModal>
+            </Auth>
           </Flex>
         );
       },
