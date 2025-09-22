@@ -7,4 +7,5 @@ export { default as TableItemSwitch } from "./TableItemSwitch";
 export { default as DictTag } from "./DictTag";
 export { default as SvgIcon } from "./SvgIcon";
 export { default as Auth } from "./Auth";
+export { default as Breadcrumb } from "./Breadcrumb";
 export const Editor = lazy(() => import("./Editor/Editor"));

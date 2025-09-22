@@ -21,6 +21,7 @@ interface RouterConfigItem {
   alwaysShow?: boolean;
   permissions?: string[];
   parentName?: string;
+  parentMenuKey?: string; // 指定隐藏路由对应的侧边栏菜单项
   meta: {
     title: string;
     icon: string;
@@ -29,10 +30,11 @@ interface RouterConfigItem {
   children?: RouterConfigItem[];
 }
 
-interface RouterConfigNode extends RouterConfigItem {
+interface RouterConfigNode extends Omit<RouterConfigItem, "children"> {
   key: string;
   label: string;
   icon: ReactElement;
+  children?: RouterConfigNode[];
 }
 
 interface RouterStoreProps {
@@ -40,12 +42,14 @@ interface RouterStoreProps {
   sidebarRoutes: RouterConfigNode[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   router: any; // 使用any以避免类型问题
+  isInitialized: boolean; // 标记路由是否已初始化
 }
 
 const useRouterStore = create<RouterStoreProps>(() => ({
   routesConfig: [],
   sidebarRoutes: [],
   router: createBrowserRouter(constantRoutes),
+  isInitialized: false,
 }));
 
 // 检查用户是否有权限访问路由
@@ -146,7 +150,7 @@ function processMenuTree(
         ? `${parentPath}/${node.path}`.replace(/\/+/g, "/")
         : node.path;
 
-      // 创建菜单节点，过滤掉parentName属性避免React警告
+      // 创建菜单节点，过滤掉parentName和parentMenuKey属性避免React警告
       // 通过显式指定要保留的属性来避免lint警告
       const {
         name,
@@ -257,6 +261,13 @@ function generateRoutes(routes: RouterConfigItem[]): RouteObject[] {
 
 // 初始化路由配置
 export const getRouterConfig = async (): Promise<void> => {
+  const { isInitialized } = useRouterStore.getState();
+
+  // 如果已经初始化过，则不再重复初始化
+  if (isInitialized) {
+    return;
+  }
+
   // 构建路由树
   const routesTree = buildRoutesTree();
 
@@ -292,7 +303,10 @@ export const getRouterConfig = async (): Promise<void> => {
 
   // 创建新的路由器
   const newRouter = createBrowserRouter(newConstantRoutes);
-  useRouterStore.setState({ router: newRouter });
+  useRouterStore.setState({
+    router: newRouter,
+    isInitialized: true,
+  });
 };
 
 export default useRouterStore;

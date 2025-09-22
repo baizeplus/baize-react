@@ -14,17 +14,17 @@ import {
   MenuProps,
   Modal,
   message,
-  theme,
 } from "antd";
 import { Header } from "antd/es/layout/layout";
 
-import ScreenfullBtn from "./ScreenfullBtn";
-import GitBtn from "./GitBtn";
-import DocBtn from "./DocBtn";
-import SearchBtn from "./SearchBtn";
+// import ScreenfullBtn from "./ScreenfullBtn";
+// import GitBtn from "./GitBtn";
+// import DocBtn from "./DocBtn";
+// import SearchBtn from "./SearchBtn";
+import NoticeBtn from "./NoticeBtn";
 import useUser from "@/hooks/useUser";
 import { logout } from "@/store/user";
-import NoticeBtn from "./NoticeBtn";
+import Breadcrumb from "@/components/Breadcrumb";
 
 type INavbarProps = {
   collapsed: boolean;
@@ -35,10 +35,6 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
   const { avatar } = useUser();
   const navigate = useNavigate();
   const [modal, contextHolder] = Modal.useModal();
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
   const handleLogout = async () => {
     modal.confirm({
@@ -75,23 +71,22 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
   ];
 
   return (
-    <Header style={{ padding: 0, background: colorBgContainer }}>
-      <Flex justify="space-between" align="center">
-        <Button
-          type="text"
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => onCollapsedIcon(!collapsed)}
-          style={{
-            fontSize: "16px",
-            width: 64,
-            height: 64,
-          }}
-        />
+    <Header className="!h-10 !p-0 !bg-white mx-2 mt-2 shadow-sm rounded-lg">
+      <Flex justify="space-between" align="center" className="h-full">
+        <Flex align="center">
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => onCollapsedIcon(!collapsed)}
+            className="mt-1 mx-2"
+          />
+          <Breadcrumb />
+        </Flex>
         <Flex className="mr-4" align="center">
-          <SearchBtn />
+          {/* <SearchBtn />
           <GitBtn />
           <DocBtn />
-          <ScreenfullBtn />
+          <ScreenfullBtn /> */}
           <NoticeBtn />
           <Dropdown
             arrow
@@ -112,10 +107,10 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
               <Avatar
                 src={avatar}
                 shape="square"
-                size={38}
+                size={28}
                 icon={<UserOutlined />}
               />
-              <CaretDownOutlined className="text-xs mb-1 ml-1 text-gray-400" />
+              <CaretDownOutlined className="text-xs mb-1.5 ml-1 text-gray-400" />
             </Flex>
           </Dropdown>
         </Flex>

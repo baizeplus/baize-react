@@ -20,7 +20,7 @@ const BaseInfo: FC<IBaseInfoProps> = ({ user }) => {
 
   const handleFinish = async (values: IUpdateUserBaseInfo) => {
     await updateUserProfile(values);
-    form.resetFields();
+    // 不清空表单，保持用户修改后的数据
     message.success("修改成功");
   };
 

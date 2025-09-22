@@ -4,14 +4,14 @@ import { BellOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-import { getNewMessage, getUserNoticeList } from "@/api/system/notice";
-import userNoticeStore, { setDot } from "@/store/userNotice";
+import { getUserNoticeList } from "@/api/system/notice";
+import userNoticeStore from "@/store/userNotice";
 import { MM_DD_HH_MM } from "@/utils/constant";
 import { DictTag } from "@/components";
 import useDict from "@/hooks/useDict";
 import { setNoticeData } from "@/store/userNotice";
-import { getToken } from "@/utils/auth";
-const sseUrl = import.meta.env.VITE_APP_BASE_API + "/system/sse/" + getToken();
+// import { getToken } from "@/utils/auth";
+// const sseUrl = import.meta.env.VITE_APP_BASE_API + "/system/sse/" + getToken();
 
 const NoticeBtn = () => {
   const navigate = useNavigate();
@@ -70,24 +70,21 @@ const NoticeBtn = () => {
     }
   };
 
-  const getNewMessageNum = async () => {
-    const { data } = await getNewMessage();
-    setDot(data !== 0);
-  };
+  // const getNewMessageNum = async () => {
+  //   const { data } = await getNewMessage();
+  //   setDot(data !== 0);
+  // };
 
   useEffect(() => {
-    const eventSource = new EventSource(sseUrl);
-
-    eventSource.addEventListener("notice", () => {
-      console.log("111");
-      getNewMessage();
-    });
-
-    return () => {
-      if (eventSource) {
-        eventSource.close();
-      }
-    };
+    // const eventSource = new EventSource(sseUrl);
+    // eventSource.addEventListener("notice", () => {
+    //   getNewMessage();
+    // });
+    // return () => {
+    //   if (eventSource) {
+    //     eventSource.close();
+    //   }
+    // };
   }, []);
 
   useEffect(() => {
@@ -96,9 +93,9 @@ const NoticeBtn = () => {
     }
   }, [clicked]);
 
-  useEffect(() => {
-    getNewMessageNum();
-  }, []);
+  // useEffect(() => {
+  //   getNewMessageNum();
+  // }, []);
 
   const handleNavigate = (data?: INoticeItem) => {
     setClicked(false);

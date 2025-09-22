@@ -4,16 +4,12 @@ import { EyeOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 import Query from "@/components/QueryTable";
-// import UpdateRoleDrawer from "./TableActive/UpdateRoleDrawer";
 import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import { Auth } from "@/components";
-// import UpdateDrawer from "./TableActive/UpdateDrawer";
 import { getOperlogList } from "@/api/monitor/operlog";
 
 const Table: FC = () => {
-  // const { queryFn } = Query.useQueryTable();
-
-  const columns: TableProps<IPostItem>["columns"] = [
+  const columns: TableProps<IOperlogItem>["columns"] = [
     {
       title: "日志编号",
       dataIndex: "operId",
@@ -80,7 +76,8 @@ const Table: FC = () => {
       align: "center",
       width: 160,
       ellipsis: true,
-      render: (t: string) => `${t}毫秒`,
+      render: (t: string) =>
+        `${t ? ((Number(t) * 1) / 1000000).toFixed(2) : 0}毫秒`,
     },
     {
       title: "操作",
@@ -104,6 +101,7 @@ const Table: FC = () => {
     <>
       <Query.Table
         isRowSelection
+        isPagination
         rowKey={(e) => e.operId}
         queryFn={getOperlogList}
         columns={columns}

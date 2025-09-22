@@ -78,6 +78,7 @@ export const routes = [
     component: () => import("@/pages/system/role/AuthUser"),
     hidden: true,
     permissions: ["system:role"],
+    parentMenuKey: "system/role", // 指定对应的侧边栏菜单项
     meta: { title: "分配用户", icon: "dict", noCache: false },
   },
   {
@@ -124,10 +125,12 @@ export const routes = [
     component: () => import("@/pages/system/dict/DictData"),
     hidden: true,
     permissions: ["system:dict"],
+    parentMenuKey: "system/dict", // 指定对应的侧边栏菜单项
     meta: { title: "字典数据", icon: "dict", noCache: false },
   },
   {
     name: "Config",
+    parentName: "System",
     path: "config",
     hidden: false,
     component: () => import("@/pages/system/config"),

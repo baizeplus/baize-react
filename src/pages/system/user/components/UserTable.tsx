@@ -261,7 +261,7 @@ const UserTable: FC<IProps> = ({
               placement="bottomRight"
               arrow={{ pointAtCenter: true }}
               trigger={["click"]}
-              dropdownRender={() => (
+              popupRender={() => (
                 <div className="bg-white py-2 px-3 rounded shadow">
                   <Checkbox.Group
                     className="flex flex-col"

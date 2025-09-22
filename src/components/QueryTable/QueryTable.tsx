@@ -14,13 +14,10 @@ import { AxiosResponse } from "axios";
 import { handleTree } from "@/utils/baize";
 
 export type IQueryTableRefProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reload: (type?: string) => Promise<void>;
 };
 
-interface IQueryTableProps extends TableProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface IQueryTableProps<T = any> extends TableProps<T> {
   queryFn: (params: any) => Promise<AxiosResponse>;
   isRowSelection?: boolean;
   isPagination?: boolean;
@@ -29,7 +26,7 @@ interface IQueryTableProps extends TableProps {
   idkey?: string;
 }
 
-const QueryTable = forwardRef(
+const QueryTable = forwardRef<IQueryTableRefProps, IQueryTableProps<any>>(
   (
     {
       queryFn,
@@ -39,7 +36,7 @@ const QueryTable = forwardRef(
       isRowSelection,
       idkey,
       ...ret
-    }: IQueryTableProps,
+    }: IQueryTableProps<any>,
     ref: ForwardedRef<IQueryTableRefProps>,
   ) => {
     const {
