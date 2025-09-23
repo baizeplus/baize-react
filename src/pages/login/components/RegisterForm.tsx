@@ -22,10 +22,14 @@ const RegisterForm: FC = () => {
   const handleRegister = async (values: IRegister) => {
     setLoading(true);
     try {
+      const encryptedPassword = encrypt(values.password);
+      if (!encryptedPassword) {
+        throw new Error("密码加密失败");
+      }
       const params = {
         ...values,
         uuid,
-        password: encrypt(values.password),
+        password: encryptedPassword,
       };
       const { data } = await register(params);
       console.log("data 1", data);

@@ -256,7 +256,7 @@ const UserTable: FC<IProps> = ({
           <Tooltip title="刷新">
             <Button shape="circle" icon={<SyncOutlined />} onClick={getList} />
           </Tooltip>
-          <Tooltip title="显隐列">
+          {/* <Tooltip title="显隐列">
             <Dropdown
               placement="bottomRight"
               arrow={{ pointAtCenter: true }}
@@ -272,7 +272,7 @@ const UserTable: FC<IProps> = ({
             >
               <Button shape="circle" icon={<AppstoreOutlined />} />
             </Dropdown>
-          </Tooltip>
+          </Tooltip> */}
         </Flex>
       </Flex>
       <Table

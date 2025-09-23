@@ -47,7 +47,10 @@ const LoginForm: FC = () => {
 
   const setCookie = (values: ILoginForm) => {
     Cookies.set("username", values.username, { expires: 30 });
-    Cookies.set("password", encrypt(values.password), { expires: 30 });
+    const encryptedPassword = encrypt(values.password);
+    if (encryptedPassword) {
+      Cookies.set("password", encryptedPassword, { expires: 30 });
+    }
     Cookies.set("rememberMe", String(values.rememberMe), { expires: 30 });
   };
 

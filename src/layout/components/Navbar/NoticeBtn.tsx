@@ -138,7 +138,7 @@ const NoticeBtn = () => {
           onOpenChange={() => setClicked(!clicked)}
         >
           <Badge dot={dot} offset={[-4, 4]} className="!mr-3">
-            <BellOutlined className="text-[20px] cursor-pointer" />
+            <BellOutlined className="text-[16px] cursor-pointer" />
           </Badge>
         </Popover>
       </Tooltip>

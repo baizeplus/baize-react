@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   CaretDownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -25,6 +26,7 @@ import NoticeBtn from "./NoticeBtn";
 import useUser from "@/hooks/useUser";
 import { logout } from "@/store/user";
 import Breadcrumb from "@/components/Breadcrumb";
+import ThemeDrawer from "@/components/ThemeDrawer";
 
 type INavbarProps = {
   collapsed: boolean;
@@ -35,6 +37,7 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
   const { avatar } = useUser();
   const navigate = useNavigate();
   const [modal, contextHolder] = Modal.useModal();
+  const [themeDrawerOpen, setThemeDrawerOpen] = useState(false);
 
   const handleLogout = async () => {
     modal.confirm({
@@ -56,10 +59,12 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
     {
       label: "个人中心",
       key: "/index/user/profile",
+      icon: <UserOutlined />,
     },
     {
-      label: "布局设置",
-      key: "1",
+      label: "主题设置",
+      key: "theme-settings",
+      icon: <SettingOutlined />,
     },
     {
       type: "divider",
@@ -99,6 +104,9 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
                 if (key === "/index/user/profile") {
                   navigate("/index/user/profile");
                 }
+                if (key === "theme-settings") {
+                  setThemeDrawerOpen(true);
+                }
               },
             }}
             trigger={["click"]}
@@ -116,6 +124,10 @@ const Navbar: FC<INavbarProps> = ({ collapsed, onCollapsedIcon }) => {
         </Flex>
       </Flex>
       {contextHolder}
+      <ThemeDrawer
+        open={themeDrawerOpen}
+        onClose={() => setThemeDrawerOpen(false)}
+      />
     </Header>
   );
 };

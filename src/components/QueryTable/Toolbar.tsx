@@ -42,7 +42,7 @@ const Toolbar: FC<IQueryProps> = ({ children }) => {
             onClick={handleRefresh}
           />
         </Tooltip>
-        <Tooltip title="显隐列">
+        {/* <Tooltip title="显隐列">
           <Dropdown
             placement="bottomRight"
             arrow={{ pointAtCenter: true }}
@@ -58,7 +58,7 @@ const Toolbar: FC<IQueryProps> = ({ children }) => {
           >
             <Button shape="circle" icon={<AppstoreOutlined />} />
           </Dropdown>
-        </Tooltip>
+        </Tooltip> */}
       </Flex>
     </Flex>
   );
