@@ -1,78 +1,27 @@
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC } from "react";
+import { Flex, TableProps, Tooltip } from "antd";
 import {
-  Button,
-  Checkbox,
-  Dropdown,
-  Flex,
-  Table,
-  TableProps,
-  Tooltip,
-} from "antd";
-import { getUserList } from "@/api/system/user";
-import {
-  AppstoreOutlined,
   CheckCircleOutlined,
   DeleteOutlined,
   FormOutlined,
   KeyOutlined,
-  PlusOutlined,
-  SearchOutlined,
-  SyncOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { YYYY_MM_DD, YYYY_MM_DD_HH_mm } from "@/utils/constant";
+
+import Query from "@/components/QueryTable";
+import { getUserList } from "@/api/system/user";
+import { YYYY_MM_DD_HH_mm } from "@/utils/constant";
 import TableItemSwitch from "./TableItemSwitch";
 import UpdateUserModal from "./TableActive/UpdateUserModal";
-import DeleteUserModal, {
-  IDeleteUserRefProps,
-} from "./TableActive/DeleteUserModal";
+import DeleteUserModal from "./TableActive/DeleteUserModal";
 import ResetPwdModal from "./TableActive/ResetPwdModal";
-import ExportButton from "./TableActive/ExportButton";
-import ImportButton from "./TableActive/ImportModal";
 import UserRoleDrawer from "./UserRoleDrawer/UserRoleDrawer";
 import { Auth } from "@/components";
 import UpdateUserDataScopeModal from "./UpdateUserDataScopeModal";
 
-type IProps = {
-  searchParams: IUserSearchParams;
-  deptId?: string;
-  onHideSearch?: (hide: boolean) => void;
-};
-
-const UserTable: FC<IProps> = ({
-  searchParams,
-  deptId = undefined,
-  onHideSearch,
-}) => {
-  const [list, setList] = useState<IUserItem[]>([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [hideSearch, setHideSearch] = useState(false);
-  const deleteRef = useRef<IDeleteUserRefProps>(null);
-  // const [loading, setLoading] = useState<boolean>(false);
-  /** 查询用户列表 */
-  const getList = useCallback(async () => {
-    try {
-      setLoading(true);
-      const params = {
-        ...searchParams,
-        deptId,
-        beginTime: searchParams?.dataScope?.[0].format(YYYY_MM_DD) || "",
-        endTime: searchParams?.dataScope?.[1].format(YYYY_MM_DD) || "",
-      };
-      const { data } = await getUserList(params);
-      setList(data.rows);
-      setTotal(data.total);
-    } finally {
-      setLoading(false);
-    }
-  }, [deptId, searchParams]);
-
-  useEffect(() => {
-    getList();
-  }, [getList]);
+const UserTable: FC = () => {
+  const { queryFn } = Query.useQueryTable();
 
   const columns: TableProps<IUserItem>["columns"] = [
     {
@@ -134,18 +83,19 @@ const UserTable: FC<IProps> = ({
       key: "active",
       align: "center",
       width: 130,
+      fixed: "right",
       render: (_, r) => {
         return (
           <Flex gap={8}>
             <Auth role="system:user:edit">
-              <UpdateUserModal id={r.userId} onSuccess={getList}>
+              <UpdateUserModal id={r.userId} onSuccess={queryFn}>
                 <Tooltip placement="top" title="修改">
                   <FormOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
                 </Tooltip>
               </UpdateUserModal>
             </Auth>
             <Auth role="system:user:remove">
-              <DeleteUserModal id={r.userId} onSuccess={getList}>
+              <DeleteUserModal id={r.userId} onSuccess={queryFn}>
                 <Tooltip placement="top" title="删除">
                   <DeleteOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
                 </Tooltip>
@@ -169,7 +119,7 @@ const UserTable: FC<IProps> = ({
               <UpdateUserDataScopeModal
                 id={r.userId}
                 userName={r.userName}
-                onSuccess={getList}
+                onSuccess={queryFn}
               >
                 <Tooltip placement="top" title="数据权限">
                   <UserOutlined className="!text-primary hover:!text-[#a5b4fc] cursor-pointer" />
@@ -182,112 +132,15 @@ const UserTable: FC<IProps> = ({
     },
   ];
 
-  const handleSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const handleHideSearch = () => {
-    setHideSearch((f) => {
-      onHideSearch?.(!f);
-      return !f;
-    });
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: handleSelectChange,
-  };
-
   return (
-    <div>
-      <Flex gap={12} justify="space-between" className="mb-2" wrap="wrap">
-        <Flex gap="small" wrap="wrap">
-          <Auth role="system:user:add">
-            <UpdateUserModal onSuccess={getList}>
-              <Button type="primary" icon={<PlusOutlined />}>
-                新增
-              </Button>
-            </UpdateUserModal>
-          </Auth>
-          <Auth role="system:user:edit">
-            <UpdateUserModal
-              id={(selectedRowKeys[0] || "") as string}
-              onSuccess={getList}
-            >
-              <Button
-                disabled={!selectedRowKeys.length || selectedRowKeys.length > 1}
-                type="primary"
-                icon={<FormOutlined />}
-              >
-                修改
-              </Button>
-            </UpdateUserModal>
-          </Auth>
-          <Auth role="system:user:remove">
-            <DeleteUserModal ref={deleteRef} onSuccess={getList}>
-              <Button
-                danger
-                ghost
-                disabled={!selectedRowKeys.length}
-                icon={<DeleteOutlined />}
-                onClick={() =>
-                  deleteRef.current?.deleteUser(selectedRowKeys.join(","))
-                }
-              >
-                删除
-              </Button>
-            </DeleteUserModal>
-          </Auth>
-          <Auth role="system:user:import">
-            <ImportButton />
-          </Auth>
-          <Auth role="system:user:export">
-            <ExportButton />
-          </Auth>
-        </Flex>
-        <Flex gap="small">
-          <Tooltip title={hideSearch ? "显示搜索" : "隐藏搜索"}>
-            <Button
-              shape="circle"
-              icon={<SearchOutlined />}
-              onClick={handleHideSearch}
-            />
-          </Tooltip>
-          <Tooltip title="刷新">
-            <Button shape="circle" icon={<SyncOutlined />} onClick={getList} />
-          </Tooltip>
-          {/* <Tooltip title="显隐列">
-            <Dropdown
-              placement="bottomRight"
-              arrow={{ pointAtCenter: true }}
-              trigger={["click"]}
-              popupRender={() => (
-                <div className="bg-white py-2 px-3 rounded shadow">
-                  <Checkbox.Group
-                    className="flex flex-col"
-                    // options={columns.map(item => item.title)}
-                  />
-                </div>
-              )}
-            >
-              <Button shape="circle" icon={<AppstoreOutlined />} />
-            </Dropdown>
-          </Tooltip> */}
-        </Flex>
-      </Flex>
-      <Table
-        rowKey={(e) => e.userId}
-        columns={columns}
-        rowSelection={rowSelection}
-        dataSource={list}
-        loading={loading}
-        scroll={{ x: true }}
-        pagination={{
-          showTotal: (total) => `共 ${total} 条`,
-          total: total,
-        }}
-      />
-    </div>
+    <Query.Table
+      isRowSelection
+      isPagination
+      enableColumnVisibility={true}
+      rowKey={(e) => e.userId}
+      queryFn={getUserList}
+      columns={columns}
+    />
   );
 };
 

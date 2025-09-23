@@ -1,4 +1,5 @@
 import { FC, useCallback, useState } from "react";
+import { TableProps } from "antd";
 import QueryContext from "./content";
 
 export type IQueryProps = {
@@ -13,6 +14,11 @@ const Query: FC<IQueryProps> = ({ children }) => {
   const [selectedRows, setSelectedRows] = useState<unknown[]>([]);
   const [hideSearch, setHideSearch] = useState(false);
   const [queryFn, setQueryFn] = useState<(type?: string) => Promise<void>>();
+
+  // 列显隐功能状态
+  const [allColumns, setAllColumns] = useState<TableProps<any>["columns"]>([]);
+  const [visibleColumnKeys, setVisibleColumnKeys] = useState<string[]>([]);
+  const [enableColumnVisibility, setEnableColumnVisibility] = useState(false);
 
   const handleSetGetList = useCallback(
     (fn: (type?: string) => Promise<void>) => {
@@ -35,6 +41,13 @@ const Query: FC<IQueryProps> = ({ children }) => {
         setHideSearch,
         handleSetGetList,
         queryFn,
+        // 列显隐功能
+        allColumns,
+        setAllColumns,
+        visibleColumnKeys,
+        setVisibleColumnKeys,
+        enableColumnVisibility,
+        setEnableColumnVisibility,
       }}
     >
       {children}

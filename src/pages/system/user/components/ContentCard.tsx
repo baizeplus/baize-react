@@ -1,25 +1,24 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Card } from "antd";
 
+import Query from "@/components/QueryTable";
 import TableSearchForm from "./TableSearchForm";
 import UserTable from "./UserTable";
+import UserToolbar from "./UserToolbar";
 
 type IProps = {
   deptId: string;
 };
 
 const ContentCard: FC<IProps> = ({ deptId }) => {
-  const [searchParams, setSearchParams] = useState<IUserSearchParams>({});
-  const [hideSearch, setHideSearch] = useState(false);
   return (
-    <Card className="w-full shadow-sm" classNames={{ body: "!p-4" }}>
-      {!hideSearch && <TableSearchForm onSearch={setSearchParams} />}
-      <UserTable
-        searchParams={searchParams}
-        deptId={deptId}
-        onHideSearch={setHideSearch}
-      />
-    </Card>
+    <Query>
+      <TableSearchForm deptId={deptId} />
+      <Card className="w-full shadow-sm" classNames={{ body: "!p-4" }}>
+        <UserToolbar />
+        <UserTable />
+      </Card>
+    </Query>
   );
 };
 

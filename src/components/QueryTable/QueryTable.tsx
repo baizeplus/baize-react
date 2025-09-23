@@ -7,6 +7,7 @@ import {
   useImperativeHandle,
   ForwardedRef,
   useRef,
+  useMemo,
 } from "react";
 import { Table, TableProps } from "antd";
 import QueryContext from "./content";
@@ -24,6 +25,7 @@ interface IQueryTableProps<T = any> extends TableProps<T> {
   authQuery?: boolean;
   isTree?: boolean;
   idkey?: string;
+  enableColumnVisibility?: boolean;
 }
 
 const QueryTable = forwardRef<IQueryTableRefProps, IQueryTableProps<any>>(
@@ -35,6 +37,8 @@ const QueryTable = forwardRef<IQueryTableRefProps, IQueryTableProps<any>>(
       isPagination,
       isRowSelection,
       idkey,
+      enableColumnVisibility = false,
+      columns,
       ...ret
     }: IQueryTableProps<any>,
     ref: ForwardedRef<IQueryTableRefProps>,
@@ -45,6 +49,11 @@ const QueryTable = forwardRef<IQueryTableRefProps, IQueryTableProps<any>>(
       setSelectedRowKeys,
       setSelectedRows,
       handleSetGetList,
+      allColumns,
+      setAllColumns,
+      visibleColumnKeys,
+      setVisibleColumnKeys,
+      setEnableColumnVisibility,
     } = useContext(QueryContext);
     const [loading, setLoading] = useState(false);
     const [dataSource, setDataSource] = useState([]);
@@ -52,6 +61,50 @@ const QueryTable = forwardRef<IQueryTableRefProps, IQueryTableProps<any>>(
     const [size, setSize] = useState(10);
     const [total, setTotal] = useState(0);
     const totalRef = useRef(0);
+    const isInitialized = useRef(false);
+
+    // 使用 useMemo 来稳定 columns 引用
+    const stableColumns = useMemo(() => columns, [JSON.stringify(columns)]);
+
+    // 初始化列显隐功能
+    useEffect(() => {
+      setEnableColumnVisibility(enableColumnVisibility);
+      if (enableColumnVisibility && stableColumns && !isInitialized.current) {
+        setAllColumns(stableColumns);
+        // 只在第一次初始化时设置所有列为可见状态，排除固定列
+        const initialVisibleKeys = stableColumns
+          .filter(
+            (col) =>
+              col &&
+              (col.key || ("dataIndex" in col ? col.dataIndex : undefined)) &&
+              !col.fixed,
+          )
+          .map(
+            (col) =>
+              (col.key ||
+                ("dataIndex" in col ? col.dataIndex : undefined)) as string,
+          );
+        setVisibleColumnKeys(initialVisibleKeys);
+        isInitialized.current = true;
+      }
+    }, [
+      enableColumnVisibility,
+      stableColumns,
+      setAllColumns,
+      setVisibleColumnKeys,
+      setEnableColumnVisibility,
+    ]);
+
+    // 根据可见列过滤columns，固定列始终显示
+    const filteredColumns =
+      enableColumnVisibility && allColumns
+        ? allColumns.filter((col) => {
+            const key = (col?.key ||
+              ("dataIndex" in col ? col.dataIndex : undefined)) as string;
+            // 固定列始终显示，或者在可见列列表中
+            return col?.fixed || visibleColumnKeys.includes(key);
+          })
+        : columns;
 
     // 表格请求参数，依赖外部传入
     const getList = useCallback(
@@ -140,6 +193,7 @@ const QueryTable = forwardRef<IQueryTableRefProps, IQueryTableProps<any>>(
       <Table
         loading={loading}
         dataSource={dataSource}
+        columns={filteredColumns}
         rowSelection={isRowSelection ? rowSelection : undefined}
         scroll={{ x: true }}
         pagination={{

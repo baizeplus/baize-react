@@ -74,6 +74,7 @@ const RoleTable: FC = () => {
       key: "active",
       align: "center",
       width: 100,
+      fixed: true, // 标记为固定列，不允许隐藏
       render: (_, r) => {
         return (
           <Flex gap={8}>
@@ -114,6 +115,7 @@ const RoleTable: FC = () => {
       <Query.Table
         isRowSelection
         isPagination
+        enableColumnVisibility={true}
         rowKey={(e) => e.roleId}
         queryFn={getRoleList}
         columns={columns}
